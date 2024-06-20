@@ -29,6 +29,6 @@ export default class Collision {
   }
 
   snakeCollision() {
-    location.reload();
+    this.scene.gameOver();
   }
 }

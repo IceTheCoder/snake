@@ -36,6 +36,10 @@ export class Scene1 extends Phaser.Scene {
 
     this.collision.update();
   }
+
+  gameOver() {
+    this.scene.start("gameOver");
+  }
 }
 
 window.Scene1 = Scene1;
