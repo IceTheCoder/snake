@@ -38,7 +38,7 @@ export class Scene1 extends Phaser.Scene {
   }
 
   gameOver() {
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { snakeLength: this.snake.snakeLength });
   }
 }
 
