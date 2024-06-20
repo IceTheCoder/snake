@@ -1,6 +1,6 @@
-import Snake from './Snake.js';
-import Fruit from './Fruit.js';
-import Collision from './Collision.js';
+import Snake from '../scripts/Snake.js';
+import Fruit from '../scripts/Fruit.js';
+import Collision from '../scripts/Collision.js';
 
 export class Scene1 extends Phaser.Scene {
   constructor() {
