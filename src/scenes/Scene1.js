@@ -18,7 +18,7 @@ export class Scene1 extends Phaser.Scene {
     this.snake = new Snake(this, this.TILE_SIZE, this.GRID_WIDTH, this.GRID_HEIGHT, this.timeBetweenEachMove);
     this.snake.preload();
 
-    this.fruit = new Fruit(this, this.TILE_SIZE, this.GRID_WIDTH, this.GRID_HEIGHT,);
+    this.fruit = new Fruit(this, this.TILE_SIZE, this.GRID_WIDTH, this.GRID_HEIGHT, this.snake);
     this.fruit.preload();
 
     this.collision = new Collision(this, this.snake, this.fruit);
