@@ -29,7 +29,11 @@ And much more...
 ## What I learned
 - Basic configuration of the Phaser game engine (canvas, sprites, keyboard controls, grid).
 - Manipulating JavaScript classes to generate multiple sprite clones, using arrays to place these clones, and dynamically changing their positions.
-- How to approach a problem, come up with a solution and then codify that solution and test it.   
+- How to approach a problem, come up with a solution and then codify that solution and test it.
+- Working with multiple scenes in Phaser.
+- Loading a specific scene when a condition is met.
+- Basic scene UI elements, such as text and buttons.
+- Changing the content of a Phaser text UI element based on a variable.
 
 ## Setup
 To get a local copy up and running, follow these simple steps
