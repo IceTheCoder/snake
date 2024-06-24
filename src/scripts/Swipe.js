@@ -1,8 +1,10 @@
+// https://www.youtube.com/watch?v=nqLUfoO4TR0
 const DIRECTION = Object.freeze({
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT',
-  DOWN: 'DOWN',
-  UP: 'UP',
+  // Use numeric values for compatibility with keyboard controls code
+  LEFT: 180,
+  RIGHT: 0,
+  DOWN: 270,
+  UP: 90,
   NONE: 'NONE',
 })
 

@@ -38,9 +38,32 @@ export default class Snake {
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
 
+    // https://www.youtube.com/watch?v=nqLUfoO4TR0
     const swipe = new Swipe(this.scene, {
       swipeDetectedCallback: (direction) => {
-        console.log(direction);
+        switch(direction) {
+          case 180:
+            if (this.direction !== 0 && this.canChangeDirection) {
+              this.changeDirection(180);
+            }
+            break;
+          case 0:
+            if (this.direction !== 180 && this.canChangeDirection) {
+              this.changeDirection(0);
+            }
+            break;
+          case 90:
+            if (this.direction !== 270 && this.canChangeDirection) {
+              this.changeDirection(90);
+            }
+            break;
+          case 270:
+            if (this.direction !== 90 && this.canChangeDirection) {
+              this.changeDirection(270);
+            }
+            break;
+        }
+        this.changeDirection(direction);
       } 
     });
   }
