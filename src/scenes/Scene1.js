@@ -26,13 +26,22 @@ export class Scene1 extends Phaser.Scene {
 
   create() {
     this.snake.create();
+
+    // https://www.html5gamedevs.com/topic/40607-how-to-replace-arrow-keys-with-wasd-movement/
+    // cornstipated's solution worked.
+    this.wasd = this.input.keyboard.addKeys(
+      {up:Phaser.Input.Keyboard.KeyCodes.W,
+      down:Phaser.Input.Keyboard.KeyCodes.S,
+      left:Phaser.Input.Keyboard.KeyCodes.A,
+      right:Phaser.Input.Keyboard.KeyCodes.D});
+
     this.cursors = this.input.keyboard.createCursorKeys(); // Define input keys
 
     this.fruit.create();
   }
 
   update() {
-    this.snake.update(this.cursors);
+    this.snake.update(this.cursors, this.wasd);
 
     this.collision.update();
   }
