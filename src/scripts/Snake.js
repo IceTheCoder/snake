@@ -1,4 +1,5 @@
 import SnakeBody from "./SnakeBody.js";
+import { Swipe } from '../scripts/Swipe.js';
 
 export default class Snake {
   constructor(scene, tileSize, gridWidth, gridHeight, timeBetweenEachMove) {
@@ -36,6 +37,12 @@ export default class Snake {
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+
+    const swipe = new Swipe(this.scene, {
+      swipeDetectedCallback: (direction) => {
+        console.log(direction);
+      } 
+    });
   }
 
   // Arrow keys controls

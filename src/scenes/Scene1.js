@@ -1,7 +1,6 @@
 import Snake from '../scripts/Snake.js';
 import Fruit from '../scripts/Fruit.js';
 import Collision from '../scripts/Collision.js';
-import { Swipe } from '../scripts/Swipe.js';
 
 export class Scene1 extends Phaser.Scene {
   constructor() {
@@ -39,12 +38,6 @@ export class Scene1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys(); // Define input keys
 
     this.fruit.create();
-
-    const swipe = new Swipe(this, {
-      swipeDetectedCallback: (direction) => {
-        console.log(direction);
-      } 
-    });
   }
 
   update() {
