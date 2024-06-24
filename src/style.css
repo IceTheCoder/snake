@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+@media screen and (max-width: 800px) {
+  canvas {
+    max-width: 99vw;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  canvas {
+    max-width: 99vh;
+  }
+}
