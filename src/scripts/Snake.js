@@ -63,7 +63,6 @@ export default class Snake {
             }
             break;
         }
-        this.changeDirection(direction);
       } 
     });
   }
