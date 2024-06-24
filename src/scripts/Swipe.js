@@ -39,6 +39,9 @@ export class Swipe {
   #handlePointerUp(pointer) {
     this.#lastPointerUpLocation = pointer.position.clone();
     this.#handleSwipe();
+    if (this.#swipeDirection !== DIRECTION.NONE && this.#config && this.#config.swipeDetectedCallback) {
+      this.#config.swipeDetectedCallback(this.#swipeDirection);
+    }
   }
 
   #handleSwipe() {

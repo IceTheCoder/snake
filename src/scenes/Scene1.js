@@ -40,7 +40,11 @@ export class Scene1 extends Phaser.Scene {
 
     this.fruit.create();
 
-    const swipe = new Swipe(this, {});
+    const swipe = new Swipe(this, {
+      swipeDetectedCallback: (direction) => {
+        console.log(direction);
+      } 
+    });
   }
 
   update() {
