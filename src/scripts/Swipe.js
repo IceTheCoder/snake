@@ -1,15 +1,25 @@
+const DIRECTION = Object.freeze({
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  DOWN: 'DOWN',
+  UP: 'UP',
+  NONE: 'NONE',
+})
+
 export class Swipe {
   // Private properties
   #scene;
   #config;
   #lastPointerDownLocation;
   #lastPointerUpLocation;
+  #swipeDirection;
 
   constructor(scene, config) {
     this.#scene = scene;
     this.#config = config;
     this.#lastPointerDownLocation = new Phaser.Math.Vector2(0, 0);
     this.#lastPointerUpLocation = new Phaser.Math.Vector2(0, 0);
+    this.#swipeDirection = DIRECTION.NONE;
     this.#setupEvents();
   }
 
@@ -33,12 +43,27 @@ export class Swipe {
 
   #handleSwipe() {
     if (this.#lastPointerDownLocation.x === this.#lastPointerUpLocation.x && this.#lastPointerDownLocation.y === this.#lastPointerUpLocation.y) {
+      this.#swipeDirection = DIRECTION.NONE;
       return;
     }
 
     const radians = Phaser.Math.Angle.BetweenPoints(this.#lastPointerDownLocation, this.#lastPointerUpLocation);
     const degrees = Phaser.Math.RadToDeg(radians);
     const positiveDegrees = Math.abs(degrees);
-    console.log(radians, degrees, positiveDegrees);
+    
+    if (positiveDegrees <= 45) {
+      this.#swipeDirection = DIRECTION.RIGHT;
+      return;
+    }
+    if (positiveDegrees >= 135) {
+      this.#swipeDirection = DIRECTION.LEFT;
+      return;
+    }
+    if (degrees < 0) {
+      this.#swipeDirection = DIRECTION.UP;
+      return;
+    }
+    this.#swipeDirection = DIRECTION.DOWN;
+
   }
 }
