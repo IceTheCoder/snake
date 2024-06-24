@@ -38,14 +38,15 @@ export default class Snake {
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
   }
 
-  update(cursors) {
-    if (cursors.left.isDown && this.direction !== 0 && this.canChangeDirection) {
+  // Arrow keys controls
+  update(cursors, wasd) {
+    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.canChangeDirection) {
       this.changeDirection(180);
-    } else if (cursors.right.isDown && this.direction !== 180 && this.canChangeDirection) {
+    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.canChangeDirection) {
       this.changeDirection(0);
-    } else if (cursors.up.isDown && this.direction !== 270 && this.canChangeDirection) {
+    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.canChangeDirection) {
       this.changeDirection(90);
-    } else if (cursors.down.isDown && this.direction !== 90 && this.canChangeDirection) {
+    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.canChangeDirection) {
       this.changeDirection(270);
     }
   }
