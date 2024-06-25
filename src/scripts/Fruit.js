@@ -9,7 +9,7 @@ export default class Fruit {
    * @param {number} tileSize - The size of one tile.
    * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
    * @param {number} gridHeeight - The height of the grid, expressed by number of tiles.
-   * @param {Object} snake - The snake object.
+   * @param {Snake} snake - The snake object.
    */
   constructor(scene, tileSize, gridWidth, gridHeight, snake) {
     /** @type {Phaser.Scene} */
@@ -21,7 +21,7 @@ export default class Fruit {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
 
-    /** @tyoe {Snake|null} */
+    /** @type {Snake} */
     this.snake = snake;
 
     this.fruit = null;

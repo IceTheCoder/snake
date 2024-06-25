@@ -6,16 +6,16 @@ export default class Collision {
   /**
    * Constructs the Collision class.
    * @param {Phaser.Scene} scene - The main game scene.
-   * @param {Object} snake - The snake object.
-   * @param {Object} fruit - The fruit object.
+   * @param {Snake} snake - The snake object.
+   * @param {Fruit} fruit - The fruit object.
    */
   constructor(scene, snake, fruit) {
 
     /** @type {Phaser.Scene} */
     this.scene = scene;
-    /** @type {Object} */
+    /** @type {Snake} */
     this.snake = snake;
-    /** @type {Object} */
+    /** @type {Fruit} */
     this.fruit = fruit;
   }
 
