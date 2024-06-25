@@ -80,6 +80,14 @@ export class Scene1 extends Phaser.Scene {
   gameOver() {
     this.scene.start("gameOver", { snakeLength: this.snake.snakeLength });
   }
+
+  /**
+   * Returns the current snake instance
+   * @returns {Snake}
+   */
+  getSnakeInstance() {
+    return this.snake;
+  }
 }
 
 window.Scene1 = Scene1;
