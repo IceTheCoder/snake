@@ -1,3 +1,6 @@
+import { Scene1 } from './scenes/Scene1.js';
+import { Scene2 } from './scenes/Scene2.js';
+
 let game;
 
 window.onload = function() {
@@ -56,9 +59,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   }
 });
-
-import { Scene1 } from './scenes/Scene1.js';
-import { Scene2 } from './scenes/Scene2.js';
 
 const config = {
   type: Phaser.AUTO,
