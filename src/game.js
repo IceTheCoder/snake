@@ -11,11 +11,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const hammer = new Hammer(document.body);
 
   hammer.get('swipe').set({
-      direction: Hammer.DIRECTION_ALL
+    direction: Hammer.DIRECTION_ALL,
+    threshold: 5,
+    velocity: 0
   });
 
   hammer.on('swipe', (event) => {
-      handleSwipe(event);
+    handleSwipe(event);
   });
 
   /**
@@ -32,25 +34,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
     switch(event.direction) {
       case Hammer.DIRECTION_UP:
         console.log('Swipe up detected');
-        if (snakeInstance.direction !== 270) {
+        if (snakeInstance.direction !== 270 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(90);
         }
         break;
       case Hammer.DIRECTION_DOWN:
         console.log('Swipe down detected');
-        if (snakeInstance.direction !== 90) {
+        if (snakeInstance.direction !== 90 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(270);
         }
         break;
       case Hammer.DIRECTION_LEFT:
         console.log('Swipe left detected');
-        if (snakeInstance.direction !== 0) {
+        if (snakeInstance.direction !== 0 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(180);
         }
         break;
       case Hammer.DIRECTION_RIGHT:
         console.log('Swipe right detected');
-        if (snakeInstance.direction !== 180) {
+        if (snakeInstance.direction !== 180 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(0);
         }
         break;
