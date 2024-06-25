@@ -8,7 +8,7 @@ export default class Fruit {
    * @param {Phaser.Scene} scene - The main game scene.
    * @param {number} tileSize - The size of one tile.
    * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
-   * @param {number} gridHeeight - The height of the grid, expressed by number of tiles.
+   * @param {number} gridHeight - The height of the grid, expressed by number of tiles.
    * @param {Snake} snake - The snake object.
    */
   constructor(scene, tileSize, gridWidth, gridHeight, snake) {
