@@ -1,5 +1,4 @@
 import SnakeBody from "./SnakeBody.js";
-import { Swipe } from '../scripts/Swipe.js';
 
 /**
  * Generate the snake, handle its control, increase its length etc.
@@ -65,7 +64,7 @@ export default class Snake {
   }
 
   /**
-   * Initialize the snake, start moving the snake, and initalize the swipe class.
+   * Initialize the snake, start moving the snake.
    */
   create() {
     this.snakeX = this.initialSnakeX;
@@ -74,34 +73,6 @@ export default class Snake {
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
-
-    // https://www.youtube.com/watch?v=nqLUfoO4TR0
-    const swipe = new Swipe(this.scene, {
-      swipeDetectedCallback: (direction) => {
-        switch(direction) {
-          case 180:
-            if (this.direction !== 0 && this.canChangeDirection) {
-              this.changeDirection(180);
-            }
-            break;
-          case 0:
-            if (this.direction !== 180 && this.canChangeDirection) {
-              this.changeDirection(0);
-            }
-            break;
-          case 90:
-            if (this.direction !== 270 && this.canChangeDirection) {
-              this.changeDirection(90);
-            }
-            break;
-          case 270:
-            if (this.direction !== 90 && this.canChangeDirection) {
-              this.changeDirection(270);
-            }
-            break;
-        }
-      } 
-    });
   }
 
   // Arrow and WASD keys controls
