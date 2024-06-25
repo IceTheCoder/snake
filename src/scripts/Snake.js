@@ -1,35 +1,72 @@
 import SnakeBody from "./SnakeBody.js";
 import { Swipe } from '../scripts/Swipe.js';
 
+/**
+ * Generate the snake, handle its control, increase its length etc.
+ * @param {Phaser.Scene} scene - The main game scene.
+ * @param {number} tileSize - The size of one tile.
+ * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
+ * @param {number} gridHeight - The height of the grid, expressed by number of tiles.
+ * @param {number} timeBetweenEachMove - The time (in milliseconds) between each snake movement by 1 tile.
+ */
 export default class Snake {
+  /**
+   * Generate the snake, handle its control, increase its length etc.
+   * @param {Phaser.Scene} scene - The main game scene.
+   * @param {number} tileSize - The size of one tile.
+   * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
+   * @param {number} gridHeight - The height of the grid, expressed by numer of tiles.
+   * @param {number} timeBetweenEachMove - The time (in milliseconds) between each snake movement by 1 tile.
+   */
   constructor(scene, tileSize, gridWidth, gridHeight, timeBetweenEachMove) {
+    /** @type {Phaser.scene} */
     this.scene = scene;
+    /** @type {number} */
     this.TILE_SIZE = tileSize;
+    /** @type {number} */
     this.GRID_WIDTH = gridWidth;
+    /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
+    /** @type {number} */
     this.timeBetweenEachMove = timeBetweenEachMove;
 
+    /** @type {number} */
     this.direction = 0;
+    /** @type {boolean} */
     this.canChangeDirection = true;
 
+    /** @type {number} */
     this.initialSnakeX = Math.floor(this.GRID_WIDTH / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
+    /** @type {number} */
     this.initialSnakeY = Math.floor(this.GRID_HEIGHT / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
 
+    /** @type {number|null} */
     this.snakeX = null;
+    /** @type {number|null} */
     this.snakeY = null;
 
+    /** @type {Phaser.GameObjects.Image|null} */
     this.snake = null; // Placeholder for the snake image
 
     // Snake growing variables
+    /** @type {number} */
     this.snakeLength = 1;
+    /** @type {Array.<Array.<number>>} */
     this.snakePositions = [];
+    /** @type {Array.<Phaser.GameObjects.Image>} */
     this.snakeBodyImages = [];
   }
 
+  /**
+   * Load the snake image.
+   */
   preload() {
     this.scene.load.image("snake", "assets/snake.png");
   }
 
+  /**
+   * Initialize the snake, start moving the snake, and initalize the swipe class.
+   */
   create() {
     this.snakeX = this.initialSnakeX;
     this.snakeY = this.initialSnakeY;
@@ -67,7 +104,12 @@ export default class Snake {
     });
   }
 
-  // Arrow keys controls
+  // Arrow and WASD keys controls
+  /**
+   * Handle changing direction correctly.
+   * @param {Phaser.Input.Keyboard.CursorKeys} cursors 
+   * @param {Object} wasd 
+   */
   update(cursors, wasd) {
     if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.canChangeDirection) {
       this.changeDirection(180);
@@ -80,10 +122,18 @@ export default class Snake {
     }
   }
 
+  /**
+   * Sets canChangeDirection to true.
+   */
   setCanChangeDirectionToTrue() {
     this.canChangeDirection = true;
   }
 
+  /**
+   * Changes the direction based on player input and waits for the timeBetweenEachMove before 
+   * allowing another direction change.
+   * @param {number} direction - The direction (in degrees) the snake will change to. 
+   */
   changeDirection(direction) {
     this.direction = direction;
 
@@ -93,6 +143,10 @@ export default class Snake {
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this);
   }
 
+  /**
+   * Move the snake by 1 tile in the correct direction, wrap around the screen when going through
+   * a wall, store the snake body tiles' positions, and update them accordingly.
+   */
   move() {
     switch (this.direction) {
       case 0:
@@ -127,6 +181,11 @@ export default class Snake {
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
   }
 
+  /**
+   * Updates the snake body image position.
+   * @param {number} index - The index of the snake body image
+   * @param {Array.<number>} position - The position array for the corresponding snake body image.
+   */
   updateSnakeBodyImage(index, position) {
     let x = position[0];
     let y = position[1];
@@ -136,6 +195,9 @@ export default class Snake {
     }
   }
 
+  /**
+   * Create a new snake body image on collision with a fruit.
+   */
   onCollision() {
     this.snakeLength += 1;
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
@@ -144,14 +206,26 @@ export default class Snake {
   }
 
   // Getter methods for snakeX and snakeY
+  /**
+   * Returns the snake's X.
+   * @returns {number}
+   */
   getSnakeX() {
     return this.snakeX;
   }
 
+  /**
+   * Returns the snake's Y.
+   * @returns {number}
+   */
   getSnakeY() {
     return this.snakeY;
   }
 
+  /**
+   * Returns the snake positions array.
+   * @returns {Array.<Array.<number>>}
+   */
   getSnakePositions() {
     return this.snakePositions;
   }

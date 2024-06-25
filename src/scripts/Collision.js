@@ -1,10 +1,27 @@
+/**
+ * Code for detecting collision and triggering functions associated with collision.
+ * @class
+ */
 export default class Collision {
+  /**
+   * Constructs the Collision class.
+   * @param {Phaser.Scene} scene - The main game scene.
+   * @param {Snake} snake - The snake object.
+   * @param {Fruit} fruit - The fruit object.
+   */
   constructor(scene, snake, fruit) {
+
+    /** @type {Phaser.Scene} */
     this.scene = scene;
+    /** @type {Snake} */
     this.snake = snake;
+    /** @type {Fruit} */
     this.fruit = fruit;
   }
 
+  /**
+   * Constantly check if the snake collides either with the fruit or with itself and trigger appropiate functions.
+   */
   update() {
     if (this.snake.getSnakeX() === this.fruit.getFruitX() && 
     this.snake.getSnakeY() === this.fruit.getFruitY()) {
@@ -23,11 +40,17 @@ export default class Collision {
     })
   }
 
+  /**
+   * Trigger functions to move the fruit to a random position and to increase the snake's length.
+   */
   fruitCollision() {
     this.fruit.randomPosition();
     this.snake.onCollision();
   }
 
+  /**
+   * Trigger the game over logic after collision between the snake and itself.
+   */
   snakeCollision() {
     this.scene.gameOver();
   }
