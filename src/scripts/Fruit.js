@@ -34,17 +34,26 @@ export default class Fruit {
   }
 
   /**
-   * Preloads the fruit image
+   * Preloads the fruit image.
    */
   preload() {
     this.scene.load.image("fruit", "assets/fruit.png");
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+
+  /**
+   * Get a random integer from 1 to max.
+   * @param {number} max - The maximum value of the generated integer.
+   * @returns {number}
+   */
   getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+  /**
+   * Destroy the fruit and place it in a random position that's not occupied by the snake.
+   */
   randomPosition() {
     if (this.fruit) {
       this.fruit.destroy();
@@ -64,15 +73,26 @@ export default class Fruit {
     this.fruit.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
   }
 
+  /**
+   * Place the fruit in a random position when the game starts.
+   */
   create() {
     this.randomPosition();
   }
 
   // Getter methods
+  /**
+   * Returns the fruit X.
+   * @returns {number}
+   */
   getFruitX() {
     return this.fruitX;
   }
 
+  /**
+   * Returns the fruit Y.
+   * @returns {number}
+   */
   getFruitY() {
     return this.fruitY;
   }
