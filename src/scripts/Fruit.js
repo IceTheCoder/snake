@@ -1,10 +1,27 @@
+/**
+ * Code for loading the fruit and moving it to a random position when appropiate
+ * @class
+ */
 export default class Fruit {
+  /**
+   * Constructs the Fruit class.
+   * @param {Phaser.Scene} scene - The main game scene.
+   * @param {number} tileSize - The size of one tile.
+   * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
+   * @param {number} gridHeeight - The height of the grid, expressed by number of tiles.
+   * @param {Object} snake - The snake object.
+   */
   constructor(scene, tileSize, gridWidth, gridHeight, snake) {
+    /** @type {Phaser.Scene} */
     this.scene = scene;
+    /** @type {number} */
     this.TILE_SIZE = tileSize;
+    /** @type {number} */
     this.GRID_WIDTH = gridWidth;
+    /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
 
+    /** @tyoe {Snake|null} */
     this.snake = snake;
 
     this.fruit = null;
