@@ -43,7 +43,6 @@ export class Scene1 extends Phaser.Scene {
 
   /**
    * Create game objects and initialize game settings.
-   * @method
    */
   create() {
     this.snake.create();
@@ -76,7 +75,6 @@ export class Scene1 extends Phaser.Scene {
 
   /**
    * Handle the game over state.
-   * @method
    */
   gameOver() {
     this.scene.start("gameOver", { snakeLength: this.snake.snakeLength });

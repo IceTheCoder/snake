@@ -24,12 +24,18 @@ export default class Fruit {
     /** @type {Snake} */
     this.snake = snake;
 
+    /** @type {Fruit|null} */
     this.fruit = null;
 
+    /** @type {number|null} */
     this.fruitX = null;
+    /** @type {number|null} */
     this.fruitY = null;
   }
 
+  /**
+   * Preloads the fruit image
+   */
   preload() {
     this.scene.load.image("fruit", "assets/fruit.png");
   }
