@@ -12,11 +12,11 @@ A very basic snake game, made in JavaScript with the Phaser game engine, featuri
 * **Screen Wrapping**: The snake wraps around the screen when it goes through the edges.
 * **Fruits**: The snake eats fruits when its head collides with them.
 * **Growth**: The snake's length increases by 1 square for each fruit eaten.
-* **Game Over**: The page is refreshed when the snake's head collides with its own body.
+* **Game Over**: A game over screen displaying the player's score and a restart button.
 
 ## Future features
-- [ ] Make the snake controllable with WASD
-- [ ] Make a proper game over screen
+- [X] Make the snake controllable with WASD
+- [X] Make a proper game over screen
 - [ ] Add score tracking
 - [ ] Add high score tracking
 - [ ] Make the snake controllable on mobile
