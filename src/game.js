@@ -7,12 +7,13 @@ window.onload = function() {
   game = new Phaser.Game(config);
 };
 
+/* Hammer.js */
 document.addEventListener('DOMContentLoaded', (event) => {
   const hammer = new Hammer(document.body);
 
   hammer.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,
-    threshold: 5,
+    threshold: 0,
     velocity: 0
   });
 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
    * Handles swipe gestures and logs the direction of the swipe
    * @param {Object} event - The event object containing details about the swipe gesture.
    */
+  
   function handleSwipe(event) {
     const gameScene = game.scene.getScene('playGame');
     if (!gameScene) return;
