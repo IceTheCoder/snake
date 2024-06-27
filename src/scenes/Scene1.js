@@ -78,7 +78,11 @@ export class Scene1 extends Phaser.Scene {
    * Handle the game over state.
    */
   gameOver() {
+    // https://stackoverflow.com/questions/59448975/how-to-stop-a-phaser-game-and-remove-it-from-a-page
     this.game.destroy(true, false);
+    // I'm so happy document works in this script :)
+    document.getElementById("score").innerHTML = `Score: ${this.snake.snakeLength}`;
+    document.getElementById("game-over").style.display = "flex";
   }
 
   /**
