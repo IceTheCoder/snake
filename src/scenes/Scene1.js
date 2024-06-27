@@ -78,7 +78,7 @@ export class Scene1 extends Phaser.Scene {
    * Handle the game over state.
    */
   gameOver() {
-    this.scene.start("gameOver", { snakeLength: this.snake.snakeLength });
+    this.game.destroy(true, false);
   }
 
   /**
