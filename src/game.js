@@ -71,3 +71,9 @@ const config = {
   backgroundColor: 0x000000,
   scene: [Scene1]
 }
+
+const button = document.getElementById("restart-button");
+
+button.addEventListener("click", () => {
+  document.location.reload();
+});
