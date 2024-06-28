@@ -1,7 +1,10 @@
 * {
+  font-family: 'Roboto', Arial, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #121212;
+  color: white;
 }
 
 body {
@@ -24,4 +27,32 @@ body {
 }
 
 /* Game Over Screen */
+#game-over {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+h1 {
+  font-size: 50px;
+  margin: 30px;
+}
+
+h2 {
+  font-size: 40px;
+  margin: 30px;
+}
+
+button {
+  font-size: 40px;
+  margin: 30px;
+  border: none;
+  color: green;
+}
+
+button:hover {
+  color: greenyellow;
+}
