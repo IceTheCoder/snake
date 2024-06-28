@@ -55,6 +55,8 @@ export default class Snake {
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
     this.snakeBodyImages = [];
+    /** @type {Array.number} */
+    this.directionChanges = []
   }
 
   /**
@@ -120,6 +122,13 @@ export default class Snake {
       this.changeDirection(90);
     } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90) {
       this.changeDirection(270);
+    }
+  }
+
+  addDirectionChange(direction) {
+    this.directionChanges.push(direction);
+    if (this.directionChanges.length > 2) {
+      
     }
   }
 
