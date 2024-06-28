@@ -44,6 +44,8 @@ export default class Snake {
     this.snakeX = null;
     /** @type {number|null} */
     this.snakeY = null;
+    /** @type {Array.number} */
+    this.storedSnakePosition = [];
 
     /** @type {Phaser.GameObjects.Image|null} */
     this.snake = null; // Placeholder for the snake image
@@ -55,8 +57,6 @@ export default class Snake {
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
     this.snakeBodyImages = [];
-    /** @type {Array.number} */
-    this.directionChanges = []
   }
 
   /**
@@ -123,12 +123,16 @@ export default class Snake {
     } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90) {
       this.changeDirection(270);
     }
-  }
 
-  addDirectionChange(direction) {
-    this.directionChanges.push(direction);
-    if (this.directionChanges.length > 2) {
-      
+    // IF CANCHANGEDIRECTION === FALSE
+    //// IF CURRENT SNAKE POSITION !== STORED SNAKE POSITION (i.e. the snake has moved)
+    ////// CANCHANGEDIRECTION = TRUE;
+
+    if (!this.canChangeDirection) {
+      // If the snake has moved
+      if (this.snakeX !== this.storedSnakePosition[0] || this.snakeY !== this.storedSnakePosition[1]) {
+        this.canChangeDirection = true;
+      }
     }
   }
 
@@ -145,13 +149,17 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
+    console.log(`Changing direction to ${direction}`);
     if (this.canChangeDirection) {
+      console.log("Direction can be changed");
+      this.storedSnakePosition = [this.snakeX, this.snakeY];
+
       this.direction = direction;
 
       // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
       // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
       this.canChangeDirection = false;
-      this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this);  
+      // this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this); // REMOVE THIS
     }
   }
 
