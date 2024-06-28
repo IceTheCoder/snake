@@ -124,10 +124,6 @@ export default class Snake {
       this.changeDirection(270);
     }
 
-    // IF CANCHANGEDIRECTION === FALSE
-    //// IF CURRENT SNAKE POSITION !== STORED SNAKE POSITION (i.e. the snake has moved)
-    ////// CANCHANGEDIRECTION = TRUE;
-
     if (!this.canChangeDirection) {
       // If the snake has moved
       if (this.snakeX !== this.storedSnakePosition[0] || this.snakeY !== this.storedSnakePosition[1]) {
@@ -149,17 +145,19 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    console.log(`Changing direction to ${direction}`);
     if (this.canChangeDirection) {
-      console.log("Direction can be changed");
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
+      // IF CACHED DIRECTION EXISTS
+      //// SET DIRECTION TO CACHED DIRECTION
+      // ELSE:
       this.direction = direction;
 
       // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
       // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
       this.canChangeDirection = false;
-      // this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this); // REMOVE THIS
+    } else {
+      // CACHED DIRECTION = DIRECTION;
     }
   }
 
