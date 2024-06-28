@@ -32,6 +32,8 @@ export default class Snake {
 
     /** @type {number} */
     this.direction = 0;
+    /** @type {number|null} */
+    this.cachedDirection = null;
     /** @type {boolean} */
     this.canChangeDirection = true;
 
@@ -114,13 +116,18 @@ export default class Snake {
    * @param {Object} wasd 
    */
   update(cursors, wasd) {
-    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0) {
+    // NOTE: I've added the extra condition so we can't change the direction to the same value it already is.
+    // Changing the direction to any value triggers a pause in the ability to change direction (while canChangeDirection is false).
+    // During the pause, the snake can't change direction, 
+    // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column)  if the inputs are succededquickly.
+    // As such, we must remove unnecessary pauses, thereby we must introduce the extra condition.
+    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.direction !== 180) {
       this.changeDirection(180);
-    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180) {
+    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.direction !== 0) {
       this.changeDirection(0);
-    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270) {
+    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.direction !== 90) {
       this.changeDirection(90);
-    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90) {
+    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.direction !== 270) {
       this.changeDirection(270);
     }
 
@@ -130,17 +137,18 @@ export default class Snake {
         this.canChangeDirection = true;
       }
     }
+
+    console.log(this.cachedDirection);
+
+    /*
+    if (this.canChangeDirection && this.cachedDirection !== null) {
+      this.direction = this.cachedDirection;
+      this.cachedDirection = null;
+    } */
   }
 
   /**
-   * Sets canChangeDirection to true.
-   */
-  setCanChangeDirectionToTrue() {
-    this.canChangeDirection = true;
-  }
-
-  /**
-   * Changes the direction based on player input and waits for the timeBetweenEachMove before 
+   * Changes the direction based on player input and waits for the snake to change position before 
    * allowing another direction change.
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
@@ -148,17 +156,15 @@ export default class Snake {
     if (this.canChangeDirection) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
-      // IF CACHED DIRECTION EXISTS
-      //// SET DIRECTION TO CACHED DIRECTION
-      // ELSE:
       this.direction = direction;
 
       // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
       // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
       this.canChangeDirection = false;
-    } else {
-      // CACHED DIRECTION = DIRECTION;
-    }
+    
+    // else
+    //// CACHE THE DIRECTION
+    //// AS SOON AS WE CAN CHANGE THE DIRECTION WE ChANGE IT TO THE CACHED DIRECTION
   }
 
   /**
