@@ -112,13 +112,13 @@ export default class Snake {
    * @param {Object} wasd 
    */
   update(cursors, wasd) {
-    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.canChangeDirection) {
+    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0) {
       this.changeDirection(180);
-    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.canChangeDirection) {
+    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180) {
       this.changeDirection(0);
-    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.canChangeDirection) {
+    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270) {
       this.changeDirection(90);
-    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.canChangeDirection) {
+    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90) {
       this.changeDirection(270);
     }
   }
@@ -136,12 +136,14 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    this.direction = direction;
+    if (this.canChangeDirection) {
+      this.direction = direction;
 
-    // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
-    // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
-    this.canChangeDirection = false;
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this);
+      // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
+      // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
+      this.canChangeDirection = false;
+      this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this);  
+    }
   }
 
   /**
