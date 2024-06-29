@@ -17,9 +17,9 @@ A very basic snake game, made in JavaScript with the Phaser game engine, featuri
 ## Future features
 - [X] Make the snake controllable with WASD
 - [X] Make a proper game over screen
-- [ ] Add score tracking
+- [X] Add score tracking
 - [ ] Add high score tracking
-- [ ] Make the snake controllable on mobile
+- [X] Make the snake controllable on mobile
 - [ ] Improve graphics
 - [ ] Changeable snake head, snake body and fruit colours
 - [ ] Custom snake width
@@ -34,6 +34,8 @@ And much more...
 - Loading a specific scene when a condition is met.
 - Basic scene UI elements, such as text and buttons.
 - Changing the content of a Phaser text UI element based on a variable.
+- Enabling/disabling HTML elements or Phaser scenes.
+- Waiting until a condition occurs in JavaScript.
 
 ## Setup
 To get a local copy up and running, follow these simple steps

@@ -32,6 +32,8 @@ export default class Snake {
 
     /** @type {number} */
     this.direction = 0;
+    /** @type {number|null} */
+    this.cachedDirection = null;
     /** @type {boolean} */
     this.canChangeDirection = true;
 
@@ -44,6 +46,8 @@ export default class Snake {
     this.snakeX = null;
     /** @type {number|null} */
     this.snakeY = null;
+    /** @type {Array.number} */
+    this.storedSnakePosition = [];
 
     /** @type {Phaser.GameObjects.Image|null} */
     this.snake = null; // Placeholder for the snake image
@@ -112,36 +116,44 @@ export default class Snake {
    * @param {Object} wasd 
    */
   update(cursors, wasd) {
-    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.canChangeDirection) {
+    // NOTE: I've added the extra condition so we can't change the direction to the same value it already is.
+    // Changing the direction to any value triggers a pause in the ability to change direction (while canChangeDirection is false).
+    // During the pause, the snake can't change direction, 
+    // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column) if the inputs are succeded quickly.
+    // As such, we must remove unnecessary pauses, thereby we must introduce the extra condition.
+    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.direction !== 180) {
       this.changeDirection(180);
-    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.canChangeDirection) {
+    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.direction !== 0) {
       this.changeDirection(0);
-    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.canChangeDirection) {
+    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.direction !== 90) {
       this.changeDirection(90);
-    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.canChangeDirection) {
+    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.direction !== 270) {
       this.changeDirection(270);
+    }
+
+    if (!this.canChangeDirection) {
+      // If the snake has moved
+      if (this.snakeX !== this.storedSnakePosition[0] || this.snakeY !== this.storedSnakePosition[1]) {
+        this.canChangeDirection = true;
+      }
     }
   }
 
   /**
-   * Sets canChangeDirection to true.
-   */
-  setCanChangeDirectionToTrue() {
-    this.canChangeDirection = true;
-  }
-
-  /**
-   * Changes the direction based on player input and waits for the timeBetweenEachMove before 
+   * Changes the direction based on player input and waits for the snake to change position before 
    * allowing another direction change.
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    this.direction = direction;
+    if (this.canChangeDirection) {
+      this.storedSnakePosition = [this.snakeX, this.snakeY];
 
-    // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
-    // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
-    this.canChangeDirection = false;
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.setCanChangeDirectionToTrue, [], this);
+      this.direction = direction;
+
+      // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
+      // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
+      this.canChangeDirection = false;
+    }
   }
 
   /**

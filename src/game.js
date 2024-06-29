@@ -36,26 +36,63 @@ document.addEventListener('DOMContentLoaded', (event) => {
     switch(event.direction) {
       case Hammer.DIRECTION_UP:
         console.log('Swipe up detected');
-        if (snakeInstance.direction !== 270 && snakeInstance.canChangeDirection) {
+        if (snakeInstance.direction !== 270 && snakeInstance.direction !== 90 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(90);
+        } else {
+          // Wait until the snake can change direction
+          function waitUntilCanChangeDirection() {
+            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 270) {
+              snakeInstance.changeDirection(90);
+            } else {
+              setTimeout(waitUntilCanChangeDirection, 50);
+            }
+          }
+          waitUntilCanChangeDirection();
         }
         break;
       case Hammer.DIRECTION_DOWN:
         console.log('Swipe down detected');
-        if (snakeInstance.direction !== 90 && snakeInstance.canChangeDirection) {
+        if (snakeInstance.direction !== 90 && snakeInstance.direction !== 270 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(270);
+        } else {
+          function waitUntilCanChangeDirection() {
+            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 90) {
+              snakeInstance.changeDirection(270);
+            } else {
+              setTimeout(waitUntilCanChangeDirection, 50);
+            }
+          }
+          waitUntilCanChangeDirection();
         }
         break;
       case Hammer.DIRECTION_LEFT:
         console.log('Swipe left detected');
-        if (snakeInstance.direction !== 0 && snakeInstance.canChangeDirection) {
+        if (snakeInstance.direction !== 0 && snakeInstance.direction !== 180 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(180);
+        } else {
+          function waitUntilCanChangeDirection() {
+            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 0) {
+              snakeInstance.changeDirection(180);
+            } else {
+              setTimeout(waitUntilCanChangeDirection, 50);
+            }
+          }
+          waitUntilCanChangeDirection();
         }
         break;
       case Hammer.DIRECTION_RIGHT:
         console.log('Swipe right detected');
-        if (snakeInstance.direction !== 180 && snakeInstance.canChangeDirection) {
+        if (snakeInstance.direction !== 180 && snakeInstance.direction !== 0 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(0);
+        } else {
+          function waitUntilCanChangeDirection() {
+            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 180) {
+              snakeInstance.changeDirection(0);
+            } else {
+              setTimeout(waitUntilCanChangeDirection, 50);
+            }
+          }
+          waitUntilCanChangeDirection();
         }
         break;
       default:
