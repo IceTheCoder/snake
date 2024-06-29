@@ -119,7 +119,7 @@ export default class Snake {
     // NOTE: I've added the extra condition so we can't change the direction to the same value it already is.
     // Changing the direction to any value triggers a pause in the ability to change direction (while canChangeDirection is false).
     // During the pause, the snake can't change direction, 
-    // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column)  if the inputs are succeded quickly.
+    // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column) if the inputs are succeded quickly.
     // As such, we must remove unnecessary pauses, thereby we must introduce the extra condition.
     if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.direction !== 180) {
       this.changeDirection(180);
@@ -137,14 +137,6 @@ export default class Snake {
         this.canChangeDirection = true;
       }
     }
-
-    console.log(this.cachedDirection);
-
-    /*
-    if (this.canChangeDirection && this.cachedDirection !== null) {
-      this.direction = this.cachedDirection;
-      this.cachedDirection = null;
-    } */
   }
 
   /**
@@ -161,10 +153,6 @@ export default class Snake {
       // Prevent the player from changing direction again immediately to avoid a quick succession of direction changes.
       // This prevents a 180-degree rotation if the player attempts to change direction twice quickly (e.g., two 90-degree turns).
       this.canChangeDirection = false;
-    
-    // else
-    //// CACHE THE DIRECTION
-    //// AS SOON AS WE CAN CHANGE THE DIRECTION WE ChANGE IT TO THE CACHED DIRECTION
     }
   }
 
