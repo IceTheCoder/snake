@@ -35,6 +35,7 @@ And much more...
 - Basic scene UI elements, such as text and buttons.
 - Changing the content of a Phaser text UI element based on a variable.
 - Enabling/disabling HTML elements or Phaser scenes.
+- Waiting until a condition occurs in JavaScript.
 
 ## Setup
 To get a local copy up and running, follow these simple steps
