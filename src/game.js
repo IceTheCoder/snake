@@ -2,6 +2,7 @@ import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
+let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may brick the game
 
 window.onload = function() {
   game = new Phaser.Game(config);
@@ -25,7 +26,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
    * Handles swipe gestures and logs the direction of the swipe
    * @param {Object} event - The event object containing details about the swipe gesture.
    */
-  
   function handleSwipe(event) {
     const gameScene = game.scene.getScene('playGame');
     if (!gameScene) return;
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       if (snakeInstance.canChangeDirection) {
         snakeInstance.changeDirection(direction);
       } else {
-        setTimeout(waitUntilCanChangeDirection, 50);
+        setTimeout(waitUntilCanChangeDirection, timeIntervalToCheckIfCanChangeDirection);
       }
     }
 
