@@ -145,9 +145,30 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    console.log(`Changing direction to ${direction}`);
+    console.log(`Changing direction from ${this.direction} to ${direction}`);
+    console.log(`this.canChangeDirection: ${this.canChangeDirection}`);
+    console.log(`direction !== this.direction (${direction} !== ${this.direction}): ${direction !== this.direction}`);
+    console.log(`direction !== oppositeDegrees(this.direction) (${direction} !== ${oppositeDegrees(this.direction)}): ${direction !== oppositeDegrees(this.direction)}`);
     // Make sure the direction isn't change to the same or opposite direction
-    if (this.canChangeDirection && this.direction !== direction && this.direction !== Math.abs(180 - direction)) {
+    /**
+     * Returns the number of degrees opposite to the argument given.
+     * 180 if 0 degrees, 270 if 90 degrees, 0 if 180 degrees, 90 if 270 degrees.
+     * @param {number} degrees 0, 90, 180, 270
+     */
+    function oppositeDegrees(degrees) {
+      if (degrees === 0) {
+        return 180;
+      } else if (degrees === 90) {
+        return 270;
+      } else if (degrees === 180) {
+        return 0;
+      } else if (degrees === 270) {
+        return 90;
+      }
+    }
+
+    if (this.canChangeDirection && direction !== this.direction && direction !== oppositeDegrees(this.direction)) {
+      console.log("All conditions met")
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
       this.direction = direction;
