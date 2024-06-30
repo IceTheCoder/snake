@@ -2,7 +2,7 @@ import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
-let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may brick the game
+let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may freeze the game
 
 window.onload = function() {
   game = new Phaser.Game(config);
@@ -34,46 +34,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (!snakeInstance) return;
 
     function waitUntilCanChangeDirection(direction) {
+      console.log("Waiting to be able to change direction... " + direction)
       if (snakeInstance.canChangeDirection) {
+        console.log("CAN CHANGE DIRECTION " + direction);
         snakeInstance.changeDirection(direction);
+        return;
       } else {
-        setTimeout(waitUntilCanChangeDirection, timeIntervalToCheckIfCanChangeDirection);
+        console.log("CAN'T CHANGE DIRECTION. Waiting... " + direction)
+        setTimeout(function() {
+          waitUntilCanChangeDirection(direction)
+        }, timeIntervalToCheckIfCanChangeDirection);
       }
     }
 
     switch(event.direction) {
       case Hammer.DIRECTION_UP:
-        console.log('Swipe up detected');
-        if (snakeInstance.direction !== 270 && snakeInstance.direction !== 90 && snakeInstance.canChangeDirection) {
-          snakeInstance.changeDirection(90);
-        } else {
-          // Wait until the snake can change direction
-          waitUntilCanChangeDirection(90);
-        }
+        console.log('%c Swipe up detected', 'color:red;');
+        // Wait until the snake can change direction
+        waitUntilCanChangeDirection(90);
         break;
       case Hammer.DIRECTION_DOWN:
-        console.log('Swipe down detected');
-        if (snakeInstance.direction !== 90 && snakeInstance.direction !== 270 && snakeInstance.canChangeDirection) {
-          snakeInstance.changeDirection(270);
-        } else {
-          waitUntilCanChangeDirection(270);
-        }
+        console.log('%c Swipe down detected', 'color:yellow;');
+        waitUntilCanChangeDirection(270);
         break;
       case Hammer.DIRECTION_LEFT:
-        console.log('Swipe left detected');
-        if (snakeInstance.direction !== 0 && snakeInstance.direction !== 180 && snakeInstance.canChangeDirection) {
-          snakeInstance.changeDirection(180);
-        } else {
-          waitUntilCanChangeDirection(180);
-        }
+        console.log('%c Swipe left detected', 'color:green;');
+        waitUntilCanChangeDirection(180);
         break;
       case Hammer.DIRECTION_RIGHT:
-        console.log('Swipe right detected');
-        if (snakeInstance.direction !== 180 && snakeInstance.direction !== 0 && snakeInstance.canChangeDirection) {
-          snakeInstance.changeDirection(0);
-        } else {
-          waitUntilCanChangeDirection(0);
-        }
+        console.log('%c Swipe right detected', 'color:blue;');
+        waitUntilCanChangeDirection(0);
         break;
       default:
         break;

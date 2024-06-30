@@ -145,6 +145,7 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
+    console.log(`Changing direction to ${direction}`);
     // Make sure the direction isn't change to the same or opposite direction
     if (this.canChangeDirection && this.direction !== direction && this.direction !== Math.abs(180 - direction)) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
