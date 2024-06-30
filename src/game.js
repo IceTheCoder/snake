@@ -2,7 +2,7 @@ import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
-let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may brick the game
+let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may freeze the game
 
 window.onload = function() {
   game = new Phaser.Game(config);
@@ -34,32 +34,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (!snakeInstance) return;
 
     function waitUntilCanChangeDirection(direction) {
-      console.log("Waiting to be able to change direction...")
+      console.log("Waiting to be able to change direction... " + direction)
       if (snakeInstance.canChangeDirection) {
-        console.log("CAN CHANGE DIRECTION");
+        console.log("CAN CHANGE DIRECTION " + direction);
         snakeInstance.changeDirection(direction);
+        return;
       } else {
-        console.log("CAN'T CHANGE DIRECTION. Waiting...")
-        setTimeout(waitUntilCanChangeDirection, timeIntervalToCheckIfCanChangeDirection);
+        console.log("CAN'T CHANGE DIRECTION. Waiting... " + direction)
+        setTimeout(function() {
+          waitUntilCanChangeDirection(direction)
+        }, timeIntervalToCheckIfCanChangeDirection);
       }
     }
 
     switch(event.direction) {
       case Hammer.DIRECTION_UP:
-        console.log('Swipe up detected');
+        console.log('%c Swipe up detected', 'color:red;');
         // Wait until the snake can change direction
         waitUntilCanChangeDirection(90);
         break;
       case Hammer.DIRECTION_DOWN:
-        console.log('Swipe down detected');
+        console.log('%c Swipe down detected', 'color:yellow;');
         waitUntilCanChangeDirection(270);
         break;
       case Hammer.DIRECTION_LEFT:
-        console.log('Swipe left detected');
+        console.log('%c Swipe left detected', 'color:green;');
         waitUntilCanChangeDirection(180);
         break;
       case Hammer.DIRECTION_RIGHT:
-        console.log('Swipe right detected');
+        console.log('%c Swipe right detected', 'color:blue;');
         waitUntilCanChangeDirection(0);
         break;
       default:
