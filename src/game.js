@@ -2,6 +2,7 @@ import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
+let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may brick the game
 
 window.onload = function() {
   game = new Phaser.Game(config);
@@ -25,13 +26,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
    * Handles swipe gestures and logs the direction of the swipe
    * @param {Object} event - The event object containing details about the swipe gesture.
    */
-  
   function handleSwipe(event) {
     const gameScene = game.scene.getScene('playGame');
     if (!gameScene) return;
     const snakeInstance = gameScene.getSnakeInstance();
 
     if (!snakeInstance) return;
+
+    function waitUntilCanChangeDirection(direction) {
+      if (snakeInstance.canChangeDirection) {
+        snakeInstance.changeDirection(direction);
+      } else {
+        setTimeout(waitUntilCanChangeDirection, timeIntervalToCheckIfCanChangeDirection);
+      }
+    }
 
     switch(event.direction) {
       case Hammer.DIRECTION_UP:
@@ -40,14 +48,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           snakeInstance.changeDirection(90);
         } else {
           // Wait until the snake can change direction
-          function waitUntilCanChangeDirection() {
-            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 270) {
-              snakeInstance.changeDirection(90);
-            } else {
-              setTimeout(waitUntilCanChangeDirection, 50);
-            }
-          }
-          waitUntilCanChangeDirection();
+          waitUntilCanChangeDirection(90);
         }
         break;
       case Hammer.DIRECTION_DOWN:
@@ -55,14 +56,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (snakeInstance.direction !== 90 && snakeInstance.direction !== 270 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(270);
         } else {
-          function waitUntilCanChangeDirection() {
-            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 90) {
-              snakeInstance.changeDirection(270);
-            } else {
-              setTimeout(waitUntilCanChangeDirection, 50);
-            }
-          }
-          waitUntilCanChangeDirection();
+          waitUntilCanChangeDirection(270);
         }
         break;
       case Hammer.DIRECTION_LEFT:
@@ -70,14 +64,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (snakeInstance.direction !== 0 && snakeInstance.direction !== 180 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(180);
         } else {
-          function waitUntilCanChangeDirection() {
-            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 0) {
-              snakeInstance.changeDirection(180);
-            } else {
-              setTimeout(waitUntilCanChangeDirection, 50);
-            }
-          }
-          waitUntilCanChangeDirection();
+          waitUntilCanChangeDirection(180);
         }
         break;
       case Hammer.DIRECTION_RIGHT:
@@ -85,14 +72,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (snakeInstance.direction !== 180 && snakeInstance.direction !== 0 && snakeInstance.canChangeDirection) {
           snakeInstance.changeDirection(0);
         } else {
-          function waitUntilCanChangeDirection() {
-            if (snakeInstance.canChangeDirection && snakeInstance.direction !== 180) {
-              snakeInstance.changeDirection(0);
-            } else {
-              setTimeout(waitUntilCanChangeDirection, 50);
-            }
-          }
-          waitUntilCanChangeDirection();
+          waitUntilCanChangeDirection(0);
         }
         break;
       default:
