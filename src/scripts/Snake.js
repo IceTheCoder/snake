@@ -121,13 +121,13 @@ export default class Snake {
     // During the pause, the snake can't change direction, 
     // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column) if the inputs are succeded quickly.
     // As such, we must remove unnecessary pauses, thereby we must introduce the extra condition.
-    if ((cursors.left.isDown || wasd.left.isDown) && this.direction !== 0 && this.direction !== 180) {
+    if (cursors.left.isDown || wasd.left.isDown) {
       this.changeDirection(180);
-    } else if ((cursors.right.isDown || wasd.right.isDown) && this.direction !== 180 && this.direction !== 0) {
+    } else if (cursors.right.isDown || wasd.right.isDown) {
       this.changeDirection(0);
-    } else if ((cursors.up.isDown || wasd.up.isDown) && this.direction !== 270 && this.direction !== 90) {
+    } else if (cursors.up.isDown || wasd.up.isDown) {
       this.changeDirection(90);
-    } else if ((cursors.down.isDown || wasd.down.isDown) && this.direction !== 90 && this.direction !== 270) {
+    } else if (cursors.down.isDown || wasd.down.isDown) {
       this.changeDirection(270);
     }
 
@@ -145,7 +145,7 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    if (this.canChangeDirection) {
+    if (this.canChangeDirection && this.direction !== direction && this.direction !== Math.abs(180 - direction)) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
       this.direction = direction;
