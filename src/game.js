@@ -83,4 +83,6 @@ const button = document.getElementById("restart-button");
 
 button.addEventListener("click", () => {
   console.log("restarting game");
+  document.getElementById("game-over").style.display = "none";
+  game = new Phaser.Game(config);
 });
