@@ -25,6 +25,8 @@ export class Scene1 extends Phaser.Scene {
 
     /** @type {Snake|null} */
     this.snake = null;
+    
+    this.timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may freeze the gam
   }
 
   /**
@@ -62,27 +64,25 @@ export class Scene1 extends Phaser.Scene {
     this.fruit.create();
 
     /* Hammer.js */
-    let hammer = new Hammer(document.body);
+    this.hammer = new Hammer(document.body);
 
-    hammer.get('swipe').set({
+    this.hammer.get('swipe').set({
       direction: Hammer.DIRECTION_ALL,
       threshold: 0,
       velocity: 0
     });
 
-    hammer.on('swipe', (event) => {
+    this.hammer.on('swipe', (event) => {
       handleSwipe(event);
     });
 
-
     const snakeInstance = this.snake;
-    
+
     /**
      * Handles swipe gestures and logs the direction of the swipe
      * @param {Object} event - The event object containing details about the swipe gesture.
      */
     function handleSwipe(event) {
-
       if (!snakeInstance) return;
 
       function waitUntilCanChangeDirection(direction) {
@@ -95,7 +95,7 @@ export class Scene1 extends Phaser.Scene {
           console.log("CAN'T CHANGE DIRECTION. Waiting... " + direction)
           setTimeout(function() {
             waitUntilCanChangeDirection(direction)
-          }, timeIntervalToCheckIfCanChangeDirection);
+          }, this.timeIntervalToCheckIfCanChangeDirection);
         }
       }
 
@@ -149,6 +149,10 @@ export class Scene1 extends Phaser.Scene {
       document.getElementById("game-over").style.display = "flex";
     }
     setTimeout(loadGameOver, 50);
+
+    this.hammer.off('swipe', (event) => {
+      handleSwipe(event);
+    });
   }
 
   /**
