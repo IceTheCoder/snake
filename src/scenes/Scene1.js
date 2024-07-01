@@ -25,8 +25,6 @@ export class Scene1 extends Phaser.Scene {
 
     /** @type {Snake|null} */
     this.snake = null;
-    
-    this.timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may freeze the gam
   }
 
   /**
@@ -95,7 +93,7 @@ export class Scene1 extends Phaser.Scene {
           console.log("CAN'T CHANGE DIRECTION. Waiting... " + direction)
           setTimeout(function() {
             waitUntilCanChangeDirection(direction)
-          }, this.timeIntervalToCheckIfCanChangeDirection);
+          }, 50);
         }
       }
 
