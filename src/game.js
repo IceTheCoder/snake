@@ -13,7 +13,8 @@ const config = {
   width: 800,
   height: 800,
   backgroundColor: 0x000000,
-  scene: [Scene1]
+  scene: [Scene1],
+  parent: "phaser-game",
 }
 
 const button = document.getElementById("restart-button");
