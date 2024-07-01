@@ -13,16 +13,16 @@ body {
   align-items: center;
   height: 100vh;
 }
-
-@media screen and (max-width: 800px) {
+/* Canvas width = Canvas height, so, to avoid the game being cut off, we have to base both dimensions on the smaller one,
+which is height for landscape orientation, width for portrait orientation */
+@media screen and (orientation: landscape) {
   canvas {
-    max-width: 99vw;
+    max-height: 82vh;
   }
 }
-
-@media screen and (min-width: 800px) {
+@media screen and (orientation: portrait) {
   canvas {
-    max-width: 99vh;
+    max-width: 95vw;
   }
 }
 
