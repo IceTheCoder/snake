@@ -2,6 +2,7 @@ import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
+let hammer;
 let timeIntervalToCheckIfCanChangeDirection = 50; // Setting a high value may freeze the game
 
 window.onload = function() {
@@ -10,7 +11,8 @@ window.onload = function() {
 
 /* Hammer.js */
 document.addEventListener('DOMContentLoaded', (event) => {
-  const hammer = new Hammer(document.body);
+  hammer = new Hammer(document.body);
+  console.log(hammer);
 
   hammer.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,
@@ -86,3 +88,11 @@ button.addEventListener("click", () => {
   document.getElementById("game-over").style.display = "none";
   game = new Phaser.Game(config);
 });
+
+function removeHammerListeners() {
+  if (hammer) {
+    hammer.off('swipe');
+    hammer.destroy();
+    hammer = null;
+  }
+}

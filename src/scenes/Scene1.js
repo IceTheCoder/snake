@@ -1,6 +1,7 @@
 import Snake from '../scripts/Snake.js';
 import Fruit from '../scripts/Fruit.js';
 import Collision from '../scripts/Collision.js';
+import { removeHammerListeners } from '../game.js';
 
 /**
  * Represents the main game scene.
