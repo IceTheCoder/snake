@@ -82,5 +82,5 @@ const config = {
 const button = document.getElementById("restart-button");
 
 button.addEventListener("click", () => {
-  document.location.reload();
+  console.log("restarting game");
 });
