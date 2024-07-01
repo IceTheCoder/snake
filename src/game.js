@@ -11,8 +11,8 @@ window.onload = function() {
 
 /* Hammer.js */
 document.addEventListener('DOMContentLoaded', (event) => {
+
   hammer = new Hammer(document.body);
-  console.log(hammer);
 
   hammer.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   function handleSwipe(event) {
     const gameScene = game.scene.getScene('playGame');
     if (!gameScene) return;
+    
     const snakeInstance = gameScene.getSnakeInstance();
 
     if (!snakeInstance) return;
@@ -84,15 +85,7 @@ const config = {
 const button = document.getElementById("restart-button");
 
 button.addEventListener("click", () => {
-  console.log("restarting game");
+  isGameOver = false;
   document.getElementById("game-over").style.display = "none";
   game = new Phaser.Game(config);
 });
-
-function removeHammerListeners() {
-  if (hammer) {
-    hammer.off('swipe');
-    hammer.destroy();
-    hammer = null;
-  }
-}
