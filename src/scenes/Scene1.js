@@ -60,6 +60,65 @@ export class Scene1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys(); // Define input keys
 
     this.fruit.create();
+
+    /* Hammer.js */
+    this.hammer = new Hammer(document.body);
+
+    this.hammer.get('swipe').set({
+      direction: Hammer.DIRECTION_ALL,
+      threshold: 0,
+      velocity: 0
+    });
+
+    this.hammer.on('swipe', (event) => {
+      handleSwipe(event);
+    });
+
+    const snakeInstance = this.snake;
+
+    /**
+     * Handles swipe gestures and logs the direction of the swipe
+     * @param {Object} event - The event object containing details about the swipe gesture.
+     */
+    function handleSwipe(event) {
+      if (!snakeInstance) return;
+
+      function waitUntilCanChangeDirection(direction) {
+        console.log("Waiting to be able to change direction... " + direction)
+        if (snakeInstance.canChangeDirection) {
+          console.log("CAN CHANGE DIRECTION " + direction);
+          snakeInstance.changeDirection(direction);
+          return;
+        } else {
+          console.log("CAN'T CHANGE DIRECTION. Waiting... " + direction)
+          setTimeout(function() {
+            waitUntilCanChangeDirection(direction)
+          }, 50);
+        }
+      }
+
+      switch(event.direction) {
+        case Hammer.DIRECTION_UP:
+          console.log('%c Swipe up detected', 'color:red;');
+          // Wait until the snake can change direction
+          waitUntilCanChangeDirection(90);
+          break;
+        case Hammer.DIRECTION_DOWN:
+          console.log('%c Swipe down detected', 'color:yellow;');
+          waitUntilCanChangeDirection(270);
+          break;
+        case Hammer.DIRECTION_LEFT:
+          console.log('%c Swipe left detected', 'color:green;');
+          waitUntilCanChangeDirection(180);
+          break;
+        case Hammer.DIRECTION_RIGHT:
+          console.log('%c Swipe right detected', 'color:blue;');
+          waitUntilCanChangeDirection(0);
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   /**
@@ -88,6 +147,10 @@ export class Scene1 extends Phaser.Scene {
       document.getElementById("game-over").style.display = "flex";
     }
     setTimeout(loadGameOver, 50);
+
+    this.hammer.off('swipe', (event) => {
+      handleSwipe(event);
+    });
   }
 
   /**
