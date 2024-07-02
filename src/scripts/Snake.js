@@ -240,6 +240,7 @@ export default class Snake {
       this.highScore = this.snakeLength; // snake length = score
     }
     
+    // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
     localStorage.setItem('highScore', this.highScore);
     console.log(parseInt(localStorage.getItem("highScore")));
 
