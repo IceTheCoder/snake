@@ -139,7 +139,12 @@ export class Scene1 extends Phaser.Scene {
   gameOver() {
     // https://stackoverflow.com/questions/59448975/how-to-stop-a-phaser-game-and-remove-it-from-a-page
     let snakeLength = this.snake.snakeLength;
+
+    // Destroy game elements
     this.game.destroy(true, false);
+    for (const element of document.getElementsByClassName("game-ui")) {
+      element.style.display = "none";
+    }
 
     function loadGameOver() {
       // I'm so happy document works in this script :)
