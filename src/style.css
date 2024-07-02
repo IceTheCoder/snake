@@ -62,20 +62,20 @@ h1.game-ui, h2.game-ui {
 
 h1.game-over {
   font-size: 50px;
-  margin: 30px;
+  margin: 20px;
+  color: #FEE715;
 }
 
 h2.game-over {
   font-size: 40px;
-  margin: 30px;
+  margin: 20px;
 }
-
 
 button {
   font-size: 40px;
-  margin: 30px;
+  margin: 20px;
   border: none;
-  color: green;
+  color: #FEE715;
 }
 
 button:hover {
