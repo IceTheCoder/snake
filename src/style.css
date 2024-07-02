@@ -61,12 +61,14 @@ h1.game-ui, h2.game-ui {
   }
 }
 
+/* Game over */
 h1.game-over {
   font-size: 50px;
   margin: 20px;
   color: #FEE715;
 }
 
+/* Score & High Score */
 h2.game-over {
   font-size: 40px;
   margin: 20px;
