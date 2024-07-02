@@ -17,10 +17,10 @@ const config = {
   parent: "phaser-game",
 }
 
-const button = document.getElementById("restart-button");
+const restartButton = document.getElementById("restart-button");
 
 // Restart game
-button.addEventListener("click", () => {
+restartButton.addEventListener("click", () => {
   document.getElementById("game-over").style.display = "none";
   game = new Phaser.Game(config);
   // Enable all game ui elements
