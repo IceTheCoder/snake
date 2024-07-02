@@ -34,7 +34,6 @@ header, footer {
   flex-direction: column-reverse;
   align-items: center;
   height: 100%;
-  border: 1px solid red;
 }
 
 #high-score, #score {
