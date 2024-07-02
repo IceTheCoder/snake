@@ -148,7 +148,8 @@ export class Scene1 extends Phaser.Scene {
 
     function loadGameOver() {
       // I'm so happy document works in this script :)
-      document.getElementById("score").innerHTML = `Score: ${snakeLength}`;
+      console.log(snakeLength);
+      document.getElementById("game-over-score").innerHTML = `Score: ${snakeLength}`;
       document.getElementById("game-over").style.display = "flex";
     }
     setTimeout(loadGameOver, 50);
