@@ -148,6 +148,12 @@ export class Scene1 extends Phaser.Scene {
       document.getElementById("game-over-score").innerHTML = `Score: ${snakeLength}`;
       document.getElementById("game-over-high-score").innerHTML = `High Score: ${parseInt(localStorage.getItem("highScore"))}`;
       document.getElementById("game-over").style.display = "flex";
+
+      // Check if there's a new high score
+      if (document.getElementById("high-score").className === "game-ui new-high-score") {
+        document.getElementById("game-over-h1").innerHTML = "NEW HIGH SCORE!";
+        document.getElementById("game-over-h1").style.color = "red";
+      }
     }
     setTimeout(loadGameOver, 50);
 

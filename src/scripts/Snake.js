@@ -62,6 +62,7 @@ export default class Snake {
 
     /** @type {number} */
     this.highScore;
+    /** @type {boolean} */
   }
 
   /**
@@ -88,6 +89,8 @@ export default class Snake {
     /* Delete new-high-score class from these elements */
     document.getElementById("high-score").className = "game-ui";
     document.getElementById("score").className = "game-ui";
+    document.getElementById("game-over-high-score").className = "game-over";
+    document.getElementById("game-over-score").className = "game-over";
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -248,13 +251,15 @@ export default class Snake {
       document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
       document.getElementById("high-score").className = "game-ui new-high-score";
       document.getElementById("score").className = "game-ui new-high-score";
-    }
+      document.getElementById("game-over-high-score").className = "game-over new-high-score";
+      document.getElementById("game-over-score").className = "game-over new-high-score";
+}
     
     // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
     localStorage.setItem('highScore', this.highScore);
-    console.log(parseInt(localStorage.getItem("highScore")));
 
     document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
+
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
     this.snakeBodyImages.push(newBodyImage);

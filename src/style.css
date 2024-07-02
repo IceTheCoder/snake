@@ -5,6 +5,7 @@
   box-sizing: border-box;
   background-color: #121212;
   color: white;
+  text-align: center;
 }
 
 body {
@@ -42,7 +43,7 @@ header, footer {
 
 /* Set different color for a new high score */
 .new-high-score {
-  color: #B1DDF1;
+  color: red;
 }
 
 /* Game Over Screen */

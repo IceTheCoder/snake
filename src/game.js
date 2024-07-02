@@ -28,4 +28,8 @@ button.addEventListener("click", () => {
     element.style.display = "flex";
   }
   document.getElementById("score").innerHTML = "Score: 1";
+
+  // Reset all new high score stuff
+  document.getElementById("game-over-h1").innerHTML = "Game Over";
+  document.getElementById("game-over-h1").style.color = "#B1DDF1";
 });
