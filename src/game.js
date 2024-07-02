@@ -3,11 +3,6 @@ import { Scene2 } from './scenes/Scene2.js';
 
 let game;
 
-
-window.onload = function() {
-  game = new Phaser.Game(config);
-};
-
 const config = {
   type: Phaser.AUTO,
   width: 800,
@@ -18,6 +13,7 @@ const config = {
 }
 
 const restartButton = document.getElementById("restart-button");
+const play = document.getElementById("play");
 
 // Restart game
 restartButton.addEventListener("click", () => {
@@ -33,3 +29,9 @@ restartButton.addEventListener("click", () => {
   document.getElementById("game-over-h1").innerHTML = "Game Over";
   document.getElementById("game-over-h1").style.color = "#B1DDF1";
 });
+
+// Play game
+play.addEventListener("click", () =>{
+  game = new Phaser.Game(config);
+  console.log("game started");
+})
