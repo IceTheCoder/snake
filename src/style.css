@@ -29,10 +29,15 @@ which is height for landscape orientation, width for portrait orientation */
 
 /* Game Screen */
 header, footer {
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: last baseline;
+  flex-direction: column-reverse;
+  align-items: center;
+  height: 100%;
+  border: 1px solid red;
+}
+
+#high-score, #score {
+  margin: 5px 0;
 }
 
 /* Game Over Screen */
@@ -46,13 +51,11 @@ header, footer {
 }
 
 h1 {
-  font-size: 50px;
-  margin: 30px;
+  font-size: 40px;
 }
 
 h2 {
   font-size: 40px;
-  margin: 30px;
 }
 
 button {
