@@ -29,6 +29,30 @@ which is height for landscape orientation, width for portrait orientation */
   }
 }
 
+/* Main Menu */
+#main-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-menu h1 {
+  height: 25%;
+  font-size: 70px;
+}
+
+.buttons {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-menu button {
+  font-size: 50px;
+}
+
 /* Game Screen */
 header, footer {
   display: flex;
