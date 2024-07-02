@@ -85,6 +85,9 @@ export default class Snake {
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
+    /* Delete new-high-score class from these elements */
+    document.getElementById("high-score").className = "game-ui";
+    document.getElementById("score").className = "game-ui";
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
