@@ -54,6 +54,7 @@ header, footer {
 h1.game-ui, h2.game-ui {
   font-size: 40px;
 }
+
 @media screen and (max-height: 630px) {
   h1.game-ui, h2.game-ui {
     font-size: 6vh;
