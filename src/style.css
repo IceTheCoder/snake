@@ -40,6 +40,11 @@ header, footer {
   margin: 5px 0;
 }
 
+/* Set different color for a new high score */
+.new-high-score {
+  color: #FEE715;
+}
+
 /* Game Over Screen */
 #game-over {
   width: 100vw;

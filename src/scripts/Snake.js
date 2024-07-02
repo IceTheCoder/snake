@@ -244,6 +244,7 @@ export default class Snake {
       this.highScore = this.snakeLength; // snake length = score
       document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
       document.getElementById("high-score").className = "game-ui new-high-score";
+      document.getElementById("score").className = "game-ui new-high-score";
     }
     
     // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
