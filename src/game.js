@@ -19,6 +19,7 @@ const config = {
 
 const button = document.getElementById("restart-button");
 
+// Restart game
 button.addEventListener("click", () => {
   document.getElementById("game-over").style.display = "none";
   game = new Phaser.Game(config);
@@ -26,4 +27,5 @@ button.addEventListener("click", () => {
   for (const element of document.getElementsByClassName("game-ui")) {
     element.style.display = "flex";
   }
+  document.getElementById("score").innerHTML = "Score: 1";
 });
