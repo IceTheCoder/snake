@@ -59,6 +59,10 @@ export default class Snake {
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
     this.snakeBodyImages = [];
+
+    /** @type {number} */
+    this.highScore;
+    /** @type {boolean} */
   }
 
   /**
@@ -79,6 +83,15 @@ export default class Snake {
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     
+    this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
+
+    document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
+    /* Delete new-high-score class from these elements */
+    document.getElementById("high-score").className = "game-ui";
+    document.getElementById("score").className = "game-ui";
+    document.getElementById("game-over-high-score").className = "game-over";
+    document.getElementById("game-over-score").className = "game-over";
+
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
     const swipe = new Swipe(this.scene, {
@@ -231,7 +244,22 @@ export default class Snake {
    */
   onCollision() {
     this.snakeLength += 1;
+
+    // New high score
+    if (this.snakeLength > this.highScore) {
+      this.highScore = this.snakeLength; // snake length = score
+      document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
+      document.getElementById("high-score").className = "game-ui new-high-score";
+      document.getElementById("score").className = "game-ui new-high-score";
+      document.getElementById("game-over-high-score").className = "game-over new-high-score";
+      document.getElementById("game-over-score").className = "game-over new-high-score";
+}
+    
+    // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
+    localStorage.setItem('highScore', this.highScore);
+
     document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
+
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
     this.snakeBodyImages.push(newBodyImage);

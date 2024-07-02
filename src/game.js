@@ -13,7 +13,7 @@ const config = {
   width: 800,
   height: 800,
   backgroundColor: 0x000000,
-  scene: [Scene1],
+  scene: Scene1,
   parent: "phaser-game",
 }
 
@@ -28,4 +28,8 @@ button.addEventListener("click", () => {
     element.style.display = "flex";
   }
   document.getElementById("score").innerHTML = "Score: 1";
+
+  // Reset all new high score stuff
+  document.getElementById("game-over-h1").innerHTML = "Game Over";
+  document.getElementById("game-over-h1").style.color = "#B1DDF1";
 });

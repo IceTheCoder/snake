@@ -22,9 +22,6 @@ export class Scene1 extends Phaser.Scene {
     this.GRID_HEIGHT = 10;
     /** @type {number} */
     this.timeBetweenEachMove = 200; // Adjust as necessary.
-
-    /** @type {Snake|null} */
-    this.snake = null;
   }
 
   /**
@@ -148,9 +145,15 @@ export class Scene1 extends Phaser.Scene {
 
     function loadGameOver() {
       // I'm so happy document works in this script :)
-      console.log(snakeLength);
       document.getElementById("game-over-score").innerHTML = `Score: ${snakeLength}`;
+      document.getElementById("game-over-high-score").innerHTML = `High Score: ${parseInt(localStorage.getItem("highScore"))}`;
       document.getElementById("game-over").style.display = "flex";
+
+      // Check if there's a new high score
+      if (document.getElementById("high-score").className === "game-ui new-high-score") {
+        document.getElementById("game-over-h1").innerHTML = "NEW HIGH SCORE!";
+        document.getElementById("game-over-h1").style.color = "red";
+      }
     }
     setTimeout(loadGameOver, 50);
 

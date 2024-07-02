@@ -5,6 +5,7 @@
   box-sizing: border-box;
   background-color: #121212;
   color: white;
+  text-align: center;
 }
 
 body {
@@ -23,16 +24,26 @@ which is height for landscape orientation, width for portrait orientation */
 }
 @media screen and (orientation: portrait) {
   canvas {
-    max-width: 95vw;
+    width: 95vw;
+    max-width: 650px;
   }
 }
 
 /* Game Screen */
 header, footer {
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: last baseline;
+  flex-direction: column-reverse;
+  align-items: center;
+  height: 100%;
+}
+
+#high-score, #score {
+  margin: 5px 0;
+}
+
+/* Set different color for a new high score */
+.new-high-score {
+  color: red;
 }
 
 /* Game Over Screen */
@@ -45,23 +56,37 @@ header, footer {
   justify-content: center;
 }
 
-h1 {
-  font-size: 50px;
-  margin: 30px;
+/* Font sizes */
+h1.game-ui, h2.game-ui {
+  font-size: 40px;
 }
 
-h2 {
+@media screen and (max-height: 630px) {
+  h1.game-ui, h2.game-ui {
+    font-size: 6vh;
+  }
+}
+
+/* Game over */
+h1.game-over {
+  font-size: 50px;
+  margin: 20px;
+  color: #B1DDF1;
+}
+
+/* Score & High Score */
+h2.game-over {
   font-size: 40px;
-  margin: 30px;
+  margin: 20px;
 }
 
 button {
   font-size: 40px;
-  margin: 30px;
+  margin: 20px;
   border: none;
-  color: green;
+  color: #B1DDF1;
 }
 
 button:hover {
-  color: greenyellow;
+  color: #5889a0;
 }
