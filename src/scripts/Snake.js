@@ -231,6 +231,7 @@ export default class Snake {
    */
   onCollision() {
     this.snakeLength += 1;
+    document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
     this.snakeBodyImages.push(newBodyImage);
