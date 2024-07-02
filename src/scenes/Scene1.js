@@ -22,9 +22,6 @@ export class Scene1 extends Phaser.Scene {
     this.GRID_HEIGHT = 10;
     /** @type {number} */
     this.timeBetweenEachMove = 200; // Adjust as necessary.
-
-    /** @type {Snake|null} */
-    this.snake = null;
   }
 
   /**

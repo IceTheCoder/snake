@@ -59,6 +59,9 @@ export default class Snake {
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
     this.snakeBodyImages = [];
+
+    /** @type {number} */
+    this.highScore;
   }
 
   /**
@@ -79,6 +82,8 @@ export default class Snake {
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     
+    this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
+
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
     const swipe = new Swipe(this.scene, {
@@ -231,6 +236,13 @@ export default class Snake {
    */
   onCollision() {
     this.snakeLength += 1;
+    if (this.snakeLength > this.highScore) {
+      this.highScore = this.snakeLength; // snake length = score
+    }
+    
+    localStorage.setItem('highScore', this.highScore);
+    console.log(parseInt(localStorage.getItem("highScore")));
+
     document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
