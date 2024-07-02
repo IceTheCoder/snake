@@ -84,6 +84,8 @@ export default class Snake {
     
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
+    document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
+
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
     const swipe = new Swipe(this.scene, {
@@ -238,6 +240,7 @@ export default class Snake {
     this.snakeLength += 1;
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
+      document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
     }
     
     // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
