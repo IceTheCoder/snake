@@ -32,6 +32,13 @@ restartButton.addEventListener("click", () => {
 
 // Play game
 play.addEventListener("click", () =>{
-  game = new Phaser.Game(config);
+  document.getElementById("main-menu").style.display = "none";
+  document.getElementById("main-menu").style.height = "0px";
+
+  document.getElementById("game").style.display = "flex";
+  document.getElementById("phaser-game").style.display = "flex";
+  document.getElementsByTagName("footer")[0].style.display = "flex";
   console.log("game started");
+  game = new Phaser.Game(config);
+
 })
