@@ -14,6 +14,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
 }
 /* Canvas width = Canvas height, so, to avoid the game being cut off, we have to base both dimensions on the smaller one,
 which is height for landscape orientation, width for portrait orientation */

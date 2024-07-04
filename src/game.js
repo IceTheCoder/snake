@@ -1,4 +1,5 @@
 import { Scene1 } from './scenes/Scene1.js';
+import SceneManager from './scripts/SceneManager.js';
 import { Scene2 } from './scenes/Scene2.js';
 
 let game;
@@ -32,13 +33,7 @@ restartButton.addEventListener("click", () => {
 
 // Play game
 play.addEventListener("click", () =>{
-  document.getElementById("main-menu").style.display = "none";
-  document.getElementById("main-menu").style.height = "0px";
-
-  document.getElementById("game").style.display = "flex";
-  document.getElementById("phaser-game").style.display = "flex";
-  document.getElementsByTagName("footer")[0].style.display = "flex";
+  SceneManager.loadScene(1);
   console.log("game started");
   game = new Phaser.Game(config);
-
 })

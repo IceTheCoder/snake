@@ -15,24 +15,24 @@
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   </head>
   <body>
-    <div id="main-menu">
-      <h1>Snake</h1>
-      <div class="buttons">
-        <button id="play">Play</button>
+    <div id="main-menu" class="scene-0">
+      <h1 class="scene-0">Snake</h1>
+      <div class="scene-0 buttons">
+        <button id="play" class="scene-0">Play</button>
       </div>
     </div>
-    <header id="game" class="game-ui" style="display: none;">
-      <h1 id="score" class="game-ui">Score: 1</h1>
-      <h2 id="high-score" class="game-ui">High Score: 0</h2>
+    <header id="game" class="scene-1 game-ui" style="display: none;">
+      <h1 id="score" class="scene-1 game-ui">Score: 1</h1>
+      <h2 id="high-score" class="scene-1 game-ui">High Score: 0</h2>
     </header>
     <!-- https://stackoverflow.com/questions/20526933/html-moving-phaser-into-container-div -->
-    <div id="phaser-game" class="game-ui" style="display: none;"></div>
-    <footer class="game-ui" style="display: none;"></footer>
-    <div id="game-over" style="display: none;">
-      <h1 id="game-over-h1" class="game-over">Game Over</h1>
-      <h2 id="game-over-score" class="game-over">Score: </h2>
-      <h2 id="game-over-high-score" class="game-over">High Score: 0</h2>
-      <button id="restart-button" class="game-over">Restart</button>
+    <div id="phaser-game" class="scene-1 game-ui" style="display: none;"></div>
+    <footer class="scene-1 game-ui" style="display: none;"></footer>
+    <div id="game-over" class="scene-2" style="display: none;">
+      <h1 id="game-over-h1" class="scene-2 game-over">Game Over</h1>
+      <h2 id="game-over-score" class="scene-2 game-over">Score: </h2>
+      <h2 id="game-over-high-score" class="scene-2 game-over">High Score: 0</h2>
+      <button id="restart-button" class="scene-2 game-over">Restart</button>
     </div>
   </body>
 </html>
