@@ -5,6 +5,10 @@ export default {
    * elements of the requested scene.
    * @param {number} index - The index of the scene we should load
    */
+
+  // 0 - main menu
+  // 1 - game
+  // 2 - game over
   loadScene(index) {
     console.log(index);
     // Hide all elements not in the requested scene

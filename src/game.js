@@ -18,12 +18,9 @@ const play = document.getElementById("play");
 
 // Restart game
 restartButton.addEventListener("click", () => {
-  document.getElementById("game-over").style.display = "none";
+  loadScene(1);
   game = new Phaser.Game(config);
-  // Enable all game ui elements
-  for (const element of document.getElementsByClassName("game-ui")) {
-    element.style.display = "flex";
-  }
+
   document.getElementById("score").innerHTML = "Score: 1";
 
   // Reset all new high score stuff
