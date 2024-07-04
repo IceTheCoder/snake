@@ -13,9 +13,11 @@ const config = {
   parent: "phaser-game",
 }
 
+// BUTTONS functions
 const restartButton = document.getElementById("restart-button");
 const play = document.getElementById("play");
 const mainMenuButton = document.getElementById("main-menu-button");
+const settingsButton = document.getElementById("settings-button");
 
 // Restart game
 restartButton.addEventListener("click", () => {
@@ -38,4 +40,8 @@ play.addEventListener("click", () => {
 // Main menu button
 mainMenuButton.addEventListener("click", () => {
   SceneManager.loadScene(0);
+})
+
+settingsButton.addEventListener("click", () => {
+  SceneManager.loadScene(3);
 })

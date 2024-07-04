@@ -2,6 +2,7 @@
 // To make a HTML element part of a scene, give it a class of scene-{index},
 // where index is its scene number. Use the loadScene function with the index
 // argument to load that specified scene.
+// Make sure you also give child elements the scene-{index} class.
 
 export default { 
   /**
