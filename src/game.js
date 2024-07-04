@@ -16,7 +16,7 @@ const config = {
 // BUTTONS functions
 const restartButton = document.getElementById("restart-button");
 const play = document.getElementById("play");
-const mainMenuButton = document.getElementById("main-menu-button");
+const mainMenuButtons = document.getElementsByClassName("main-menu-button");
 const settingsButton = document.getElementById("settings-button");
 
 // Restart game
@@ -38,10 +38,13 @@ play.addEventListener("click", () => {
 })
 
 // Main menu button
-mainMenuButton.addEventListener("click", () => {
-  SceneManager.loadScene(0);
-})
+for (const button of mainMenuButtons) {
+  button.addEventListener("click", () => {
+    SceneManager.loadScene(0);
+  })
+}
 
+// Settings button
 settingsButton.addEventListener("click", () => {
   SceneManager.loadScene(3);
 })
