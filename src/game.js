@@ -15,6 +15,7 @@ const config = {
 
 const restartButton = document.getElementById("restart-button");
 const play = document.getElementById("play");
+const mainMenuButton = document.getElementById("main-menu-button");
 
 // Restart game
 restartButton.addEventListener("click", () => {
@@ -29,8 +30,12 @@ restartButton.addEventListener("click", () => {
 });
 
 // Play game
-play.addEventListener("click", () =>{
+play.addEventListener("click", () => {
   SceneManager.loadScene(1);
-  console.log("game started");
   game = new Phaser.Game(config);
+})
+
+// Main menu button
+mainMenuButton.addEventListener("click", () => {
+  SceneManager.loadScene(0);
 })
