@@ -87,10 +87,10 @@ export default class Snake {
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
     /* Delete new-high-score class from these elements */
-    document.getElementById("high-score").className = "game-ui";
-    document.getElementById("score").className = "game-ui";
-    document.getElementById("game-over-high-score").className = "game-over";
-    document.getElementById("game-over-score").className = "game-over";
+    document.getElementById("high-score").className = "scene-1 game-ui";
+    document.getElementById("score").className = "scene-1 game-ui";
+    document.getElementById("game-over-high-score").className = "scene-2 game-over";
+    document.getElementById("game-over-score").className = "scene-2 game-over";
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -249,11 +249,11 @@ export default class Snake {
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
       document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
-      document.getElementById("high-score").className = "game-ui new-high-score";
-      document.getElementById("score").className = "game-ui new-high-score";
-      document.getElementById("game-over-high-score").className = "game-over new-high-score";
-      document.getElementById("game-over-score").className = "game-over new-high-score";
-}
+      document.getElementById("high-score").className = "scene-1 game-ui new-high-score";
+      document.getElementById("score").className = "scene-1 game-ui new-high-score";
+      document.getElementById("game-over-high-score").className = "scene-2 game-over new-high-score";
+      document.getElementById("game-over-score").className = "scene-2 game-over new-high-score";
+  }
     
     // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
     localStorage.setItem('highScore', this.highScore);
