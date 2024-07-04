@@ -1,3 +1,8 @@
+// HOW TO USE:
+// To make a HTML element part of a scene, give it a class of scene-{index},
+// where index is its scene number. Use the loadScene function with the index
+// argument to load that specified scene.
+
 export default { 
   /**
    * Hides all elements not in the requested scene, makes sure
