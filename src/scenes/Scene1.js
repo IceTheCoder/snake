@@ -1,6 +1,7 @@
 import Snake from '../scripts/Snake.js';
 import Fruit from '../scripts/Fruit.js';
 import Collision from '../scripts/Collision.js';
+import SceneManager from '../scripts/SceneManager.js';
 
 /**
  * Represents the main game scene.
@@ -139,16 +140,9 @@ export class Scene1 extends Phaser.Scene {
 
     // Destroy game elements
     this.game.destroy(true, false);
-    for (const element of document.getElementsByClassName("game-ui")) {
-      element.style.display = "none";
-    }
+    SceneManager.loadScene(2);
 
     function loadGameOver() {
-      // I'm so happy document works in this script :)
-      document.getElementById("game-over-score").innerHTML = `Score: ${snakeLength}`;
-      document.getElementById("game-over-high-score").innerHTML = `High Score: ${parseInt(localStorage.getItem("highScore"))}`;
-      document.getElementById("game-over").style.display = "flex";
-
       // Check if there's a new high score
       if (document.getElementById("high-score").className === "game-ui new-high-score") {
         document.getElementById("game-over-h1").innerHTML = "NEW HIGH SCORE!";
