@@ -1,4 +1,10 @@
 export default { 
+  /**
+   * Hides all elements not in the requested scene, makes sure
+   * the HTML and body elements are not hidden and displays the
+   * elements of the requested scene.
+   * @param {number} index - The index of the scene we should load
+   */
   loadScene(index) {
     console.log(index);
     // Hide all elements not in the requested scene
