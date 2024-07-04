@@ -18,7 +18,7 @@ const play = document.getElementById("play");
 
 // Restart game
 restartButton.addEventListener("click", () => {
-  loadScene(1);
+  SceneManager.loadScene(1);
   game = new Phaser.Game(config);
 
   document.getElementById("score").innerHTML = "Score: 1";
