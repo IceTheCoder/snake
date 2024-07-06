@@ -10,7 +10,6 @@
 ![image](https://github.com/IceTheCoder/snake/assets/115871297/51069374-5e67-481d-830d-4e50ef027495)
 ![image](https://github.com/IceTheCoder/snake/assets/115871297/f0699834-84a9-4478-9c0c-ac03eb57a574)
 
-
 A very basic snake game, made in JavaScript with the Phaser game engine, featuring:
 * **Controls**: Use arrow keys to navigate the snake within a grid.
 * **Screen Wrapping**: The snake wraps around the screen when it goes through the edges.
