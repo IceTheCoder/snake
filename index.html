@@ -11,6 +11,7 @@
     <script type="module" src="src/scripts/Fruit.js"></script>
     <script type="module" src="src/scripts/SnakeBody.js"></script>
     <script type="module" src="src/game.js"></script>
+    <script type="module" src="src/scripts/LegacyGraphics.js"></script>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/settings-style.css">
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
@@ -43,8 +44,8 @@
       <div id="legacy-graphics-container" class="scene-3">
         <p class="scene-3">Legacy Graphics</p>
         <label class="switch scene-3">
-          <input type="checkbox" class="scene-3">
-          <span class="slider scene-3"></span>
+          <input type="checkbox" class="scene-3" id="legacy-checkbox">
+          <span class="slider scene-3" id="legacy-graphics"></span>
         </label>        
       </div>
       <button class="scene-3 main-menu-button">Back</button>
