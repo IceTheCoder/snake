@@ -12,6 +12,7 @@
     <script type="module" src="src/scripts/SnakeBody.js"></script>
     <script type="module" src="src/game.js"></script>
     <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/slider-style.css">
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   </head>
   <body>
@@ -37,7 +38,12 @@
       <button id="restart-button" class="scene-2 game-over">Restart</button>
       <button class="scene-2 game-over main-menu-button">Main Menu</button>
     </div>
+    <!-- Every element of a scene must have a class of scene-{scene-number} -->
     <div id="settings" class="scene-3" style="display: none;">
+      <label class="switch scene-3">
+        <input type="checkbox" class="scene-3">
+        <span class="slider scene-3"></span>
+      </label>      
       <button class="scene-3 main-menu-button">Back</button>
     </div>
   </body>
