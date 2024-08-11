@@ -9,6 +9,8 @@ if (localStorage.getItem("legacy") === "1") {
   document.getElementById("legacy-checkbox").checked = true;
 }
 
+document.getElementById("placeholder").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
+
 function legacyGraphics() {
   if (localStorage.getItem("legacy") === "1") {
     localStorage.setItem("legacy", "0");
@@ -16,4 +18,6 @@ function legacyGraphics() {
     localStorage.setItem("legacy", "1")
   }
   console.log(localStorage.getItem("legacy"))
+  // Update legacy placeholder text
+  document.getElementById("placeholder").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
 }
