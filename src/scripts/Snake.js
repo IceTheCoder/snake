@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 700;
+    this.timeBetweenEachMove = 1000;
 
     /** @type {number} */
     this.direction = 0;
@@ -73,6 +73,10 @@ export default class Snake {
   preload() {
     this.scene.load.image("snake", "assets/snake.png");
     this.scene.load.image("snake-body", "assets/snake-body.png")
+    this.scene.load.image("1", "assets/1.png")
+    this.scene.load.image("2", "assets/2.png")
+    this.scene.load.image("3", "assets/3.png")
+    this.scene.load.image("4", "assets/4.png")
   }
 
   /**
@@ -167,6 +171,18 @@ export default class Snake {
       }
     }
   }
+  
+  oppositeDegrees(degrees) {
+    if (degrees === 0) {
+      return 180;
+    } else if (degrees === 90) {
+      return 270;
+    } else if (degrees === 180) {
+      return 0;
+    } else if (degrees === 270) {
+      return 90;
+    }
+  }
 
   /**
    * Changes the direction based on player input and waits for the snake to change position before 
@@ -180,19 +196,8 @@ export default class Snake {
      * 180 if 0 degrees, 270 if 90 degrees, 0 if 180 degrees, 90 if 270 degrees.
      * @param {number} degrees 0, 90, 180, 270
      */
-    function oppositeDegrees(degrees) {
-      if (degrees === 0) {
-        return 180;
-      } else if (degrees === 90) {
-        return 270;
-      } else if (degrees === 180) {
-        return 0;
-      } else if (degrees === 270) {
-        return 90;
-      }
-    }
 
-    if (this.canChangeDirection && direction !== this.direction && direction !== oppositeDegrees(this.direction)) {
+    if (this.canChangeDirection && direction !== this.direction && direction !== this.oppositeDegrees(this.direction)) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
       this.direction = direction;
@@ -254,6 +259,19 @@ export default class Snake {
   }
 
   /**
+   * Determines whether the snake turned left or right.
+   * @param {number} directionDifference - The difference in direction between 2 consecutive snake body images
+   * @returns {string} "left" or "right"
+   */
+  determineRotation(directionDifference) {
+    if (directionDifference === -90 || directionDifference === 270) {
+      return "left";
+    } else if (directionDifference === 90 || directionDifference === -270) {
+      return "right"
+    }
+  }
+
+  /**
    * Updates the snake body image position.
    * @param {number} index - The index of the snake body image
    * @param {Array.<number>} position - The position array for the corresponding snake body image.
@@ -265,10 +283,31 @@ export default class Snake {
     
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
-      if (this.snakeDirections[index] !== this.snakeDirections[index + 1]) {
-        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(45));
+      // This condition checks if the snake body needs to turn
+      let previousDirection = this.snakeDirections[index];
+      let nextDirection = this.snakeDirections[index + 1];
+      if (previousDirection !== nextDirection) {
+        this.snakeBodyImages[index].snakeBody.setRotation(0);
+        if ((previousDirection === 90 && nextDirection === 0) 
+          || (previousDirection === 180 && nextDirection === 270)) {
+          this.snakeBodyImages[index].snakeBody.setTexture("1")
+        }
+        if ((previousDirection === 90 && nextDirection === 180) 
+          || (previousDirection === 0 && nextDirection === 270)) {
+            this.snakeBodyImages[index].snakeBody.setTexture("2")
+        }
+        if ((previousDirection === 0 && nextDirection === 90) 
+          || (previousDirection === 270 && nextDirection === 180)) {
+            this.snakeBodyImages[index].snakeBody.setTexture("3")
+        }
+        if ((previousDirection === 270 && nextDirection === 0) 
+          || (previousDirection === 180 && nextDirection === 90)) {
+            this.snakeBodyImages[index].snakeBody.setTexture("4")
+        }
       }
+      // Ensures the snake body is pointed in the correct direction
       else {
+        this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
         if (direction !== 90 && direction !== 270) {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
         } else if (direction === 90) {
@@ -277,7 +316,6 @@ export default class Snake {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
         }  
       }
-
     }
   }
 
