@@ -289,7 +289,7 @@ export default class Snake {
       // If it's the last snake body image
       if (index === 0) {
         this.snakeBodyImages[index].snakeBody.setTexture("snake-tail");
-        // Ensures the snake body is pointed in the correct direction
+        // The tail has to correspond with the next body tile after it
         let nextSnakeDirection = this.snakeDirections[1];
         // For some reason 90 and 270 have to be reversed
         if (nextSnakeDirection !== 90 && nextSnakeDirection !== 270) {
@@ -302,10 +302,12 @@ export default class Snake {
       } else {
         let previousDirection = this.snakeDirections[index];
         let nextDirection = this.snakeDirections[index + 1];
+        // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
           // Ensure previous rotation values don't fiddle with the texture
           this.snakeBodyImages[index].snakeBody.setRotation(0);
-  
+
+          // Find the corresponding texture
           const directionMapping = {
             "90-0": "1",
             "180-270": "1",
