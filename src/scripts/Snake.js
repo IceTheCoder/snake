@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 500;
+    this.timeBetweenEachMove = 700;
 
     /** @type {number} */
     this.direction = 0;
@@ -94,6 +94,10 @@ export default class Snake {
     document.getElementById("score").className = "scene-1 game-ui";
     document.getElementById("game-over-high-score").className = "scene-2 game-over";
     document.getElementById("game-over-score").className = "scene-2 game-over";
+
+    // https://www.youtube.com/watch?v=TTtgXd5qJko
+    // Make sure the snake head is above all other objects
+    this.snake.depth = 100;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -294,7 +298,6 @@ export default class Snake {
 
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
-    this.snake.depth = 0;
     this.snakeBodyImages.push(newBodyImage);
   }
 
