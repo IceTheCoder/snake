@@ -14,6 +14,7 @@
     <script type="module" src="src/scripts/LegacyGraphics.js"></script>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/settings-style.css">
+    <link rel="stylesheet" href="src/credits-style.css">
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   </head>
   <body>
@@ -22,6 +23,7 @@
       <div class="scene-0 buttons">
         <button id="play" class="scene-0">Play</button>
         <button id="settings-button" class="scene-0">Settings</button>
+        <button id="credits-button" class="scene-0">Credits</button>
       </div>
     </div>
     <header id="game" class="scene-1 game-ui" style="display: none;">
@@ -50,6 +52,20 @@
         </label>        
       </div>
       <button class="scene-3 main-menu-button">Back</button>
+    </div>
+    <div id="credits" class="scene-4" style="display:none">
+      <p class="scene-4 text">Copyright Disclaimer</p>
+      <p class="scene-4 text">
+        <a class="scene-4 text" href="https://opengameart.org/content/snake-graphics">Snake Graphics</a> by Joshua Robertson (<a class="scene-4 text" href="https://opengameart.org/users/jrob774">JROB774</a>) is licensed under <a class="scene-4 text" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+      </p> 
+      <p class="scene-4 text">
+        Attribution 3.0 Unported
+        Deed
+      </p>
+      <p class="scene-4 text">
+        No warranties are given.
+      </p>  
+      <button class="scene-4 main-menu-button text">Back</button>
     </div>
   </body>
 </html>

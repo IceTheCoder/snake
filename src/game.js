@@ -18,6 +18,7 @@ const restartButton = document.getElementById("restart-button");
 const play = document.getElementById("play");
 const mainMenuButtons = document.getElementsByClassName("main-menu-button");
 const settingsButton = document.getElementById("settings-button");
+const creditsButton = document.getElementById("credits-button");
 
 // Restart game
 restartButton.addEventListener("click", () => {
@@ -47,4 +48,13 @@ for (const button of mainMenuButtons) {
 // Settings button
 settingsButton.addEventListener("click", () => {
   SceneManager.loadScene(3);
+})
+
+// Credits button
+creditsButton.addEventListener("click", () => {
+  SceneManager.loadScene(4);
+  const texts = Array.from(document.getElementsByClassName("text"));
+  texts.forEach((text) => {
+    text.style.display = "inline";
+  })
 })
