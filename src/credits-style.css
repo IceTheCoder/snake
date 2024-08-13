@@ -1,0 +1,9 @@
+#credits {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+}
+
+p {
+  display: block;
+}
