@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 200;
+    this.timeBetweenEachMove = 700;
 
     /** @type {number} */
     this.direction = 0;
@@ -265,13 +265,19 @@ export default class Snake {
     
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
-      if (direction !== 90 && direction !== 270) {
-        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
-      } else if (direction === 90) {
-        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
-      } else if (direction === 270) {
-        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
-      }  
+      if (this.snakeDirections[index] !== this.snakeDirections[index + 1]) {
+        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(45));
+      }
+      else {
+        if (direction !== 90 && direction !== 270) {
+          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
+        } else if (direction === 90) {
+          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
+        } else if (direction === 270) {
+          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
+        }  
+      }
+
     }
   }
 
