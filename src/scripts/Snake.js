@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 700;
+    this.timeBetweenEachMove = 200;
 
     /** @type {number} */
     this.direction = 0;
@@ -166,14 +166,6 @@ export default class Snake {
         this.canChangeDirection = true;
       }
     }
-
-    if (this.direction !== 90 && this.direction !== 270) {
-      this.snake.setRotation(this.degreesToRadians(this.direction));
-    } else if (this.direction === 90) {
-      this.snake.setRotation(this.degreesToRadians(270));
-    } else if (this.direction === 270) {
-      this.snake.setRotation(this.degreesToRadians(90));
-    }
   }
 
   /**
@@ -251,6 +243,14 @@ export default class Snake {
     }
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+
+    if (this.direction !== 90 && this.direction !== 270) {
+      this.snake.setRotation(this.degreesToRadians(this.direction));
+    } else if (this.direction === 90) {
+      this.snake.setRotation(this.degreesToRadians(270));
+    } else if (this.direction === 270) {
+      this.snake.setRotation(this.degreesToRadians(90));
+    }  
   }
 
   /**
