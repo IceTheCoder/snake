@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = timeBetweenEachMove;
+    this.timeBetweenEachMove = 500;
 
     /** @type {number} */
     this.direction = 0;
@@ -122,6 +122,15 @@ export default class Snake {
       });  */
   }
 
+  // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
+  /** 
+   * Converts degrees to radians
+   * @param {Number} degrees - The degree value that should be converted to radians
+   */
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
   // Arrow and WASD keys controls
   /**
    * Handle changing direction correctly.
@@ -149,6 +158,14 @@ export default class Snake {
       if (this.snakeX !== this.storedSnakePosition[0] || this.snakeY !== this.storedSnakePosition[1]) {
         this.canChangeDirection = true;
       }
+    }
+
+    if (this.direction !== 90 && this.direction !== 270) {
+      this.snake.setRotation(this.degreesToRadians(this.direction));
+    } else if (this.direction === 90) {
+      this.snake.setRotation(this.degreesToRadians(270));
+    } else if (this.direction === 270) {
+      this.snake.setRotation(this.degreesToRadians(90));
     }
   }
 
