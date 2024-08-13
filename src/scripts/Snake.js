@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 300;
+    this.timeBetweenEachMove = 800;
 
     /** @type {number} */
     this.direction = 0;
@@ -72,11 +72,12 @@ export default class Snake {
    */
   preload() {
     this.scene.load.image("snake", "assets/snake.png");
-    this.scene.load.image("snake-body", "assets/snake-body.png")
-    this.scene.load.image("1", "assets/1.png")
-    this.scene.load.image("2", "assets/2.png")
-    this.scene.load.image("3", "assets/3.png")
-    this.scene.load.image("4", "assets/4.png")
+    this.scene.load.image("snake-body", "assets/snake-body.png");
+    this.scene.load.image("1", "assets/1.png");
+    this.scene.load.image("2", "assets/2.png");
+    this.scene.load.image("3", "assets/3.png");
+    this.scene.load.image("4", "assets/4.png");
+    this.scene.load.image("snake-tail", "assets/snake-tail.png");
   }
 
   /**
@@ -284,41 +285,57 @@ export default class Snake {
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
       // This condition checks if the snake body needs to turn
-      let previousDirection = this.snakeDirections[index];
-      let nextDirection = this.snakeDirections[index + 1];
-      if (previousDirection !== nextDirection) {
-        // Ensure previous rotation values don't fiddle with the texture
-        this.snakeBodyImages[index].snakeBody.setRotation(0);
-
-        const directionMapping = {
-          "90-0": "1",
-          "180-270": "1",
-          "90-180": "2",
-          "0-270": "2",
-          "0-90": "3",
-          "270-180": "3",
-          "270-0": "4",
-          "180-90": "4"  
-        };
-
-        const key = `${previousDirection}-${nextDirection}`;
-        const texture = directionMapping[key];
-
-        if (texture) {
-          this.snakeBodyImages[index].snakeBody.setTexture(texture);
-        } else {
-          console.error("No texture found!");
-        }
-      }
-      // Ensures the snake body is pointed in the correct direction
-      else {
-        this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
-        if (direction !== 90 && direction !== 270) {
-          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
-        } else if (direction === 90) {
+      
+      // If it's the last snake body image
+      if (index === 0) {
+        this.snakeBodyImages[index].snakeBody.setTexture("snake-tail");
+        // Ensures the snake body is pointed in the correct direction
+        let nextSnakeDirection = this.snakeDirections[1];
+        // For some reason 90 and 270 have to be reversed
+        if (nextSnakeDirection !== 90 && nextSnakeDirection !== 270) {
+          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(nextSnakeDirection));
+        } else if (nextSnakeDirection === 90) {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
-        } else if (direction === 270) {
+        } else if (nextSnakeDirection === 270) {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
+        }  
+      } else {
+        let previousDirection = this.snakeDirections[index];
+        let nextDirection = this.snakeDirections[index + 1];
+        if (previousDirection !== nextDirection) {
+          // Ensure previous rotation values don't fiddle with the texture
+          this.snakeBodyImages[index].snakeBody.setRotation(0);
+  
+          const directionMapping = {
+            "90-0": "1",
+            "180-270": "1",
+            "90-180": "2",
+            "0-270": "2",
+            "0-90": "3",
+            "270-180": "3",
+            "270-0": "4",
+            "180-90": "4"  
+          };
+  
+          const key = `${previousDirection}-${nextDirection}`;
+          const texture = directionMapping[key];
+  
+          if (texture) {
+            this.snakeBodyImages[index].snakeBody.setTexture(texture);
+          } else {
+            console.error("No texture found!");
+          }
+        }
+        // Ensures the snake body is pointed in the correct direction
+        else {
+          this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
+          if (direction !== 90 && direction !== 270) {
+            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
+          } else if (direction === 90) {
+            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
+          } else if (direction === 270) {
+            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
+          }  
         }  
       }
     }
@@ -338,7 +355,7 @@ export default class Snake {
       document.getElementById("score").className = "scene-1 game-ui new-high-score";
       document.getElementById("game-over-high-score").className = "scene-2 game-over new-high-score";
       document.getElementById("game-over-score").className = "scene-2 game-over new-high-score";
-  }
+    }
     
     // https://www.dynetisgames.com/2018/10/28/how-save-load-player-progress-localstorage/
     localStorage.setItem('highScore', this.highScore);
