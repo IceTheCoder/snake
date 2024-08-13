@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 1000;
+    this.timeBetweenEachMove = 300;
 
     /** @type {number} */
     this.direction = 0;
@@ -287,22 +287,27 @@ export default class Snake {
       let previousDirection = this.snakeDirections[index];
       let nextDirection = this.snakeDirections[index + 1];
       if (previousDirection !== nextDirection) {
+        // Ensure previous rotation values don't fiddle with the texture
         this.snakeBodyImages[index].snakeBody.setRotation(0);
-        if ((previousDirection === 90 && nextDirection === 0) 
-          || (previousDirection === 180 && nextDirection === 270)) {
-          this.snakeBodyImages[index].snakeBody.setTexture("1")
-        }
-        if ((previousDirection === 90 && nextDirection === 180) 
-          || (previousDirection === 0 && nextDirection === 270)) {
-            this.snakeBodyImages[index].snakeBody.setTexture("2")
-        }
-        if ((previousDirection === 0 && nextDirection === 90) 
-          || (previousDirection === 270 && nextDirection === 180)) {
-            this.snakeBodyImages[index].snakeBody.setTexture("3")
-        }
-        if ((previousDirection === 270 && nextDirection === 0) 
-          || (previousDirection === 180 && nextDirection === 90)) {
-            this.snakeBodyImages[index].snakeBody.setTexture("4")
+
+        const directionMapping = {
+          "90-0": "1",
+          "180-270": "1",
+          "90-180": "2",
+          "0-270": "2",
+          "0-90": "3",
+          "270-180": "3",
+          "270-0": "4",
+          "180-90": "4"  
+        };
+
+        const key = `${previousDirection}-${nextDirection}`;
+        const texture = directionMapping[key];
+
+        if (texture) {
+          this.snakeBodyImages[index].snakeBody.setTexture(texture);
+        } else {
+          console.error("No texture found!");
         }
       }
       // Ensures the snake body is pointed in the correct direction
