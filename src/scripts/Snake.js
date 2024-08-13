@@ -72,6 +72,7 @@ export default class Snake {
    */
   preload() {
     this.scene.load.image("snake", "assets/snake.png");
+    this.scene.load.image("snake-body", "assets/snake-body.png")
   }
 
   /**
@@ -291,8 +292,9 @@ export default class Snake {
 
     document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
 
-    let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", this.snakeX, this.snakeY); // Instantiate new snake body image
+    let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
+    this.snake.depth = 0;
     this.snakeBodyImages.push(newBodyImage);
   }
 
