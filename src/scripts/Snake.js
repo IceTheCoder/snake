@@ -315,6 +315,7 @@ export default class Snake {
 
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.visible = true;
+      this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
 
       // If it's the last snake body image (the tail)
       if (index === 0) {
@@ -338,14 +339,6 @@ export default class Snake {
             this.turnImagePositions.shift();
           }  
         }
-
-        this.scene.tweens.add({
-          targets: this.snakeBodyImages[index].snakeBody,
-          x: targetX,
-          y: targetY,
-          duration: this.timeBetweenEachMove,
-          ease: 'Linear',
-        });
       } else {
         // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
@@ -398,19 +391,7 @@ export default class Snake {
           } else if (direction === 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
           }
-
-          this.scene.tweens.add({
-            targets: this.snakeBodyImages[index].snakeBody,
-            x: targetX,
-            y: targetY,
-            duration: this.timeBetweenEachMove,
-            ease: 'Linear',
-          });
         }  
-      }
-
-      if (previousDirection === nextDirection) {
-        this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
       }
     }
   }
