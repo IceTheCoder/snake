@@ -37,6 +37,11 @@ export class Scene1 extends Phaser.Scene {
     this.fruit.preload();
 
     this.collision = new Collision(this, this.snake, this.fruit);
+
+    this.load.image("background", "assets/background.png");
+
+    // https://stackoverflow.com/questions/52139569/phaser-io-3-get-game-size-in-scene
+    this.canvas = this.sys.game.canvas;
   }
 
   /**
@@ -44,6 +49,10 @@ export class Scene1 extends Phaser.Scene {
    */
   create() {
     this.snake.create();
+
+    let { width, height } = this.canvas;
+
+    this.background = this.add.image(width / 2, height / 2, "background");
 
     // https://www.html5gamedevs.com/topic/40607-how-to-replace-arrow-keys-with-wasd-movement/
     // cornstipated's solution worked.
