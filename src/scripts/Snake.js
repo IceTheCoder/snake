@@ -330,8 +330,9 @@ export default class Snake {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
         }
 
-        if (this.turnImagePositions[0]) {
-          if (this.snakeBodyImages[index].snakeBody.x === this.turnImagePositions[0][0] && this.snakeBodyImages[index].snakeBody.y === this.turnImagePositions[0][1]) {
+        if (this.turnImages[0]) {
+          // If the tail has reached the turn, destroy the turn snake body tile image
+          if (this.snakeBodyImages[0].snakeBody.x === this.turnImagePositions[0][0] && this.snakeBodyImages[0].snakeBody.y === this.turnImagePositions[0][1]) {
             this.turnImages[0].destroy();
             this.turnImages.shift();
             this.turnImagePositions.shift();
@@ -361,13 +362,23 @@ export default class Snake {
           const texture = directionMapping[key];
 
           if (texture) {
-            // Place a texture in that tile
-            let turnImage = this.scene.add.image(this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y, texture);
-            turnImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-            this.turnImages.push(turnImage);
+            let occupied = false;
 
-            this.turnImagePositions.push([this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y]);
-           } else {
+            // Place a texture in that tile only if there isn't already a texture
+            this.turnImagePositions.forEach((position) => {
+              if (position[0] === this.snakeBodyImages[index].snakeBody.x && position[1]  === this.snakeBodyImages[index].snakeBody.y) {
+                occupied = true;
+              }
+            });
+
+            if (occupied === false) {
+              let turnImage = this.scene.add.image(this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y, texture);
+              turnImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+              this.turnImages.push(turnImage);
+              console.log(this.turnImages);
+              this.turnImagePositions.push([this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y]);  
+            }
+          } else {
             console.error("No texture found!");
           }
         }
