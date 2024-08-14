@@ -343,7 +343,7 @@ export default class Snake {
         let nextDirection = this.snakeDirections[index + 1];
         // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
-          // Ensure previous rotation values don't fiddle with the texture
+          // We'll use another image to display a turn of the snake instead
           this.snakeBodyImages[index].snakeBody.visible = false;
 
           // Find the corresponding texture
