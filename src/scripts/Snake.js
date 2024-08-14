@@ -90,7 +90,8 @@ export default class Snake {
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
-    
+    this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
+
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
@@ -209,6 +210,14 @@ export default class Snake {
     }
   }
 
+  callUpdateSnakeBodyImage() {
+    if (this.snakePositions.length !== 0) {
+      for (let i = 0; i < this.snakePositions.length; i++) {
+        this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
+      }  
+    }
+  }
+
   /**
    * Move the snake by 1 tile in the correct direction, wrap around the screen when going through
    * a wall, store the snake body tiles' positions, and update them accordingly.
@@ -244,11 +253,8 @@ export default class Snake {
       this.snakeDirections.shift();
     }
 
-    for (let i = 0; i < this.snakePositions.length; i++) {
-      this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
-    }
-
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+    this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
     if (this.direction !== 90 && this.direction !== 270) {
       this.snake.setRotation(this.degreesToRadians(this.direction));
