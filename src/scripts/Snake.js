@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 800;
+    this.timeBetweenEachMove = 300;
 
     /** @type {number} */
     this.direction = 0;
@@ -283,6 +283,7 @@ export default class Snake {
     let y = position[1];
     
     if (this.snakeBodyImages[index]) {
+      this.snakeBodyImages[index].snakeBody.visible = true;
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
       // This condition checks if the snake body needs to turn
       
