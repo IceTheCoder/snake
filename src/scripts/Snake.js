@@ -86,8 +86,13 @@ export default class Snake {
   create() {
     this.snakeX = this.initialSnakeX;
     this.snakeY = this.initialSnakeY;
-    this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
+    this.snake = this.scene.add.image(this.snakeX, this.snakeY, "");
+    this.snake.visible = false;
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+
+    // Have a snake image for animations
+    this.snakeImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
+    this.snakeImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
@@ -103,7 +108,7 @@ export default class Snake {
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     // Make sure the snake head is above all other objects
-    this.snake.depth = 100;
+    this.snakeImage.depth = 100;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -241,6 +246,17 @@ export default class Snake {
     this.snakeX = Phaser.Math.Wrap(this.snakeX, 0, this.GRID_WIDTH * this.TILE_SIZE);
     this.snakeY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
 
+    let targetX = this.snakeX;
+    let targetY = this.snakeY;
+
+    this.scene.tweens.add({
+      targets: this.snakeImage,
+      x: targetX,
+      y: targetY,
+      duration: this.timeBetweenEachMove,
+      ease: 'Linear',
+    })
+
     this.snake.setPosition(this.snakeX, this.snakeY);
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
@@ -257,11 +273,11 @@ export default class Snake {
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
     if (this.direction !== 90 && this.direction !== 270) {
-      this.snake.setRotation(this.degreesToRadians(this.direction));
+      this.snakeImage.setRotation(this.degreesToRadians(this.direction));
     } else if (this.direction === 90) {
-      this.snake.setRotation(this.degreesToRadians(270));
+      this.snakeImage.setRotation(this.degreesToRadians(270));
     } else if (this.direction === 270) {
-      this.snake.setRotation(this.degreesToRadians(90));
+      this.snakeImage.setRotation(this.degreesToRadians(90));
     }  
   }
 
