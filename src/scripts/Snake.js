@@ -71,6 +71,11 @@ export default class Snake {
 
     /** @type {Array.Phaser.GameObjects.Image} */
     this.turnImages = [];
+
+    // We use this variable to stop the snake tween when a fruit is eaten, so the tail remains behind,
+    // lengthening the snake
+    /** @type {Phaser.GameObjects.tweens|null} */
+    this.snakeTween = null;
   }
 
   /**
@@ -319,9 +324,9 @@ export default class Snake {
 
 
     if (this.snakeBodyImages[index]) {  
-      // If it's the last snake body image (the tail)
       this.snakeBodyImages[index].snakeBody.visible = true;
 
+      // If it's the last snake body image (the tail)
       if (index === 0) {
         // We'll use an image independent from the actual tail
         this.snakeBodyImages[index].snakeBody.visible = false;
@@ -341,8 +346,8 @@ export default class Snake {
         targetX = this.snakePositions[1][0];
         targetY = this.snakePositions[1][1];
 
-        // Animate only the tail
-        this.scene.tweens.add({
+        // Animate only the tail unless a snake body image is being added after eating a fruit
+        this.snakeTween = this.scene.tweens.add({
           targets: this.snakeTailImage,
           x: targetX,
           y: targetY,
@@ -352,7 +357,7 @@ export default class Snake {
           onComplete: () => {
             this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
           }
-        })    
+        })
 
         if (this.turnImages[0]) {
           // If the tail has reached the turn, destroy the turn snake body tile image
@@ -363,7 +368,6 @@ export default class Snake {
           }  
         }
       } else {
-        // Animate only the tail
         this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
         // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
@@ -445,6 +449,11 @@ export default class Snake {
     let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", this.snakeX, this.snakeY); // Instantiate new snake body image
     newBodyImage.create();
     this.snakeBodyImages.push(newBodyImage);
+
+    // Stop the snake animation.
+    if (this.snakeTween) {
+      this.snakeTween.remove();
+    }
   }
 
   // Getter methods for snakeX and snakeY
