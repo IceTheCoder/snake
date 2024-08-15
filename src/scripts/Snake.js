@@ -97,8 +97,8 @@ export default class Snake {
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     // Have a snake image for animations
-    this.snakeImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
-    this.snakeImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+    this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
+    this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
@@ -114,7 +114,7 @@ export default class Snake {
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     // Make sure the snake head is above all other objects
-    this.snakeImage.depth = 100;
+    this.snakeHeadImage.depth = 100;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -256,7 +256,7 @@ export default class Snake {
     let targetY = this.snakeY;
 
     this.scene.tweens.add({
-      targets: this.snakeImage,
+      targets: this.snakeHeadImage,
       x: targetX,
       y: targetY,
       duration: this.timeBetweenEachMove,
@@ -279,11 +279,11 @@ export default class Snake {
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
     if (this.direction !== 90 && this.direction !== 270) {
-      this.snakeImage.setRotation(this.degreesToRadians(this.direction));
+      this.snakeHeadImage.setRotation(this.degreesToRadians(this.direction));
     } else if (this.direction === 90) {
-      this.snakeImage.setRotation(this.degreesToRadians(270));
+      this.snakeHeadImage.setRotation(this.degreesToRadians(270));
     } else if (this.direction === 270) {
-      this.snakeImage.setRotation(this.degreesToRadians(90));
+      this.snakeHeadImage.setRotation(this.degreesToRadians(90));
     }  
   }
 
