@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 300;
+    this.timeBetweenEachMove = 400;
 
     /** @type {number} */
     this.direction = 0;
@@ -100,6 +100,9 @@ export default class Snake {
     this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
+    this.snakeTailImage = this.scene.add.image(this.snakeX - this.TILE_SIZE, this.snakeY, "snake-tail");
+    this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
@@ -115,6 +118,7 @@ export default class Snake {
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     // Make sure the snake head is above all other objects
     this.snakeHeadImage.depth = 100;
+    this.snakeTailImage.depth = 100;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -313,33 +317,54 @@ export default class Snake {
     let previousDirection = this.snakeDirections[index];
     let nextDirection = this.snakeDirections[index + 1];
 
-    if (this.snakeBodyImages[index]) {
-      this.snakeBodyImages[index].snakeBody.visible = true;
-      this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
 
+    if (this.snakeBodyImages[index]) {  
       // If it's the last snake body image (the tail)
+      this.snakeBodyImages[index].snakeBody.visible = true;
+
       if (index === 0) {
-        this.snakeBodyImages[index].snakeBody.setTexture("snake-tail");
+        // We'll use an image independent from the actual tail
+        this.snakeBodyImages[index].snakeBody.visible = false;
+
         // The tail has to correspond with the next body tile after it
         let nextSnakeDirection = this.snakeDirections[1];
         // For some reason 90 and 270 have to be reversed
         if (nextSnakeDirection !== 90 && nextSnakeDirection !== 270) {
-          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(nextSnakeDirection));
+          this.snakeTailImage.setRotation(this.degreesToRadians(nextSnakeDirection));
         } else if (nextSnakeDirection === 90) {
-          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
+          this.snakeTailImage.setRotation(this.degreesToRadians(270));
         } else if (nextSnakeDirection === 270) {
-          this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
+          this.snakeTailImage.setRotation(this.degreesToRadians(90));
         }
+
+        // The tail needs to keep up with the next body tile
+        targetX = this.snakePositions[1][0];
+        targetY = this.snakePositions[1][1];
+
+        // Animate only the tail
+        this.scene.tweens.add({
+          targets: this.snakeTailImage,
+          x: targetX,
+          y: targetY,
+          duration: this.timeBetweenEachMove,
+          ease: 'Linear',
+          // Update the tail position after the animation
+          onComplete: () => {
+            this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
+          }
+        })    
 
         if (this.turnImages[0]) {
           // If the tail has reached the turn, destroy the turn snake body tile image
-          if (this.snakeBodyImages[0].snakeBody.x === this.turnImagePositions[0][0] && this.snakeBodyImages[0].snakeBody.y === this.turnImagePositions[0][1]) {
+          if (this.snakeBodyImages[1].snakeBody.x === this.turnImagePositions[0][0] && this.snakeBodyImages[1].snakeBody.y === this.turnImagePositions[0][1]) {
             this.turnImages[0].destroy();
             this.turnImages.shift();
             this.turnImagePositions.shift();
           }  
         }
       } else {
+        // Animate only the tail
+        this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
         // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
           // We'll use another image to display a turn of the snake instead
