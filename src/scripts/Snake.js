@@ -155,6 +155,10 @@ export default class Snake {
       });  */
 
     this.onCollision();
+
+    this.animation = false;
+
+    this.callUpdateSnakeBodyImage();
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -345,23 +349,41 @@ export default class Snake {
         }
 
         // The tail needs to keep up with the next body tile
-        if (this.snakePositions[1]) {
-          targetX = this.snakePositions[1][0];
-          targetY = this.snakePositions[1][1];  
+        if (this.animation) {
+          if (this.snakePositions[1]) {
+            targetX = this.snakePositions[1][0];
+            targetY = this.snakePositions[1][1];  
+          } else {
+            targetX = this.snakeX;
+            targetY = this.snakeY;
+          }  
+        } else {
+          if (this.snakePositions[0]) {
+            targetX = this.snakePositions[0][0];
+            targetY = this.snakePositions[0][1];  
+          } else {
+            targetX = this.snakeX;
+            targetY = this.snakeY;
+          }
         }
 
-        // Animate only the tail unless a snake body image is being added after eating a fruit
-        this.snakeTween = this.scene.tweens.add({
-          targets: this.snakeTailImage,
-          x: targetX,
-          y: targetY,
-          duration: this.timeBetweenEachMove,
-          ease: 'Linear',
-          // Update the tail position after the animation
-          onComplete: () => {
-            this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
-          }
-        })
+        if (this.animation) {
+          this.snakeTween = this.scene.tweens.add({
+            targets: this.snakeTailImage,
+            x: targetX,
+            y: targetY,
+            duration: this.timeBetweenEachMove,
+            ease: 'Linear',
+            // Update the tail position after the animation
+            onComplete: () => {
+              this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
+            }
+          })  
+        } else {
+          console.log("No animation");
+          this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
+          this.snakeTailImage.setPosition(targetX, targetY);
+        }
 
         if (this.turnImages[0]) {
           // If the tail has reached the turn, destroy the turn snake body tile image
