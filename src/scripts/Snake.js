@@ -54,7 +54,7 @@ export default class Snake {
 
     // Snake growing variables
     /** @type {number} */
-    this.snakeLength = 1;
+    this.snakeLength = 3;
     /** @type {Array.<Array.<number>>} */
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
