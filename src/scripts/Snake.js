@@ -153,6 +153,9 @@ export default class Snake {
           }
         } 
       });  */
+
+    this.onCollision();
+    this.onCollision();
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -343,8 +346,10 @@ export default class Snake {
         }
 
         // The tail needs to keep up with the next body tile
-        targetX = this.snakePositions[1][0];
-        targetY = this.snakePositions[1][1];
+        if (this.snakePositions[1]) {
+          targetX = this.snakePositions[1][0];
+          targetY = this.snakePositions[1][1];  
+        }
 
         // Animate only the tail unless a snake body image is being added after eating a fruit
         this.snakeTween = this.scene.tweens.add({
@@ -429,8 +434,6 @@ export default class Snake {
    * Create a new snake body image on collision with a fruit.
    */
   onCollision() {
-    this.snakeLength += 1;
-
     // New high score
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
