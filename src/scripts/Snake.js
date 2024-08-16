@@ -54,7 +54,7 @@ export default class Snake {
 
     // Snake growing variables
     /** @type {number} */
-    this.snakeLength = 3;
+    this.snakeLength = 1;
     /** @type {Array.<Array.<number>>} */
     this.snakePositions = [];
     /** @type {Array.<Phaser.GameObjects.Image>} */
@@ -154,7 +154,6 @@ export default class Snake {
         } 
       });  */
 
-    this.onCollision();
     this.onCollision();
   }
 
@@ -434,6 +433,8 @@ export default class Snake {
    * Create a new snake body image on collision with a fruit.
    */
   onCollision() {
+    this.snakeLength += 1;
+
     // New high score
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
