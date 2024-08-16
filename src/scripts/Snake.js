@@ -123,7 +123,7 @@ export default class Snake {
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     // Make sure the snake head is above all other objects
     this.snakeHeadImage.depth = 100;
-    this.snakeTailImage.depth = 100;
+    this.snakeTailImage.depth = 99;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
