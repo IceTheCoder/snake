@@ -108,6 +108,8 @@ export default class Snake {
     this.snakeTailImage = this.scene.add.image(this.snakeX - this.TILE_SIZE, this.snakeY, "snake-tail");
     this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
+    // KEEP THESE UP HERE
+    // If they're up here, the snake will update INSTANTLY to being a length of 3 instead of 1
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
@@ -165,7 +167,9 @@ export default class Snake {
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
  
-    this.animation = true;
+    this.onCollision();
+
+    this.animation = false;
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
