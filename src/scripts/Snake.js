@@ -107,6 +107,7 @@ export default class Snake {
 
     this.snakeTailImage = this.scene.add.image(this.snakeX - this.TILE_SIZE, this.snakeY, "snake-tail");
     this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+    this.snakeTailImage.visible = false;
 
     // KEEP THESE UP HERE
     // If they're up here, the snake will update INSTANTLY to being a length of 3 instead of 1
@@ -155,21 +156,7 @@ export default class Snake {
           }
         } 
       });  */
-
-    let newBodyImage2 = new SnakeBody(this.scene, this.TILE_SIZE, "snake",
-        this.snakeX - this.TILE_SIZE, this.snakeY); // Instantiate new snake body image
-    newBodyImage2.create();
-    this.snakeBodyImages.push(newBodyImage2);
-    this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
-    this.snakeDirections.push(0);
-
-    this.snakeLength += 1;
-
-    this.snakePositions.push([this.snakeX, this.snakeY]);
- 
-    this.onCollision();
-
-    this.animation = false;
+    this.animation = true;
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -349,6 +336,7 @@ export default class Snake {
       if (index === 0) {
         // We'll use an image independent from the actual tail
         this.snakeBodyImages[index].snakeBody.visible = false;
+        this.snakeTailImage.visible = true;
 
         // The tail has to correspond with the next body tile after it
         let nextSnakeDirection = this.snakeDirections[1];
