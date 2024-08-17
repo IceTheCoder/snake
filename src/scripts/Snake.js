@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 400;
+    this.timeBetweenEachMove = 650;
 
     /** @type {number} */
     this.direction = 0;
@@ -154,11 +154,18 @@ export default class Snake {
         } 
       });  */
 
-    this.onCollision();
+    let newBodyImage2 = new SnakeBody(this.scene, this.TILE_SIZE, "snake",
+        this.snakeX - this.TILE_SIZE, this.snakeY); // Instantiate new snake body image
+    newBodyImage2.create();
+    this.snakeBodyImages.push(newBodyImage2);
+    this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
+    this.snakeDirections.push(0);
 
-    this.animation = false;
+    this.snakeLength += 1;
 
-    this.callUpdateSnakeBodyImage();
+    this.snakePositions.push([this.snakeX, this.snakeY]);
+ 
+    this.animation = true;
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -249,6 +256,8 @@ export default class Snake {
    * a wall, store the snake body tiles' positions, and update them accordingly.
    */
   move() {
+    console.log(this.snakePositions[0]);
+
     switch (this.direction) {
       case 0:
         this.snakeX += this.TILE_SIZE;
@@ -380,7 +389,6 @@ export default class Snake {
             }
           })  
         } else {
-          console.log("No animation");
           this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
           this.snakeTailImage.setPosition(targetX, targetY);
         }
