@@ -419,7 +419,7 @@ export default class Snake {
       } else {
         this.snakeBodyImages[index].snakeBody.setPosition(targetX, targetY);
         // i.e. if the snake body tile needs to turn
-        if (previousDirection !== nextDirection) {
+        if (nextDirection && previousDirection !== nextDirection) {
           // We'll use another image to display a turn of the snake instead
           this.snakeBodyImages[index].snakeBody.visible = false;
 
@@ -434,7 +434,7 @@ export default class Snake {
             "270-0": "4",
             "180-90": "4"  
           };
-  
+
           const key = `${previousDirection}-${nextDirection}`;
           const texture = directionMapping[key];
 
