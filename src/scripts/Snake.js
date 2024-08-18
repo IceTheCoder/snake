@@ -97,20 +97,47 @@ export default class Snake {
   create() {
     this.snakeX = this.initialSnakeX;
     this.snakeY = this.initialSnakeY;
+    
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "");
     this.snake.visible = false;
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
-    // Have a snake image for animations
-    this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
+    // Set the initial snake length to 3
+    this.snakeLength = 3;
+    
+    // Initialize the snake body with the correct length
+    this.snakePositions = [
+      [this.snakeX - 2 * this.TILE_SIZE, this.snakeY],  // Tail position
+      [this.snakeX - this.TILE_SIZE, this.snakeY],      // Body position
+      [this.snakeX, this.snakeY]                        // Head position
+    ]
+
+    this.snakeDirections = [0, 0, 0] // All parts are intially moving to the right
+    
+    // Create snake head
+    this.snakeHeadImage = this.scene.add.image(this.snakePositions[2][0], this.snakePositions[2][1], "snake");
     this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+    this.snakeHeadImage.depth = 100;
 
-    this.snakeTailImage = this.scene.add.image(this.snakeX - this.TILE_SIZE, this.snakeY, "snake-tail");
+    // Create body segments
+    for (let i = 0; i < 2; i++) {
+      let position = this.snakePositions[i];
+      let bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", position[0], position[1]);
+      bodyImage.create();
+      this.snakeBodyImages.push(bodyImage);
+    }
+
+    // Create tail
+    let tailPosition = this.snakePositions[0]
+    this.snakeTailImage = this.scene.add.image(tailPosition[0], tailPosition[1], "snake-tail");
     this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-    this.snakeTailImage.visible = false;
+    this.snakeTailImage.depth = 99;     // https://www.youtube.com/watch?v=TTtgXd5qJko
 
-    // KEEP THESE UP HERE
-    // If they're up here, the snake will update INSTANTLY to being a length of 3 instead of 1
+    let bodyImage = this.scene.add.image(this.snakePositions[1][0], this.snakePositions[1][1], "snake-body");
+    bodyImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+    this.snakeBodyImages.push({ snakeBody: bodyImage });
+
+    // Start moving the snake and update the body images
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
@@ -123,10 +150,7 @@ export default class Snake {
     document.getElementById("game-over-high-score").className = "scene-2 game-over";
     document.getElementById("game-over-score").className = "scene-2 game-over";
 
-    // https://www.youtube.com/watch?v=TTtgXd5qJko
-    // Make sure the snake head is above all other objects
-    this.snakeHeadImage.depth = 100;
-    this.snakeTailImage.depth = 99;
+    this.animation = true;
 
     /* Dedicated swipe script 
     // https://www.youtube.com/watch?v=nqLUfoO4TR0
@@ -156,7 +180,6 @@ export default class Snake {
           }
         } 
       });  */
-    this.animation = true;
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
