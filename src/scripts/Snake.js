@@ -133,10 +133,6 @@ export default class Snake {
     this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
     this.snakeTailImage.depth = 99;     // https://www.youtube.com/watch?v=TTtgXd5qJko
 
-    let bodyImage = this.scene.add.image(this.snakePositions[1][0], this.snakePositions[1][1], "snake-body");
-    bodyImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-    this.snakeBodyImages.push({ snakeBody: bodyImage });
-
     // Start moving the snake and update the body images
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
@@ -350,7 +346,6 @@ export default class Snake {
 
     let previousDirection = this.snakeDirections[index];
     let nextDirection = this.snakeDirections[index + 1];
-
 
     if (this.snakeBodyImages[index]) {  
       this.snakeBodyImages[index].snakeBody.visible = true;
