@@ -89,6 +89,7 @@ export default class Snake {
     this.scene.load.image("3", "assets/3.png");
     this.scene.load.image("4", "assets/4.png");
     this.scene.load.image("snake-tail", "assets/snake-tail.png");
+    this.scene.load.image("f", "assets/snake-body-f.png");
   }
 
   /**
@@ -99,7 +100,7 @@ export default class Snake {
     this.snakeY = this.initialSnakeY;
     
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "");
-    this.snake.visible = false;
+    //this.snake.visible = false;
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     // Set the initial snake length to 3
@@ -107,35 +108,46 @@ export default class Snake {
     
     // Initialize the snake body with the correct length
     this.snakePositions = [
-      [this.snakeX - 2 * this.TILE_SIZE, this.snakeY],  // Tail position
-      [this.snakeX - this.TILE_SIZE, this.snakeY],      // Body position
-      [this.snakeX, this.snakeY]                        // Head position
+      [this.snakeX - 2 * this.TILE_SIZE, this.snakeY],
+      [this.snakeX - this.TILE_SIZE, this.snakeY]
     ]
 
-    this.snakeDirections = [0, 0, 0] // All parts are intially moving to the right
+    this.snakeDirections = [0, 0] // All parts are intially moving to the right
     
     // Create snake head
-    this.snakeHeadImage = this.scene.add.image(this.snakePositions[2][0], this.snakePositions[2][1], "snake");
+    this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
     this.snakeHeadImage.depth = 100;
 
     // Create body segments
-    for (let i = 0; i < 2; i++) {
-      let position = this.snakePositions[i];
-      let bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", position[0], position[1]);
-      bodyImage.create();
-      this.snakeBodyImages.push(bodyImage);
-    }
+    //for (let i = 0; i < 1; i++) {
+    //  let position = this.snakePositions[i];
+    //  let bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", position[0], position[1]);
+    //  bodyImage.create();
+    //  this.snakeBodyImages.push(bodyImage);
+    //}
 
+    let position;
+    let bodyImage;
+
+    position = this.snakePositions[0];
+    bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", position[0], position[1]);
+    bodyImage.create();
+    this.snakeBodyImages.push(bodyImage);
+
+    position = this.snakePositions[1];
+    bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", position[0], position[1]);
+    bodyImage.create();
+    this.snakeBodyImages.push(bodyImage);
+  
     // Create tail
-    let tailPosition = this.snakePositions[0]
+    let tailPosition = this.snakePositions[1]
     this.snakeTailImage = this.scene.add.image(tailPosition[0], tailPosition[1], "snake-tail");
     this.snakeTailImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
     this.snakeTailImage.depth = 99;     // https://www.youtube.com/watch?v=TTtgXd5qJko
 
     // Start moving the snake and update the body images
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
@@ -253,21 +265,11 @@ export default class Snake {
     }
   }
 
-  callUpdateSnakeBodyImage() {
-    if (this.snakePositions.length !== 0) {
-      for (let i = 0; i < this.snakePositions.length; i++) {
-        this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
-      }  
-    }
-  }
-
   /**
    * Move the snake by 1 tile in the correct direction, wrap around the screen when going through
    * a wall, store the snake body tiles' positions, and update them accordingly.
    */
   move() {
-    console.log(this.snakePositions[0]);
-
     switch (this.direction) {
       case 0:
         this.snakeX += this.TILE_SIZE;
@@ -310,7 +312,6 @@ export default class Snake {
     }
 
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
 
     if (this.direction !== 90 && this.direction !== 270) {
       this.snakeHeadImage.setRotation(this.degreesToRadians(this.direction));
@@ -318,7 +319,9 @@ export default class Snake {
       this.snakeHeadImage.setRotation(this.degreesToRadians(270));
     } else if (this.direction === 270) {
       this.snakeHeadImage.setRotation(this.degreesToRadians(90));
-    }  
+    }
+
+    this.callUpdateSnakeBodyImage();
   }
 
   /**
@@ -334,26 +337,39 @@ export default class Snake {
     }
   }
 
+  callUpdateSnakeBodyImage() {
+    if (this.snakeBodyImages.length !== 0) {
+      for (let i = 0; i < this.snakeBodyImages.length; i++) {
+        this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
+      }  
+    }
+  }
+
   /**
    * Updates the snake body image position.
    * @param {number} index - The index of the snake body image
    * @param {Array.<number>} position - The position array for the corresponding snake body image.
    * @param {number} direction - The direction for the corresponding snake body image.
    */
-  updateSnakeBodyImage(index, position, direction) {    
+  updateSnakeBodyImage(index, position, direction) {  
     let targetX = position[0];
     let targetY = position[1];
 
+    if (index === 1) {
+      // Make sure the tail doesn't overlap
+      this.snakeBodyImages[index].snakeBody.depth = 99;
+    }
+  
     let previousDirection = this.snakeDirections[index];
     let nextDirection = this.snakeDirections[index + 1];
-
+  
     if (this.snakeBodyImages[index]) {  
       this.snakeBodyImages[index].snakeBody.visible = true;
 
       // If it's the last snake body image (the tail)
       if (index === 0) {
         // We'll use an image independent from the actual tail
-        this.snakeBodyImages[index].snakeBody.visible = false;
+        this.snakeBodyImages[index].snakeBody.visible = true;
         this.snakeTailImage.visible = true;
 
         // The tail has to correspond with the next body tile after it
@@ -447,7 +463,6 @@ export default class Snake {
               let turnImage = this.scene.add.image(this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y, texture);
               turnImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
               this.turnImages.push(turnImage);
-              console.log(this.turnImages);
               this.turnImagePositions.push([this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y]);  
             }
           } else {
@@ -456,7 +471,7 @@ export default class Snake {
         }
         // Ensures the snake body is pointed in the correct direction
         else {
-          this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
+          //this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
           } else if (direction === 90) {
