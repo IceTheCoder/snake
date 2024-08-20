@@ -33,7 +33,7 @@ export default class SnakeBody {
   create() {
     this.snakeBody = this.scene.add.image(this.snakeX, this.snakeY, this.imageName);
     this.snakeBody.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-    this.snakeBody.visible = true;
+    this.snakeBody.visible = false;
   }
 
   /**
