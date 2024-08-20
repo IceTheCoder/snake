@@ -323,11 +323,11 @@ export default class Snake {
     this.snake.setPosition(this.snakeX, this.snakeY);
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
-    this.snakeDirections.push(this.direction);
-
     if (this.snakePositions.length > this.snakeLength) {
       this.snakePositions.shift();
     }
+
+    this.snakeDirections.push(this.direction);
     if (this.snakeDirections.length > this.snakeLength) {
       this.snakeDirections.shift();
     }
