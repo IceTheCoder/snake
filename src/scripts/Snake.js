@@ -324,7 +324,6 @@ export default class Snake {
       }
     })
 
-
     this.snakePositions.push([this.snakeX, this.snakeY]);
     if (this.snakePositions.length > this.snakeLength) {
       this.snakePositions.shift();
@@ -391,8 +390,8 @@ export default class Snake {
     let previousDirection = this.snakeDirections[index];
     let nextDirection = this.snakeDirections[index + 1];
   
-    if (this.snakeBodyImages[index]) {  
-      this.snakeBodyImages[index].snakeBody.visible = true;
+    if (this.snakeBodyImages[index]) {
+      this.snakeBodyImages[index].snakeBody.visible = false;
 
       // If it's the last snake body image (the tail)
       if (index === 0) {
@@ -488,6 +487,7 @@ export default class Snake {
         }
         // Ensures the snake body is pointed in the correct direction
         else {
+          this.snakeBodyImages[index].snakeBody.visible = true;
           this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
