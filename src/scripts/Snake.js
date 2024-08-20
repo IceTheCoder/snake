@@ -333,6 +333,9 @@ export default class Snake {
       this.snakeDirections.shift();
     }
 
+    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+    this.scene.time.delayedCall(this.timeBetweenEachMove, this.callUpdateSnakeBodyImage, [], this);
+
     if (this.direction !== 90 && this.direction !== 270) {
       this.snakeHeadImage.setRotation(this.degreesToRadians(this.direction));
     } else if (this.direction === 90) {
@@ -341,9 +344,6 @@ export default class Snake {
       this.snakeHeadImage.setRotation(this.degreesToRadians(90));
     }
 
-    this.callUpdateSnakeBodyImage();
-
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
   }
 
   /**
@@ -396,7 +396,6 @@ export default class Snake {
       if (index === 0) {
         // We'll use an image independent from the actual tail
         this.snakeBodyImages[index].snakeBody.visible = false;
-        this.snakeTailImage.visible = true;
 
         // The tail has to correspond with the next body tile after it
         let nextSnakeDirection = this.snakeDirections[1];
@@ -410,24 +409,14 @@ export default class Snake {
         }
 
         // The tail needs to keep up with the next body tile
-        if (this.animation) {
-          if (this.snakePositions[1]) {
-            targetX = this.snakePositions[1][0];
-            targetY = this.snakePositions[1][1];  
-          } else {
-            targetX = this.snakeX;
-            targetY = this.snakeY;
-          }  
+        if (this.snakePositions[1]) {
+          targetX = this.snakePositions[1][0];
+          targetY = this.snakePositions[1][1];  
         } else {
-          if (this.snakePositions[0]) {
-            targetX = this.snakePositions[0][0];
-            targetY = this.snakePositions[0][1];  
-          } else {
-            targetX = this.snakeX;
-            targetY = this.snakeY;
-          }
-        }
-
+          targetX = this.snakeX;
+          targetY = this.snakeY;
+        }  
+        
         if (this.animation) {
           this.snakeTween = this.scene.tweens.add({
             targets: this.snakeTailImage,
