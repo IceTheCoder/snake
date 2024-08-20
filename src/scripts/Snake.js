@@ -104,7 +104,7 @@ export default class Snake {
     this.snakeY = this.initialSnakeY;
     
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "");
-    //this.snake.visible = false;
+    this.snake.visible = false;
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
     // Set the initial snake length to 3
@@ -497,7 +497,7 @@ export default class Snake {
         }
         // Ensures the snake body is pointed in the correct direction
         else {
-          //this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
+          this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
           } else if (direction === 90) {
