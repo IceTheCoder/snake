@@ -319,9 +319,11 @@ export default class Snake {
       y: targetY,
       duration: this.timeBetweenEachMove,
       ease: 'Linear',
+      onComplete: () => {
+        this.snake.setPosition(this.snakeX, this.snakeY);
+      }
     })
 
-    this.snake.setPosition(this.snakeX, this.snakeY);
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
     if (this.snakePositions.length > this.snakeLength) {
