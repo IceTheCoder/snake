@@ -381,11 +381,6 @@ export default class Snake {
     if (this.firstAnimationDone === false) {
       return;
     }
-
-    if (index === 1) {
-      // Make sure the tail doesn't overlap
-      this.snakeBodyImages[index].snakeBody.depth = 99;
-    }
   
     let previousDirection = this.snakeDirections[index];
     let nextDirection = this.snakeDirections[index + 1];
@@ -478,6 +473,7 @@ export default class Snake {
             if (occupied === false) {
               let turnImage = this.scene.add.image(this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y, texture);
               turnImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
+              turnImage.depth = 98;
               this.turnImages.push(turnImage);
               this.turnImagePositions.push([this.snakeBodyImages[index].snakeBody.x, this.snakeBodyImages[index].snakeBody.y]);  
             }
@@ -488,6 +484,7 @@ export default class Snake {
         // Ensures the snake body is pointed in the correct direction
         else {
           this.snakeBodyImages[index].snakeBody.visible = true;
+          this.snakeBodyImages[index].snakeBody.depth = 97;
           this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
