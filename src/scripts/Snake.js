@@ -275,7 +275,8 @@ export default class Snake {
      * @param {number} degrees 0, 90, 180, 270
      */
 
-    if (this.canChangeDirection && direction !== this.direction && direction !== this.oppositeDegrees(this.direction)) {
+    // Only allow changing direction after moving one tile
+    if (this.firstAnimationDone && this.canChangeDirection && direction !== this.direction && direction !== this.oppositeDegrees(this.direction)) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
       this.direction = direction;
