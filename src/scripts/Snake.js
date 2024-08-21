@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 1500;
+    this.timeBetweenEachMove = 5000;
 
     /** @type {number} */
     this.direction = 0;
