@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 5000;
+    this.timeBetweenEachMove = 500;
 
     /** @type {number} */
     this.direction = 0;
@@ -493,7 +493,10 @@ export default class Snake {
           } else if (direction === 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
           }
-        }  
+          let headMask = this.snakeHeadImage.createBitmapMask();
+          this.snakeBodyImages[index].snakeBody.setMask(headMask);
+
+        }
       }
     }
   }
