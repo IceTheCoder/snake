@@ -51,8 +51,6 @@ export default class Snake {
 
     /** @type {Phaser.GameObjects.Image|null} */
     this.snake = null; // Placeholder for the snake image
-    /** @type {Phaser.GameObjects.Image|null} */
-    this.longSnakeHead = null;
 
     // Snake growing variables
     /** @type {number} */
@@ -124,10 +122,7 @@ export default class Snake {
     // Create snake head
     this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-    this.snakeHeadImage.depth = 100;
-
-    this.longSnakeHead = this.scene.add.image(this.snakeX, this.snakeY, "long-snake");
-    
+    this.snakeHeadImage.depth = 100;    
 
     // Create body segments
     //for (let i = 0; i < 1; i++) {
