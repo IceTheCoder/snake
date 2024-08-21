@@ -28,7 +28,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 500;
+    this.timeBetweenEachMove = 1000;
 
     /** @type {number} */
     this.direction = 0;
@@ -51,6 +51,8 @@ export default class Snake {
 
     /** @type {Phaser.GameObjects.Image|null} */
     this.snake = null; // Placeholder for the snake image
+    /** @type {Phaser.GameObjects.Image|null} */
+    this.longSnakeHead = null;
 
     // Snake growing variables
     /** @type {number} */
@@ -94,6 +96,7 @@ export default class Snake {
     this.scene.load.image("4", "assets/4.png");
     this.scene.load.image("snake-tail", "assets/snake-tail.png");
     this.scene.load.image("f", "assets/snake-body-f.png");
+    this.scene.load.image("long", "assets/long=snake.png")
   }
 
   /**
@@ -122,6 +125,9 @@ export default class Snake {
     this.snakeHeadImage = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snakeHeadImage.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
     this.snakeHeadImage.depth = 100;
+
+    this.longSnakeHead = this.scene.add.image(this.snakeX, this.snakeY, "long-snake");
+    
 
     // Create body segments
     //for (let i = 0; i < 1; i++) {
@@ -387,6 +393,7 @@ export default class Snake {
   
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.visible = false;
+      this.snakeBodyImages[index].snakeBody.clearMask(true);
 
       // If it's the last snake body image (the tail)
       if (index === 0) {
@@ -484,7 +491,7 @@ export default class Snake {
         // Ensures the snake body is pointed in the correct direction
         else {
           this.snakeBodyImages[index].snakeBody.visible = true;
-          this.snakeBodyImages[index].snakeBody.depth = 97;
+          this.snakeBodyImages[index].snakeBody.depth = 105;
           this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
@@ -493,9 +500,17 @@ export default class Snake {
           } else if (direction === 270) {
             this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
           }
-          let headMask = this.snakeHeadImage.createBitmapMask();
-          this.snakeBodyImages[index].snakeBody.setMask(headMask);
 
+          // Masks (make sure body images don't fill up the transparent areas created by the head
+          // tail tail curvatures)
+          if (index === 1) {
+            let tailMask = this.snakeTailImage.createBitmapMask();
+            this.snakeBodyImages[index].snakeBody.setMask(tailMask);  
+          }
+          if (index === this.snakeBodyImages.length - 1) {
+            let headMask = this.snakeHeadImage.createBitmapMask();
+            this.snakeBodyImages[index].snakeBody.setMask(headMask);  
+          }
         }
       }
     }
