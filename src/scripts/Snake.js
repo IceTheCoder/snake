@@ -503,8 +503,20 @@ export default class Snake {
             this.snakeBodyImages[index].snakeBody.setMask(tailMask);  
           }
           if (index === this.snakeBodyImages.length - 1) {
-            let headMask = this.snakeHeadImage.createBitmapMask();
-            this.snakeBodyImages[index].snakeBody.setMask(headMask);  
+            let maskGraphics = this.scene.add.graphics({ x: 0, y: 0, add: false });
+
+            maskGraphics.fillRect(
+              this.snakeBodyImages[index].snakeBody.x - this.TILE_SIZE / 2,
+              this.snakeBodyImages[index].snakeBody.y - this.TILE_SIZE / 2,
+              this.TILE_SIZE, this.TILE_SIZE
+            );
+
+            let headMask = maskGraphics.createGeometryMask();
+
+            this.snakeBodyImages[index].snakeBody.setMask(headMask);
+
+            //let headMask = this.snakeHeadImage.createBitmapMask();
+            //this.snakeBodyImages[index].snakeBody.setMask(headMask);  
           }
         }
       }
