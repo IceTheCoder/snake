@@ -80,6 +80,8 @@ export default class Snake {
     // Only allow turning and show body images after the first animation is done
     /** @type {boolean} */
     this.firstAnimationDone = false;
+
+    this.fuck = null;
   }
 
   /**
@@ -249,6 +251,17 @@ export default class Snake {
         this.canChangeDirection = true;
       }
     }
+
+    // NOTE: THE SNAKE HEAD **IMAGE** IS UPDATED GRADUALLY BY ANIMATION,
+    // THE SNAKE HEAD ITSELF IS JUST TELEPORTED EVERY TIME BETWEEN EACH MOVE MILLISECONDS 
+    if (this.fuck) {
+      this.fuck.setPosition(
+        (this.snakeHeadImage.x + this.snakeBodyImages[this.snakeBodyImages.length - 1].snakeBody.x) / 2,
+        (this.snakeHeadImage.y + this.snakeBodyImages[this.snakeBodyImages.length - 1].snakeBody.y) / 2
+        // TODO: OFFSET THIS "FILLER" SNAKE BODY IMAGE SO IT DOESN'T COVER THE GAPS MADE BY
+        // THE CURVATURE OF THE SNAKE HEAD.
+      );
+    }
   }
   
   oppositeDegrees(degrees) {
@@ -378,6 +391,10 @@ export default class Snake {
   updateSnakeBodyImage(index, position, direction) {
     let targetX = position[0];
     let targetY = position[1];
+    
+    if (this.fuck) {
+      this.fuck.destroy();
+    }
 
     if (this.firstAnimationDone === false) {
       return;
@@ -503,22 +520,18 @@ export default class Snake {
             this.snakeBodyImages[index].snakeBody.setMask(tailMask);  
           }
           if (index === this.snakeBodyImages.length - 1) {
-            let maskGraphics = this.scene.add.graphics({ x: 0, y: 0, add: false });
-
-            maskGraphics.fillRect(
-              this.snakeBodyImages[index].snakeBody.x - this.TILE_SIZE / 2,
-              this.snakeBodyImages[index].snakeBody.y - this.TILE_SIZE / 2,
-              this.TILE_SIZE, this.TILE_SIZE
-            );
-
-            let headMask = maskGraphics.createGeometryMask();
-
-            this.snakeBodyImages[index].snakeBody.setMask(headMask);
-
-            //let headMask = this.snakeHeadImage.createBitmapMask();
-            //this.snakeBodyImages[index].snakeBody.setMask(headMask);  
+            let headMask = this.snakeHeadImage.createBitmapMask();
+            this.snakeBodyImages[index].snakeBody.setMask(headMask); 
+            this.fuck = this.scene.add.image(
+              (this.snakeBodyImages[index].snakeBody.x + this.snakeBodyImages[index - 1].snakeBody.x) / 2, 
+              (this.snakeBodyImages[index].snakeBody.y + this.snakeBodyImages[index - 1].snakeBody.y) / 2, 
+              "snake-body");
+            this.fuck.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
           }
         }
+
+        // Make a body image be the average between the first before the snake head and the one
+        // before that one
       }
     }
   }
