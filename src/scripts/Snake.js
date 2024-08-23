@@ -1,5 +1,4 @@
 import SnakeBody from "./SnakeBody.js";
-/* import { Swipe } from "./Swipe.js"; */
 
 /**
  * Generate the snake, handle its control, increase its length etc.
@@ -101,35 +100,6 @@ export default class Snake {
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     // Make sure the snake head is above all other objects
     this.snake.depth = 100;
-
-    /* Dedicated swipe script 
-    // https://www.youtube.com/watch?v=nqLUfoO4TR0
-    const swipe = new Swipe(this.scene, {
-      swipeDetectedCallback: (direction) => {
-        switch(direction) {
-          case 180:
-            if (this.direction !== 0 && this.canChangeDirection) {
-              this.changeDirection(180);
-            }
-            break;
-          case 0:
-            if (this.direction !== 180 && this.canChangeDirection) {
-              this.changeDirection(0);
-            }
-            break;
-          case 90:
-            if (this.direction !== 270 && this.canChangeDirection) {
-              this.changeDirection(90);
-            }
-            break;
-          case 270:
-            if (this.direction !== 90 && this.canChangeDirection) {
-              this.changeDirection(270);
-            }
-            break;
-          }
-        } 
-      });  */
     
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
   }
