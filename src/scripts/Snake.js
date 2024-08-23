@@ -49,7 +49,7 @@ export default class Snake {
     this.storedSnakePosition = [];
 
     /** @type {Phaser.GameObjects.Image|null} */
-    this.snake = null; // Placeholder for the snake image
+    this.snake = null;
 
     // Snake growing variables
     /** @type {number} */
@@ -98,7 +98,6 @@ export default class Snake {
     document.getElementById("game-over-score").className = "scene-2 game-over";
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
-    // Make sure the snake head is above all other objects
     this.snake.depth = 100;
     
     this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
@@ -113,18 +112,12 @@ export default class Snake {
     return degrees * (Math.PI / 180);
   }
 
-  // Arrow and WASD keys controls
   /**
    * Handle changing direction correctly.
    * @param {Phaser.Input.Keyboard.CursorKeys} cursors 
    * @param {Object} wasd 
    */
   update(cursors, wasd) {
-    // NOTE: I've added the extra condition so we can't change the direction to the same value it already is.
-    // Changing the direction to any value triggers a pause in the ability to change direction (while canChangeDirection is false).
-    // During the pause, the snake can't change direction, 
-    // leading to a delay in changing direction legally (i.e. no 180-degree turns in the same row/column) if the inputs are succeded quickly.
-    // As such, we must remove unnecessary pauses, thereby we must introduce the extra condition.
     if (cursors.left.isDown || wasd.left.isDown) {
       this.changeDirection(180);
     } else if (cursors.right.isDown || wasd.right.isDown) {
@@ -136,7 +129,6 @@ export default class Snake {
     }
 
     if (!this.canChangeDirection) {
-      // If the snake has moved
       if (this.snakeX !== this.storedSnakePosition[0] || this.snakeY !== this.storedSnakePosition[1]) {
         this.canChangeDirection = true;
       }
@@ -161,7 +153,6 @@ export default class Snake {
    * @param {number} direction - The direction (in degrees) the snake will change to. 
    */
   changeDirection(direction) {
-    // Make sure the direction isn't change to the same or opposite direction
     /**
      * Returns the number of degrees opposite to the argument given.
      * 180 if 0 degrees, 270 if 90 degrees, 0 if 180 degrees, 90 if 270 degrees.
@@ -255,13 +246,13 @@ export default class Snake {
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.visible = true;
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
-      // This condition checks if the snake body needs to turn
       
-      // If it's the last snake body image
+      // index 0 is the last snake body image
       if (index === 0) {
         this.snakeBodyImages[index].snakeBody.setTexture("snake-tail");
-        // The tail has to correspond with the next body tile after it
+        // The tail direction has to correspond with the next body tile after it
         let nextSnakeDirection = this.snakeDirections[1];
+
         // For some reason 90 and 270 have to be reversed
         if (nextSnakeDirection !== 90 && nextSnakeDirection !== 270) {
           this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(nextSnakeDirection));
@@ -299,7 +290,7 @@ export default class Snake {
             console.error("No texture found!");
           }
         }
-        // Ensures the snake body is pointed in the correct direction
+        // Ensure the snake body is pointed in the correct direction
         else {
           this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
           if (direction !== 90 && direction !== 270) {
@@ -320,7 +311,6 @@ export default class Snake {
   onCollision() {
     this.snakeLength += 1;
 
-    // New high score
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
       document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
@@ -335,7 +325,7 @@ export default class Snake {
 
     document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
 
-    let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", this.snakeX, this.snakeY); // Instantiate new snake body image
+    let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", this.snakeX, this.snakeY);
     newBodyImage.create();
     this.snakeBodyImages.push(newBodyImage);
   }
