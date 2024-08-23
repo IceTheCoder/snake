@@ -31,8 +31,6 @@ export default class Snake {
 
     /** @type {number} */
     this.direction = 0;
-    /** @type {number|null} */
-    this.cachedDirection = null;
     /** @type {boolean} */
     this.canChangeDirection = true;
 
