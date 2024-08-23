@@ -6,7 +6,7 @@ import SnakeBody from "./SnakeBody.js";
  * @param {number} tileSize - The size of one tile.
  * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
  * @param {number} gridHeight - The height of the grid, expressed by number of tiles.
- * @param {number} timeBetweenEachMove - The time (in milliseconds) between each snake movement by 1 tile.
+ * @param {number} moveInterval - The time (in milliseconds) between each snake movement by 1 tile.
  */
 export default class Snake {
   /**
@@ -15,9 +15,9 @@ export default class Snake {
    * @param {number} tileSize - The size of one tile.
    * @param {number} gridWidth - The width of the grid, expressed by number of tiles.
    * @param {number} gridHeight - The height of the grid, expressed by numer of tiles.
-   * @param {number} timeBetweenEachMove - The time (in milliseconds) between each snake movement by 1 tile.
+   * @param {number} moveInterval - The time (in milliseconds) between each snake movement by 1 tile.
    */
-  constructor(scene, tileSize, gridWidth, gridHeight, timeBetweenEachMove) {
+  constructor(scene, tileSize, gridWidth, gridHeight, moveInterval) {
     /** @type {Phaser.scene} */
     this.scene = scene;
     /** @type {number} */
@@ -27,7 +27,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.timeBetweenEachMove = 300;
+    this.moveInterval = 300;
 
     /** @type {number} */
     this.direction = 0;
@@ -100,7 +100,7 @@ export default class Snake {
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     this.snake.depth = 100;
     
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+    this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -209,7 +209,7 @@ export default class Snake {
       this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
     }
 
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
+    this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
 
     if (this.direction !== 90 && this.direction !== 270) {
       this.snake.setRotation(this.degreesToRadians(this.direction));
