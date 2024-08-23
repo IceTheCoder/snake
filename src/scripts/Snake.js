@@ -88,8 +88,6 @@ export default class Snake {
     this.snakeY = this.initialSnakeY;
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-
-    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
     
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
@@ -132,6 +130,27 @@ export default class Snake {
           }
         } 
       });  */
+
+    
+    //let newBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake", 
+    //  this.snakeX - this.TILE_SIZE * 2, this.snakeY); // Instantiate new snake body image
+    //newBodyImage.create();
+    //this.snakeBodyImages.push(newBodyImage);
+    //this.snakePositions.push([this.snakeX - this.TILE_SIZE * 2, this.snakeY]);
+//
+    //this.snakeLength += 1;
+//
+    //let newBodyImage2 = new SnakeBody(this.scene, this.TILE_SIZE, "snake",
+    //   this.snakeX - this.TILE_SIZE, this.snakeY); // Instantiate new snake body image
+    //newBodyImage2.create();
+    //this.snakeBodyImages.push(newBodyImage2);
+    //this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
+//
+    //this.snakeLength += 1;
+//
+    //this.snakePositions.push([this.snakeX, this.snakeY]); 
+    
+    this.scene.time.delayedCall(this.timeBetweenEachMove, this.move, [], this);
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
