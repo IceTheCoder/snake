@@ -126,15 +126,13 @@ export default class Snake {
   }
   
   getOppositeDegrees(degrees) {
-    if (degrees === 0) {
-      return 180;
-    } else if (degrees === 90) {
-      return 270;
-    } else if (degrees === 180) {
-      return 0;
-    } else if (degrees === 270) {
-      return 90;
-    }
+    const opposites = {
+      0: 180,
+      90: 270,
+      180: 0,
+      270: 90,
+    };
+    return opposites[degrees];
   }
 
   /**
