@@ -207,13 +207,7 @@ export default class Snake {
 
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
 
-    if (this.direction !== 90 && this.direction !== 270) {
-      this.snake.setRotation(this.degreesToRadians(this.direction));
-    } else if (this.direction === 90) {
-      this.snake.setRotation(this.degreesToRadians(270));
-    } else if (this.direction === 270) {
-      this.snake.setRotation(this.degreesToRadians(90));
-    }  
+    this.advancedDegreesToRadians(this.direction, -1);
   }
 
   /**
@@ -289,17 +283,39 @@ export default class Snake {
         // Ensure the snake body is pointed in the correct direction
         else {
           this.snakeBodyImages[index].snakeBody.setTexture("snake-body");
-          if (direction !== 90 && direction !== 270) {
-            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
-          } else if (direction === 90) {
-            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
-          } else if (direction === 270) {
-            this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
-          }  
+          this.advancedDegreesToRadians(direction, index);
         }  
       }
     }
   }
+
+  /**
+   * Convert direction to radians, taking into account inverting 90 and 270 degrees.
+   * Pass an index of -1 to apply the code to the snake head.
+   * @param {number} direction - The direction in degrees that should be converted to radians
+   * @param {number} index - The index of the snake body image or -1 for the snake head.
+   */
+  advancedDegreesToRadians(direction, index) {
+    if (index === -1) {
+      if (direction !== 90 && direction !== 270) {
+        this.snake.setRotation(this.degreesToRadians(direction));
+      } else if (direction === 90) {
+        this.snake.setRotation(this.degreesToRadians(270));
+      } else if (direction === 270) {
+        this.snake.setRotation(this.degreesToRadians(90));
+      }  
+    } else {
+      console.log(index);
+      if (direction !== 90 && direction !== 270) {
+        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
+      } else if (direction === 90) {
+        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(270));
+      } else if (direction === 270) {
+        this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(90));
+      }  
+    }
+  }
+
 
   /**
    * Create a new snake body image on collision with a fruit.
