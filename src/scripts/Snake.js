@@ -18,7 +18,7 @@ export default class Snake {
    * @param {number} moveInterval - The time (in milliseconds) between each snake movement by 1 tile.
    */
   constructor(scene, tileSize, gridWidth, gridHeight, moveInterval) {
-    /** @type {Phaser.scene} */
+    /** @type {Phaser.Scene} */
     this.scene = scene;
     /** @type {number} */
     this.TILE_SIZE = tileSize;
@@ -35,33 +35,27 @@ export default class Snake {
     this.canChangeDirection = true;
 
     /** @type {number} */
-    this.initialSnakeX = Math.floor(this.GRID_WIDTH / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
-    /** @type {number} */
-    this.initialSnakeY = Math.floor(this.GRID_HEIGHT / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
-
-    /** @type {number|null} */
     this.snakeX = Math.floor(this.GRID_WIDTH / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
-    /** @type {number|null} */
+    /** @type {number} */
     this.snakeY = Math.floor(this.GRID_HEIGHT / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
-    /** @type {Array.number} */
+    /** @type {number[]} */
     this.storedSnakePosition = [];
 
-    /** @type {Phaser.GameObjects.Image|null} */
+    /** @type {Phaser.GameObjects.Image} */
     this.snake = null;
 
     // Snake growing variables
     /** @type {number} */
     this.snakeLength = 1;
-    /** @type {Array.<Array>.<number>>} */
+    /** @type {number[][]} */
     this.snakePositions = [];
-    /** @type {Array.<Phaser.GameObjects.Image>} */
+    /** @type {<Phaser.GameObjects.Image>[]} */
     this.snakeBodyImages = [];
-    /** @type {Array.<number>>} */
+    /** @type {number[]} */
     this.snakeDirections = [];
 
     /** @type {number} */
     this.highScore;
-    /** @type {boolean} */
   }
 
   /**
@@ -226,7 +220,7 @@ export default class Snake {
   /**
    * Updates the snake body image position.
    * @param {number} index - The index of the snake body image
-   * @param {Array.<number>} position - The position array for the corresponding snake body image.
+   * @param {number[]} position - The position array for the corresponding snake body image.
    * @param {number} direction - The direction for the corresponding snake body image.
    */
   updateSnakeBodyImage(index, position, direction) {
@@ -361,7 +355,7 @@ export default class Snake {
 
   /**
    * Returns the snake positions array.
-   * @returns {Array.<Array.<number>>}
+   * @returns {number[][]}
    */
   getSnakePositions() {
     return this.snakePositions;
