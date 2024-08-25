@@ -131,7 +131,7 @@ export default class Snake {
     }
   }
   
-  oppositeDegrees(degrees) {
+  getOppositeDegrees(degrees) {
     if (degrees === 0) {
       return 180;
     } else if (degrees === 90) {
@@ -155,7 +155,7 @@ export default class Snake {
      * @param {number} degrees 0, 90, 180, 270
      */
 
-    if (this.canChangeDirection && direction !== this.direction && direction !== this.oppositeDegrees(this.direction)) {
+    if (this.canChangeDirection && direction !== this.direction && direction !== this.getOppositeDegrees(this.direction)) {
       this.storedSnakePosition = [this.snakeX, this.snakeY];
 
       this.direction = direction;
