@@ -40,9 +40,9 @@ export default class Snake {
     this.initialSnakeY = Math.floor(this.GRID_HEIGHT / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
 
     /** @type {number|null} */
-    this.snakeX = null;
+    this.snakeX = Math.floor(this.GRID_WIDTH / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
     /** @type {number|null} */
-    this.snakeY = null;
+    this.snakeY = Math.floor(this.GRID_HEIGHT / 2) * this.TILE_SIZE + this.TILE_SIZE / 2;
     /** @type {Array.number} */
     this.storedSnakePosition = [];
 
@@ -81,8 +81,6 @@ export default class Snake {
    * Initialize the snake, start moving the snake.
    */
   create() {
-    this.snakeX = this.initialSnakeX;
-    this.snakeY = this.initialSnakeY;
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
     
