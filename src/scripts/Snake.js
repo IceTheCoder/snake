@@ -27,7 +27,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.moveInterval = 50;
+    this.moveInterval = 300;
 
     /** @type {number} */
     this.direction = 0;
@@ -319,7 +319,6 @@ export default class Snake {
         this.snake.setRotation(this.degreesToRadians(90));
       }  
     } else {
-      console.log(index);
       if (direction !== 90 && direction !== 270) {
         this.snakeBodyImages[index].snakeBody.setRotation(this.degreesToRadians(direction));
       } else if (direction === 90) {

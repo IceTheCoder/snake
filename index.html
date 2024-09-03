@@ -12,6 +12,7 @@
     <script type="module" src="src/scripts/SnakeBody.js"></script>
     <script type="module" src="src/game.js"></script>
     <script type="module" src="src/scripts/LegacyGraphics.js"></script>
+    <script type="module" src="src/scripts/slider.js"></script>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/settings-style.css">
     <link rel="stylesheet" href="src/credits-style.css">
@@ -32,7 +33,14 @@
       <p id="placeholder" class="scene-1">Value of legacy: </p>
     </header>
     <!-- https://stackoverflow.com/questions/20526933/html-moving-phaser-into-container-div -->
-    <div id="phaser-game" class="scene-1 game-ui" style="display: none;"></div>
+    <div id="phaser-game" class="scene-1 game-ui" style="display: none;">
+      <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+      <div class="scene-1 slider-container">
+        <input type="range" min="50" max="2000" value="300" step="10"
+        class="scene-1 slider" id="moveIntervalRange">
+        <p class="scene-1" id="output">Default Value</p>
+      </div>
+    </div>
     <p id="test" class="scene-1"></p>
     <footer class="scene-1 game-ui" style="display: none;"></footer>
     <div id="game-over" class="scene-2" style="display: none;">
