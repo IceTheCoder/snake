@@ -27,7 +27,7 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
-    this.moveInterval = 300;
+    this.moveInterval = 50;
 
     /** @type {number} */
     this.direction = 0;
@@ -46,7 +46,7 @@ export default class Snake {
 
     // Snake growing variables
     /** @type {number} */
-    this.snakeLength = 1;
+    this.snakeLength = 3;
     /** @type {number[][]} */
     this.snakePositions = [];
     /** @type {<Phaser.GameObjects.Image>[]} */
@@ -77,7 +77,24 @@ export default class Snake {
   create() {
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
-    
+
+    let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
+      this.snakeX - 2 * this.TILE_SIZE, this.snakeY);
+    tailImage.create();
+    this.snakeBodyImages.push(tailImage);
+
+    let firstSnakeBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", 
+      this.snakeX - this.TILE_SIZE, this.snakeY);
+    firstSnakeBodyImage.create();
+    this.snakeBodyImages.push(firstSnakeBodyImage);
+
+    // The position the tail will move to
+    this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
+    // The position that first snake body image will move to
+    this.snakePositions.push([this.snakeX, this.snakeY]);
+
+    this.snakeDirections = [0, 0];
+
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
@@ -89,6 +106,11 @@ export default class Snake {
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     this.snake.depth = 100;
+    tailImage.snakeBody.depth = 100;
+    firstSnakeBodyImage.snakeBody.depth = 100;
+
+    tailImage.snakeBody.visible = true;
+    firstSnakeBodyImage.snakeBody.visible = true;
     
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
   }
@@ -224,7 +246,7 @@ export default class Snake {
   updateSnakeBodyImage(index, position, direction) {
     let x = position[0];
     let y = position[1];
-    
+
     if (this.snakeBodyImages[index]) {
       this.snakeBodyImages[index].snakeBody.visible = true;
       this.snakeBodyImages[index].snakeBody.setPosition(x, y);
