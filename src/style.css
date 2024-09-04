@@ -183,8 +183,18 @@ button:hover {
   color: black;
 }
 
+#x, #y {
+  width: 50px;
+  height: 25px;
+  text-align: center;
+}
+
 #submit {
   margin-top: 10px;
-  width: 100px;
   font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
+
