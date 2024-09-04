@@ -170,3 +170,21 @@ button:hover {
 #output {
   margin-top: 50px;
 }
+
+/* STARTING POSITION SETTINGS STYLES */
+#starting-position-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#x, #y, #submit {
+  background-color: white;
+  color: black;
+}
+
+#submit {
+  margin-top: 10px;
+  width: 100px;
+  font-size: 20px;
+}

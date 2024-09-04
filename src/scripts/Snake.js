@@ -114,6 +114,8 @@ export default class Snake {
 
     localStorage.setItem("sliderValue", this.moveInterval);
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
+
+    console.log(`X: ${this.snakeX}, y: ${this.snakeY}`)
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
