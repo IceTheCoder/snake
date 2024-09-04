@@ -111,7 +111,8 @@ export default class Snake {
 
     tailImage.snakeBody.visible = true;
     firstSnakeBodyImage.snakeBody.visible = true;
-    
+
+    localStorage.setItem("sliderValue", this.moveInterval);
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
   }
 
@@ -219,6 +220,7 @@ export default class Snake {
       this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
     }
 
+    this.moveInterval = localStorage.getItem("sliderValue");
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
 
     this.advancedDegreesToRadians(this.direction, -1);
