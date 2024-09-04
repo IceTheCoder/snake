@@ -13,6 +13,7 @@
     <script type="module" src="src/game.js"></script>
     <script type="module" src="src/scripts/LegacyGraphics.js"></script>
     <script type="module" src="src/scripts/slider.js"></script>
+    <script type="module" src="src/scripts/startingPos.js"></script>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/settings-style.css">
     <link rel="stylesheet" href="src/credits-style.css">
@@ -65,7 +66,10 @@
 
         <label class="scene-3" for="y">Starting Y</label><br>
         <input class="scene-3" type="number" id="y" name="y" value="5"><br>
-        <input class="scene-3" type="submit" id="submit">
+
+        <form class="scene-3" id="starting-position-form">
+          <input class="scene-3" type="submit" id="submit">
+        </form>
       </div>
       <button class="scene-3 main-menu-button">Back</button>
     </div>
