@@ -35,6 +35,13 @@ export default {
     elementsOfSelectedScene.forEach(element => {
       element.style.display = "flex";
     });
+
+    // But the hide the ones that should be hidden (i.e. the elements for testing)
+    allElements.forEach(element => {
+      if (element.classList.contains(`hide`)) {
+        element.style.display = "none";
+      }
+    })
   }
 }
 

@@ -9,7 +9,7 @@ if (localStorage.getItem("legacy") === "1") {
   document.getElementById("legacy-checkbox").checked = true;
 }
 
-document.getElementById("placeholder").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
+document.getElementById("legacy-value").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
 
 function legacyGraphics() {
   if (localStorage.getItem("legacy") === "1") {
@@ -19,5 +19,5 @@ function legacyGraphics() {
   }
   console.log(localStorage.getItem("legacy"))
   // Update legacy placeholder text
-  document.getElementById("placeholder").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
+  document.getElementById("legacy-value").innerHTML = `Value of legacy: ${localStorage.getItem("legacy")}`;
 }

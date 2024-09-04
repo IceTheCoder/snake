@@ -155,7 +155,7 @@ button:hover {
   cursor: pointer; /* Cursor on hover */
 }
 
-.slider-container {
+#slider-container {
   display: flex;
   flex-direction: column;
   align-items: center;

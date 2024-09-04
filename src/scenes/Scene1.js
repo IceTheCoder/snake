@@ -107,27 +107,27 @@ export class Scene1 extends Phaser.Scene {
       switch(event.direction) {
         case Hammer.DIRECTION_UP:
           console.log('%c Swipe up detected', 'color:red;');
-          document.getElementById("test").innerHTML = "Swipe up detected";
-          document.getElementById("test").style.color = "red";
+          document.getElementById("swipe-test").innerHTML = "Swipe up detected";
+          document.getElementById("swipe-test").style.color = "red";
           // Wait until the snake can change direction
           waitUntilCanChangeDirection(90);
           break;
         case Hammer.DIRECTION_DOWN:
           console.log('%c Swipe down detected', 'color:yellow;');
-          document.getElementById("test").innerHTML = "Swipe down detected";
-          document.getElementById("test").style.color = "yellow";
+          document.getElementById("swipe-test").innerHTML = "Swipe down detected";
+          document.getElementById("swipe-test").style.color = "yellow";
           waitUntilCanChangeDirection(270);
           break;
         case Hammer.DIRECTION_LEFT:
           console.log('%c Swipe left detected', 'color:green;');
-          document.getElementById("test").innerHTML = "Swipe left detected";
-          document.getElementById("test").style.color = "green";
+          document.getElementById("swipe-test").innerHTML = "Swipe left detected";
+          document.getElementById("swipe-test").style.color = "green";
           waitUntilCanChangeDirection(180);
           break;
         case Hammer.DIRECTION_RIGHT:
           console.log('%c Swipe right detected', 'color:blue;');
-          document.getElementById("test").innerHTML = "Swipe right detected";
-          document.getElementById("test").style.color = "blue";
+          document.getElementById("swipe-test").innerHTML = "Swipe right detected";
+          document.getElementById("swipe-test").style.color = "blue";
           waitUntilCanChangeDirection(0);
           break;
         default:
