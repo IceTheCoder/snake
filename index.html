@@ -60,14 +60,14 @@
         </label>        
       </div>
       <div id="starting-position-settings" class="scene-3">
-        <!-- https://www.w3schools.com/html/tryit.asp?filename=tryhtml_form_submit -->
-        <label class="scene-3" for="x">Starting X</label><br>
-        <input class="scene-3" type="number" id="x" name="x" value="5"><br>
-
-        <label class="scene-3" for="y">Starting Y</label><br>
-        <input class="scene-3" type="number" id="y" name="y" value="5"><br>
-
         <form class="scene-3" id="starting-position-form">
+          <!-- https://www.w3schools.com/html/tryit.asp?filename=tryhtml_form_submit -->
+          <label class="scene-3" for="x">Starting X</label><br>
+          <input class="scene-3" type="number" id="x" name="x" min="0" max="9"><br>
+
+          <label class="scene-3" for="y">Starting Y</label><br>
+          <input class="scene-3" type="number" id="y" name="y" min="0" max="9"><br>
+
           <input class="scene-3" type="submit" id="submit">
         </form>
       </div>

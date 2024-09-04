@@ -172,7 +172,7 @@ button:hover {
 }
 
 /* STARTING POSITION SETTINGS STYLES */
-#starting-position-settings {
+#starting-position-form {
   display: flex;
   flex-direction: column;
   align-items: center;
