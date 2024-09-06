@@ -83,28 +83,72 @@ export default class Snake {
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
-    let tailX = Phaser.Math.Wrap(this.snakeX - 2 * this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
+    if (!localStorage.getItem("length")) {
+      this.snakeLength = 3;
+    } else {
+       // Make sure we're not dealing with a string.
+      this.snakeLength = Number(localStorage.getItem("length"));
+    }
+
+
+    let tailX = Phaser.Math.Wrap(this.snakeX - ((this.snakeLength - 1) * this.TILE_SIZE), 0, 
+    this.GRID_WIDTH * this.TILE_SIZE)
     let tailY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
 
-    let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
-      tailX, tailY);
-    tailImage.create();
-    this.snakeBodyImages.push(tailImage);
+    if (this.snakeLength >= 2) {
+      let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
+        tailX, tailY);
+      tailImage.create();
+      this.snakeBodyImages.push(tailImage);
+      tailImage.snakeBody.depth = 100;
+      tailImage.snakeBody.visible = true;  
+    }
 
-    let bodyX = Phaser.Math.Wrap(this.snakeX - this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
-    let bodyY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+    for (let i = this.snakeLength - 2; i > 0; i--) {
+      let bodyX = Phaser.Math.Wrap(this.snakeX - (i * this.TILE_SIZE), 0,
+        this.GRID_WIDTH * this.TILE_SIZE);
+      let bodyY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+      
+      let bodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", bodyX, bodyY);
+      bodyImage.create();
+      this.snakeBodyImages.push(bodyImage);
 
-    let firstSnakeBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", 
-      bodyX, bodyY);
-    firstSnakeBodyImage.create();
-    this.snakeBodyImages.push(firstSnakeBodyImage);
+      this.snakePositions.push([bodyX, bodyY]);
+
+      this.snakeDirections.push(0);
+
+      bodyImage.snakeBody.depth = 100;
+      bodyImage.snakeBody.visible = true;
+    }
+
+    this.snakePositions.push([this.snakeX, this.snakeY]);
+    this.snakeDirections.push(0);
+
+    console.log(this.snakeBodyImages.length);
+
+
+    //let tailX = Phaser.Math.Wrap(this.snakeX - 2 * this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
+    //let tailY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+//
+    //let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
+    //  tailX, tailY);
+    //tailImage.create();
+    //this.snakeBodyImages.push(tailImage);
+//
+    //let bodyX = Phaser.Math.Wrap(this.snakeX - this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
+    //let bodyY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+//
+    //let firstSnakeBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", 
+    //  bodyX, bodyY);
+    //firstSnakeBodyImage.create();
+    //this.snakeBodyImages.push(firstSnakeBodyImage);
 
     // The position the tail will move to
-    this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
-    // The position that first snake body image will move to
-    this.snakePositions.push([this.snakeX, this.snakeY]);
-
-    this.snakeDirections = [0, 0];
+    //this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
+    //// The position that first snake body image will move to
+    //this.snakePositions.push([this.snakeX, this.snakeY]);
+//
+    //this.snakeDirections = [0, 0];
 
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
@@ -117,11 +161,6 @@ export default class Snake {
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
     this.snake.depth = 100;
-    tailImage.snakeBody.depth = 100;
-    firstSnakeBodyImage.snakeBody.depth = 100;
-
-    tailImage.snakeBody.visible = true;
-    firstSnakeBodyImage.snakeBody.visible = true;
 
     localStorage.setItem("sliderValue", this.moveInterval);
     this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
@@ -350,6 +389,8 @@ export default class Snake {
    */
   onCollision() {
     this.snakeLength += 1;
+
+    console.log(this.snakeLength);
 
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score

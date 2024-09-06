@@ -13,7 +13,6 @@
     <script type="module" src="src/game.js"></script>
     <script type="module" src="src/scripts/LegacyGraphics.js"></script>
     <script type="module" src="src/scripts/slider.js"></script>
-    <script type="module" src="src/scripts/startingPos.js"></script>
     <script type="module" src="src/scripts/testing.js"></script>
     <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/settings-style.css">
@@ -60,7 +59,7 @@
           <span class="slider scene-3" id="legacy-graphics"></span>
         </label>        
       </div>
-      <div id="starting-position-settings" class="scene-3">
+      <div id="testing-settings" class="scene-3">
         <form class="scene-3" id="starting-position-form">
           <!-- https://www.w3schools.com/html/tryit.asp?filename=tryhtml_form_submit -->
           <label class="scene-3" for="x">Starting X</label><br>
@@ -69,7 +68,13 @@
           <label class="scene-3" for="y">Starting Y</label><br>
           <input class="scene-3" type="number" id="y" name="y" min="0" max="9"><br>
 
-          <input class="scene-3" type="submit" id="submit" value="Submit">
+          <input class="scene-3 submit" type="submit" id="submit" value="Submit">
+        </form>
+        <form class="scene-3" id="length-form">
+          <label for="length" class="scene-3">Starting Length</label>
+          <input class="scene-3" type="number" id="length" name="length" min="1" max="10">
+
+          <input type="submit" class="scene-3 submit" value="Submit">
         </form>
       </div>
       <button class="scene-3 main-menu-button">Back</button>
