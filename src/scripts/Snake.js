@@ -83,13 +83,19 @@ export default class Snake {
     this.snake = this.scene.add.image(this.snakeX, this.snakeY, "snake");
     this.snake.setDisplaySize(this.TILE_SIZE, this.TILE_SIZE);
 
+    let tailX = Phaser.Math.Wrap(this.snakeX - 2 * this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
+    let tailY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+
     let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
-      this.snakeX - 2 * this.TILE_SIZE, this.snakeY);
+      tailX, tailY);
     tailImage.create();
     this.snakeBodyImages.push(tailImage);
 
+    let bodyX = Phaser.Math.Wrap(this.snakeX - this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
+    let bodyY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
+
     let firstSnakeBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", 
-      this.snakeX - this.TILE_SIZE, this.snakeY);
+      bodyX, bodyY);
     firstSnakeBodyImage.create();
     this.snakeBodyImages.push(firstSnakeBodyImage);
 

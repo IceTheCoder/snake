@@ -1,4 +1,4 @@
-let testing = false;
+let testing = true;
 
 if (testing === true) {
   document.getElementById("starting-position-settings").classList.remove("hide");
