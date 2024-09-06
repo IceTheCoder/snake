@@ -27,6 +27,8 @@ export default class Snake {
     /** @type {number} */
     this.GRID_HEIGHT = gridHeight;
     /** @type {number} */
+    this.lastMoveTime = 0; // Track the last time the snake moved
+    /** @type {number} */
     this.moveInterval = 300;
 
     /** @type {number} */
@@ -127,31 +129,6 @@ export default class Snake {
     this.snakeDirections.push(0);
 
     console.log(this.snakeBodyImages.length);
-
-
-    //let tailX = Phaser.Math.Wrap(this.snakeX - 2 * this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
-    //let tailY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
-//
-    //let tailImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-tail", 
-    //  tailX, tailY);
-    //tailImage.create();
-    //this.snakeBodyImages.push(tailImage);
-//
-    //let bodyX = Phaser.Math.Wrap(this.snakeX - this.TILE_SIZE, 0, this.GRID_WIDTH * this.TILE_SIZE);
-    //let bodyY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
-//
-    //let firstSnakeBodyImage = new SnakeBody(this.scene, this.TILE_SIZE, "snake-body", 
-    //  bodyX, bodyY);
-    //firstSnakeBodyImage.create();
-    //this.snakeBodyImages.push(firstSnakeBodyImage);
-
-    // The position the tail will move to
-    //this.snakePositions.push([this.snakeX - this.TILE_SIZE, this.snakeY]);
-    //// The position that first snake body image will move to
-    //this.snakePositions.push([this.snakeX, this.snakeY]);
-//
-    //this.snakeDirections = [0, 0];
-
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
@@ -165,7 +142,6 @@ export default class Snake {
     this.snake.depth = 100;
 
     localStorage.setItem("sliderValue", this.moveInterval);
-    this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
 
     console.log(`X: ${this.snakeX}, y: ${this.snakeY}`)
   }
@@ -180,11 +156,19 @@ export default class Snake {
   }
 
   /**
-   * Handle changing direction correctly.
+   * Handle timing movement and changing direction correctly.
    * @param {Phaser.Input.Keyboard.CursorKeys} cursors 
    * @param {Object} wasd 
+   * @param {number} time
    */
-  update(cursors, wasd) {
+  update(time, cursors, wasd) {
+    console.log(time - this.lastMoveTime);
+
+    if (time - this.lastMoveTime > this.moveInterval) {
+      this.move();
+      this.lastMoveTime = time;
+    }
+
     if (cursors.left.isDown || wasd.left.isDown) {
       this.changeDirection(180);
     } else if (cursors.right.isDown || wasd.right.isDown) {
@@ -275,7 +259,6 @@ export default class Snake {
     }
 
     this.moveInterval = localStorage.getItem("sliderValue");
-    this.scene.time.delayedCall(this.moveInterval, this.move, [], this);
 
     this.advancedDegreesToRadians(this.direction, -1);
   }

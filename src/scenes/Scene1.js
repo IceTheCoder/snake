@@ -143,7 +143,7 @@ export class Scene1 extends Phaser.Scene {
    * @param {Object} wasd - WASD keys for controlling the snake.
    */
   update() {
-    this.snake.update(this.cursors, this.wasd);
+    this.snake.update(this.time.now, this.cursors, this.wasd);
 
     this.collision.update();
   }
