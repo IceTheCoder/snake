@@ -75,6 +75,8 @@ export default class Snake {
    * Initialize the snake, start moving the snake.
    */
   create() {
+    document.getElementById("score").innerHTML = `Score: ${this.snakeLength}`;
+
     if (localStorage.getItem("startingX") && localStorage.getItem("startingY")) {
       this.snakeX = localStorage.getItem("startingX") * this.TILE_SIZE + this.TILE_SIZE / 2;
       this.snakeY = localStorage.getItem("startingY") * this.TILE_SIZE + this.TILE_SIZE / 2;  
