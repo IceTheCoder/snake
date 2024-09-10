@@ -139,7 +139,7 @@ export default class Snake {
     document.getElementById("game-over-score").className = "scene-2 game-over";
 
     // https://www.youtube.com/watch?v=TTtgXd5qJko
-    this.snake.depth = 100;
+    this.snake.depth = 101;
 
     localStorage.setItem("sliderValue", this.moveInterval);
 
@@ -224,6 +224,9 @@ export default class Snake {
    * a wall, store the snake body tiles' positions, and update them accordingly.
    */
   move() {
+    const previousX = this.snakeX;
+    const previousY = this.snakeY;
+
     switch (this.direction) {
       case 0:
         this.snakeX += this.TILE_SIZE;
@@ -242,7 +245,14 @@ export default class Snake {
     this.snakeX = Phaser.Math.Wrap(this.snakeX, 0, this.GRID_WIDTH * this.TILE_SIZE);
     this.snakeY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
 
-    this.snake.setPosition(this.snakeX, this.snakeY);
+    //this.snake.setPosition(this.snakeX, this.snakeY);
+    this.scene.tweens.add({
+      targets: this.snake,
+      x: this.snakeX,
+      y: this.snakeY,
+      duration: this.moveInterval,
+      ease: 'Linear',
+    });
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
     this.snakeDirections.push(this.direction);
