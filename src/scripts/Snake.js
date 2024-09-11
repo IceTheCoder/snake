@@ -127,8 +127,6 @@ export default class Snake {
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
     this.snakeDirections.push(0);
-
-    console.log(this.snakeBodyImages.length);
     this.highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
     document.getElementById("high-score").innerHTML = `High Score: ${this.highScore}`
@@ -142,8 +140,6 @@ export default class Snake {
     this.snake.depth = 101;
 
     localStorage.setItem("sliderValue", this.moveInterval);
-
-    console.log(`X: ${this.snakeX}, y: ${this.snakeY}`)
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -162,8 +158,6 @@ export default class Snake {
    * @param {number} time
    */
   update(time, cursors, wasd) {
-    console.log(time - this.lastMoveTime);
-
     if (time - this.lastMoveTime > this.moveInterval) {
       this.move();
       this.lastMoveTime = time;
@@ -245,7 +239,6 @@ export default class Snake {
     this.snakeX = Phaser.Math.Wrap(this.snakeX, 0, this.GRID_WIDTH * this.TILE_SIZE);
     this.snakeY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
 
-    //this.snake.setPosition(this.snakeX, this.snakeY);
     this.scene.tweens.add({
       targets: this.snake,
       x: this.snakeX,
@@ -266,6 +259,15 @@ export default class Snake {
 
     for (let i = 0; i < this.snakePositions.length; i++) {
       this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
+      if (i === 0) {
+        this.scene.tweens.add({
+          targets: this.snakeBodyImages[i].snakeBody,
+          x: this.snakePositions[i][0],
+          y: this.snakePositions[i][1],
+          duration: this.moveInterval,
+          ease: 'Linear',
+        });
+      }
     }
 
     this.moveInterval = localStorage.getItem("sliderValue");
@@ -384,8 +386,6 @@ export default class Snake {
    */
   onCollision() {
     this.snakeLength += 1;
-
-    console.log(this.snakeLength);
 
     if (this.snakeLength > this.highScore) {
       this.highScore = this.snakeLength; // snake length = score
