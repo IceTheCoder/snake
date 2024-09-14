@@ -278,6 +278,17 @@ export default class Snake {
       // curvature of the snake
       if (i === this.snakeBodyImages.length - 1 && this.snakeDirections[i] === this.direction) {
         this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale * 0.8;
+        console.log(this.snakeBodyImages[this.snakeBodyImages.length - 1].snakeBody.scaleX)
+        // Stop all tweens so we can start properly
+        let tweens = this.scene.tweens.getTweensOf(this.snakeBodyImages[i].snakeBody);
+        tweens.forEach(tween => tween.remove());
+
+        this.scene.tweens.add({
+          targets: this.snakeBodyImages[i].snakeBody,
+          scaleX: this.defaultScale,
+          duration: this.moveInterval,
+          ease: 'Linear',
+        });
       } else {
         this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale;
       }
