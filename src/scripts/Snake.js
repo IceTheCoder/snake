@@ -29,7 +29,7 @@ export default class Snake {
     /** @type {number} */
     this.lastMoveTime = 0; // Track the last time the snake moved
     /** @type {number} */
-    this.moveInterval = 300;
+    this.moveInterval = 1000;
 
     /** @type {number} */
     this.direction = 0;
@@ -58,6 +58,9 @@ export default class Snake {
 
     /** @type {number} */
     this.highScore;
+
+    /** @type {number} */
+    this.defaultScale;
   }
 
   /**
@@ -140,6 +143,8 @@ export default class Snake {
     this.snake.depth = 101;
 
     localStorage.setItem("sliderValue", this.moveInterval);
+
+    this.defaultScale = this.snake.scaleX;
   }
 
   // https://www.w3resource.com/javascript-exercises/javascript-math-exercise-33.php
@@ -218,9 +223,6 @@ export default class Snake {
    * a wall, store the snake body tiles' positions, and update them accordingly.
    */
   move() {
-    const previousX = this.snakeX;
-    const previousY = this.snakeY;
-
     switch (this.direction) {
       case 0:
         this.snakeX += this.TILE_SIZE;
@@ -257,17 +259,29 @@ export default class Snake {
       this.snakeDirections.shift();
     }
 
-    for (let i = 0; i < this.snakePositions.length; i++) {
+    for (let i = 0; i < this.snakeBodyImages.length; i++) {
       this.updateSnakeBodyImage(i, this.snakePositions[i], this.snakeDirections[i]);
+      
+      const snakeBody = this.snakeBodyImages[i].snakeBody;
+      
+      // Animate the tail properly
       if (i === 0) {
         this.scene.tweens.add({
-          targets: this.snakeBodyImages[i].snakeBody,
-          x: this.snakePositions[i][0],
-          y: this.snakePositions[i][1],
+          targets: snakeBody,
+          x: this.snakePositions[i + 1][0],
+          y: this.snakePositions[i + 1][1],
           duration: this.moveInterval,
           ease: 'Linear',
         });
       }
+      // Make sure the body image right before the head doesn't cover the gaps created by the
+      // curvature of the snake
+      if (i === this.snakeBodyImages.length - 1 && this.snakeDirections[i] === this.direction) {
+        this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale * 0.8;
+      } else {
+        this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale;
+      }
+
     }
 
     this.moveInterval = localStorage.getItem("sliderValue");
@@ -323,6 +337,7 @@ export default class Snake {
         if (previousDirection !== nextDirection) {
           // Ensure previous rotation values don't fiddle with the texture
           this.snakeBodyImages[index].snakeBody.setRotation(0);
+          this.snakeBodyImages[index].snakeBody.scaleX = this.defaultScale;
 
           // Find the corresponding texture
           const directionMapping = {
