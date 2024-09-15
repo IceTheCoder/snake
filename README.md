@@ -5,11 +5,10 @@
 
 <img src="https://raw.githubusercontent.com/bablubambal/All_logo_and_pictures/1ac69ce5fbc389725f16f989fa53c62d6e1b4883/social%20icons/html5.svg" height="100"><img src="https://raw.githubusercontent.com/bablubambal/All_logo_and_pictures/1ac69ce5fbc389725f16f989fa53c62d6e1b4883/social%20icons/javascript.svg" height="100">
 
-![image](https://github.com/IceTheCoder/snake/assets/115871297/dafde691-a809-44a9-a2b4-dde266b1dd6b)
-![image](https://github.com/IceTheCoder/snake/assets/115871297/5bdb323d-9bbe-469a-ab17-6a85900795a3)
-![image](https://github.com/IceTheCoder/snake/assets/115871297/51069374-5e67-481d-830d-4e50ef027495)
-![image](https://github.com/IceTheCoder/snake/assets/115871297/f0699834-84a9-4478-9c0c-ac03eb57a574)
-
+![Main Menu](assets/screenshots/main-menu.png)
+![Settings](assets/screenshots/settings.png)
+![Graphics](assets/screenshots/graphics.png)
+![Game Over](assets/screenshots/game-over.png)
 
 A very basic snake game, made in JavaScript with the Phaser game engine, featuring:
 * **Controls**: Use arrow keys to navigate the snake within a grid.
@@ -24,7 +23,7 @@ A very basic snake game, made in JavaScript with the Phaser game engine, featuri
 - [X] Add score tracking
 - [X] Add high score tracking
 - [X] Make the snake controllable on mobile
-- [ ] Improve graphics
+- [X] Improve graphics
 - [ ] Changeable snake head, snake body and fruit colours
 - [ ] Custom snake width
 - [ ] Custom grid width and height
