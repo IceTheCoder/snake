@@ -102,6 +102,7 @@ h2.game-over {
 }
 
 button {
+  display: flex;
   font-size: 50px;
   margin: 20px;
   border: none;
