@@ -29,7 +29,7 @@ export default class Snake {
     /** @type {number} */
     this.lastMoveTime = 0; // Track the last time the snake moved
     /** @type {number} */
-    this.moveInterval = 1000;
+    this.moveInterval = 300;
 
     /** @type {number} */
     this.direction = 0;
@@ -124,7 +124,7 @@ export default class Snake {
 
       this.snakeDirections.push(0);
 
-      bodyImage.snakeBody.depth = 100;
+      bodyImage.snakeBody.depth = 200;
       bodyImage.snakeBody.visible = true;
     }
 
@@ -241,13 +241,15 @@ export default class Snake {
     this.snakeX = Phaser.Math.Wrap(this.snakeX, 0, this.GRID_WIDTH * this.TILE_SIZE);
     this.snakeY = Phaser.Math.Wrap(this.snakeY, 0, this.GRID_HEIGHT * this.TILE_SIZE);
 
-    this.scene.tweens.add({
-      targets: this.snake,
-      x: this.snakeX,
-      y: this.snakeY,
-      duration: this.moveInterval,
-      ease: 'Linear',
-    });
+    //this.scene.tweens.add({
+    //  targets: this.snake,
+    //  x: this.snakeX,
+    //  y: this.snakeY,
+    //  duration: this.moveInterval,
+    //  ease: 'Linear',
+    //});
+
+    this.snake.setPosition(this.snakeX, this.snakeY);
 
     this.snakePositions.push([this.snakeX, this.snakeY]);
     this.snakeDirections.push(this.direction);
@@ -265,34 +267,45 @@ export default class Snake {
       const snakeBody = this.snakeBodyImages[i].snakeBody;
       
       // Animate the tail properly
-      if (i === 0) {
-        this.scene.tweens.add({
-          targets: snakeBody,
-          x: this.snakePositions[i + 1][0],
-          y: this.snakePositions[i + 1][1],
-          duration: this.moveInterval,
-          ease: 'Linear',
-        });
-      }
+      //if (i === 0) {
+      //  this.scene.tweens.add({
+      //    targets: snakeBody,
+      //    x: this.snakePositions[i + 1][0],
+      //    y: this.snakePositions[i + 1][1],
+      //    duration: this.moveInterval,
+      //    ease: 'Linear',
+      //  });
+      //}
       // Make sure the body image right before the head doesn't cover the gaps created by the
       // curvature of the snake
-      if (i === this.snakeBodyImages.length - 1 && this.snakeDirections[i] === this.direction) {
-        this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale * 0.8;
-        console.log(this.snakeBodyImages[this.snakeBodyImages.length - 1].snakeBody.scaleX)
-        // Stop all tweens so we can start properly
-        let tweens = this.scene.tweens.getTweensOf(this.snakeBodyImages[i].snakeBody);
-        tweens.forEach(tween => tween.remove());
-
-        this.scene.tweens.add({
-          targets: this.snakeBodyImages[i].snakeBody,
-          scaleX: this.defaultScale,
-          duration: this.moveInterval,
-          ease: 'Linear',
-        });
-      } else {
-        this.snakeBodyImages[i].snakeBody.scaleX = this.defaultScale;
-      }
-
+      //if ((i === this.snakeBodyImages.length - 1 || i === 1) && this.snakeDirections[i] === this.direction) {
+      //  console.log(this.snakeBodyImages[this.snakeBodyImages.length - 1].snakeBody.scaleX)
+//
+      //  switch(i) {
+      //    case this.snakeBodyImages.length - 1:
+      //      this.snakeBodyImages[i].snakeBody.setCrop(0, 0, 300, 400);
+      //      // Remove the crop after some time
+      //      this.scene.time.addEvent({
+      //        delay: this.moveInterval / 2,
+      //        callback: () => {
+      //          this.snakeBodyImages[i].snakeBody.setCrop();
+      //        },
+      //        callbackScope: this.scene
+      //      });
+      //      break;
+      //    case 1:
+      //      // Do the reverse
+      //      this.snakeBodyImages[i].snakeBody.setCrop();
+      //      this.scene.time.addEvent({
+      //        delay: this.moveInterval / 2,
+      //        callback: () => {
+      //          this.snakeBodyImages[i].snakeBody.setCrop(100, 0, 300, 400);
+      //        },
+      //        callbackScope: this.scene
+      //      });
+      //      break;
+      //  }
+      //}
     }
 
     this.moveInterval = localStorage.getItem("sliderValue");
@@ -346,6 +359,17 @@ export default class Snake {
         let nextDirection = this.snakeDirections[index + 1];
         // i.e. if the snake body tile needs to turn
         if (previousDirection !== nextDirection) {
+          // Ensure the turns are not affected by cropping
+          //this.snakeBodyImages[index].snakeBody.setCrop();
+          //this.snakeBodyImages[index - 1].snakeBody.setCrop();
+          //this.scene.time.addEvent({
+          //  delay: this.moveInterval * 0.85,
+          //  callback: () => {
+          //    this.snakeBodyImages[index - 1].snakeBody.setCrop(100, 0, 300, 400);
+          //  },
+          //  callbackScope: this.scene
+          //});
+
           // Ensure previous rotation values don't fiddle with the texture
           this.snakeBodyImages[index].snakeBody.setRotation(0);
           this.snakeBodyImages[index].snakeBody.scaleX = this.defaultScale;
