@@ -14,6 +14,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
 }
 /* Canvas width = Canvas height, so, to avoid the game being cut off, we have to base both dimensions on the smaller one,
 which is height for landscape orientation, width for portrait orientation */
@@ -27,6 +28,26 @@ which is height for landscape orientation, width for portrait orientation */
     width: 95vw;
     max-width: 650px;
   }
+}
+
+/* Main Menu */
+#main-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-menu h1 {
+  height: 25%;
+  font-size: 70px;
+}
+
+.buttons {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Game Screen */
@@ -81,7 +102,8 @@ h2.game-over {
 }
 
 button {
-  font-size: 40px;
+  display: flex;
+  font-size: 50px;
   margin: 20px;
   border: none;
   color: #B1DDF1;
@@ -90,3 +112,63 @@ button {
 button:hover {
   color: #5889a0;
 }
+
+#game-over {
+  font-size: 40px;
+}
+
+/* https://www.w3schools.com/howto/howto_js_rangeslider.asp */
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  -moz-appearance: none;
+  appearance: none;
+  width: 90%; /* Full-width */
+  height: 25px; /* Specified height */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  border: 0 none !important;
+  background: none;
+  margin: 10px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+#slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* If the ::before pseudoclass isn't hidden, a little white box appears on top of the slider */
+.slider::before {
+  display: none;
+}
+
+#output {
+  margin-top: 50px;
+}
+

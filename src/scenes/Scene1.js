@@ -1,6 +1,7 @@
 import Snake from '../scripts/Snake.js';
 import Fruit from '../scripts/Fruit.js';
 import Collision from '../scripts/Collision.js';
+import SceneManager from '../scripts/SceneManager.js';
 
 /**
  * Represents the main game scene.
@@ -36,6 +37,15 @@ export class Scene1 extends Phaser.Scene {
     this.fruit.preload();
 
     this.collision = new Collision(this, this.snake, this.fruit);
+
+    if (localStorage.getItem("legacy") === "0") {
+      this.load.image("background", "assets/background.png");
+    } else {
+      this.load.image("background", "assets/background-legacy.png");
+    }
+
+    // https://stackoverflow.com/questions/52139569/phaser-io-3-get-game-size-in-scene
+    this.canvas = this.sys.game.canvas;
   }
 
   /**
@@ -43,6 +53,10 @@ export class Scene1 extends Phaser.Scene {
    */
   create() {
     this.snake.create();
+
+    let { width, height } = this.canvas;
+
+    this.background = this.add.image(width / 2, height / 2, "background");
 
     // https://www.html5gamedevs.com/topic/40607-how-to-replace-arrow-keys-with-wasd-movement/
     // cornstipated's solution worked.
@@ -97,19 +111,27 @@ export class Scene1 extends Phaser.Scene {
       switch(event.direction) {
         case Hammer.DIRECTION_UP:
           console.log('%c Swipe up detected', 'color:red;');
+          document.getElementById("swipe-test").innerHTML = "Swipe up detected";
+          document.getElementById("swipe-test").style.color = "red";
           // Wait until the snake can change direction
           waitUntilCanChangeDirection(90);
           break;
         case Hammer.DIRECTION_DOWN:
           console.log('%c Swipe down detected', 'color:yellow;');
+          document.getElementById("swipe-test").innerHTML = "Swipe down detected";
+          document.getElementById("swipe-test").style.color = "yellow";
           waitUntilCanChangeDirection(270);
           break;
         case Hammer.DIRECTION_LEFT:
           console.log('%c Swipe left detected', 'color:green;');
+          document.getElementById("swipe-test").innerHTML = "Swipe left detected";
+          document.getElementById("swipe-test").style.color = "green";
           waitUntilCanChangeDirection(180);
           break;
         case Hammer.DIRECTION_RIGHT:
           console.log('%c Swipe right detected', 'color:blue;');
+          document.getElementById("swipe-test").innerHTML = "Swipe right detected";
+          document.getElementById("swipe-test").style.color = "blue";
           waitUntilCanChangeDirection(0);
           break;
         default:
@@ -125,7 +147,7 @@ export class Scene1 extends Phaser.Scene {
    * @param {Object} wasd - WASD keys for controlling the snake.
    */
   update() {
-    this.snake.update(this.cursors, this.wasd);
+    this.snake.update(this.time.now, this.cursors, this.wasd);
 
     this.collision.update();
   }
@@ -139,9 +161,7 @@ export class Scene1 extends Phaser.Scene {
 
     // Destroy game elements
     this.game.destroy(true, false);
-    for (const element of document.getElementsByClassName("game-ui")) {
-      element.style.display = "none";
-    }
+    SceneManager.loadScene(2);
 
     function loadGameOver() {
       // I'm so happy document works in this script :)
@@ -150,7 +170,7 @@ export class Scene1 extends Phaser.Scene {
       document.getElementById("game-over").style.display = "flex";
 
       // Check if there's a new high score
-      if (document.getElementById("high-score").className === "game-ui new-high-score") {
+      if (document.getElementById("high-score").className === "scene-1 game-ui new-high-score") {
         document.getElementById("game-over-h1").innerHTML = "NEW HIGH SCORE!";
         document.getElementById("game-over-h1").style.color = "red";
       }
