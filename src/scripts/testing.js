@@ -1,4 +1,4 @@
-let testing = true;
+let testing = false;
 
 if (testing === true) {
   document.getElementById("testing-settings").classList.remove("hide");
