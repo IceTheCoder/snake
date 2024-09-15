@@ -37,7 +37,11 @@ export default class Fruit {
    * Preloads the fruit image.
    */
   preload() {
-    this.scene.load.image("fruit", "assets/fruit.png");
+    if (localStorage.getItem("legacy") === "0") {
+      this.scene.load.image("fruit", "assets/fruit.png");
+    } else {
+      this.scene.load.image("fruit", "assets/fruit-legacy.png");
+    }
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random

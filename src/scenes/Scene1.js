@@ -38,7 +38,11 @@ export class Scene1 extends Phaser.Scene {
 
     this.collision = new Collision(this, this.snake, this.fruit);
 
-    this.load.image("background", "assets/background-good.png");
+    if (localStorage.getItem("legacy") === "0") {
+      this.load.image("background", "assets/background.png");
+    } else {
+      this.load.image("background", "assets/background-legacy.png");
+    }
 
     // https://stackoverflow.com/questions/52139569/phaser-io-3-get-game-size-in-scene
     this.canvas = this.sys.game.canvas;

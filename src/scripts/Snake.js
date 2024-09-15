@@ -67,13 +67,24 @@ export default class Snake {
    * Load the snake image.
    */
   preload() {
-    this.scene.load.image("snake", "assets/snake.png");
-    this.scene.load.image("snake-body", "assets/snake-body.png");
-    this.scene.load.image("1", "assets/1.png");
-    this.scene.load.image("2", "assets/2.png");
-    this.scene.load.image("3", "assets/3.png");
-    this.scene.load.image("4", "assets/4.png");
-    this.scene.load.image("snake-tail", "assets/snake-tail.png");
+    if (localStorage.getItem("legacy") === "0") {
+      this.scene.load.image("snake", "assets/snake.png");
+      this.scene.load.image("snake-body", "assets/snake-body.png");
+      this.scene.load.image("1", "assets/1.png");
+      this.scene.load.image("2", "assets/2.png");
+      this.scene.load.image("3", "assets/3.png");
+      this.scene.load.image("4", "assets/4.png");
+      this.scene.load.image("snake-tail", "assets/snake-tail.png");  
+    }
+    if (localStorage.getItem("legacy") === "1") {
+      this.scene.load.image("snake", "assets/snake-legacy.png");
+      this.scene.load.image("snake-body", "assets/snake-legacy.png");
+      this.scene.load.image("1", "assets/snake-legacy.png");
+      this.scene.load.image("2", "assets/snake-legacy.png");
+      this.scene.load.image("3", "assets/snake-legacy.png");
+      this.scene.load.image("4", "assets/snake-legacy.png");
+      this.scene.load.image("snake-tail", "assets/snake-legacy.png");
+    }
   }
 
   /**

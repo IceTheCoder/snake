@@ -16,7 +16,6 @@ export default {
   // 1 - game
   // 2 - game over
   loadScene(index) {
-    console.log(index);
     // Hide all elements not in the requested scene
     const allElements = document.querySelectorAll('*');
     allElements.forEach(element => {
