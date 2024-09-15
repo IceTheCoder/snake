@@ -7,3 +7,8 @@
 p {
   display: block;
 }
+
+.credits-section {
+  display: flex;
+  flex-direction: column;
+}
